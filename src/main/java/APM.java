@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class APM {
     public static void main(String[] args) {
         passGen generatore = new passGen();
-        ArrayList<CharacterRule> test = new ArrayList<CharacterRule>();
+        ArrayList<CharacterRule> test = new ArrayList<>();
         test.add(new CharacterRule(EnglishCharacterData.Special));
         test.add(new CharacterRule(EnglishCharacterData.Digit));
         test.add(new CharacterRule(EnglishCharacterData.Alphabetical));
@@ -15,7 +15,6 @@ public class APM {
 
         String password = generatore.genPass(22, test);
         System.out.println(password);
-
     }
 }
 
