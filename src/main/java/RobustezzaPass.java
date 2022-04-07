@@ -8,6 +8,8 @@ public class RobustezzaPass {
             new WhitespaceRule()
     );
 
-
+    void prova(){
+        System.out.println("ciao");
+    }
 
 }
