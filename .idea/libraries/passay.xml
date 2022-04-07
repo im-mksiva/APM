@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="passay" type="repository">
+    <properties maven-id="org.passay:passay:1.6.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/passay/passay/1.6.1/passay-1.6.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
