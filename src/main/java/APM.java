@@ -16,6 +16,9 @@ public class APM {
         String password = generatore.genPass(22, test);
         System.out.println(password);
 
+
+        System.out.println("prova");
+
     }
 }
 
