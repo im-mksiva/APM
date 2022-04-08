@@ -12,24 +12,29 @@ public class SQLite_agent {
         }
     }
 
-    public void getValue(String nome){
+    public void Select(){}
+
+    public String[] get_User_Hash(String username){
+        String db_hash;
+        String db_salt;
+        String[] result = new String[2]; // molto brutto, vorrei trovare una soluzione migliore
         try {
-            Statement statement = connection.createStatement();
-            String query = "select nome from prova where nome = '" + nome +"'";
-            // executeQuery() serve per recuperare dati
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next())
-            {
-//                 read the result set
-                System.out.println("name = " + rs.getString("nome"));
-            }
+            String sql = "select passkey,salt from users where username = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1,username);
+            // executeQuery() serve per recuperare dati (esegue la query)
+            db_hash = query.executeQuery().getString("passkey");
+            db_salt = query.executeQuery().getString("salt");
+            result[0] = db_hash;
+            result[1] = db_salt;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
 
-    public void insertValue(String value){
+    void insertValue(String value){
         try {
             Statement statement = connection.createStatement();
             String query = "insert into prova values ('" + value + "')";
@@ -41,4 +46,21 @@ public class SQLite_agent {
             e.printStackTrace();
         }
     }
+
+    void insertUser(String username, String hashed_password, String salt) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "insert into users values (?,?,?)";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1,username);
+            query.setString(2,hashed_password);
+            query.setString(3,salt);
+
+            query.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
+}
