@@ -12,6 +12,16 @@ public class SQLite_agent {
         }
     }
 
+    SQLite_agent(String user_id){
+        try {
+            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/"+ user_id + ".db");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public void Select(){}
 
     public String[] get_User_Hash(String username){
@@ -60,7 +70,20 @@ public class SQLite_agent {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-
+    void insertRecord(String url, String service, String username, String password) {
+        try {
+            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/1002.db");
+            String sql = "insert into Credenziali (url,service,username,password) values (?,?,?,?)";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1,url);
+            query.setString(2,service);
+            query.setString(3,username);
+            query.setString(4,password);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
