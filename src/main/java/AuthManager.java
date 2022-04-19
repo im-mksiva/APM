@@ -10,41 +10,35 @@ public class AuthManager {
     public static void userRegister(String username, String pass) {
         // creazione del digest a partire da password+salt
         String salt = getSalt(); // miglioramento della sicurezza
-        String hashed_pass = get_SecurePassword(pass,salt);
+        String hashed_pass = get_SecurePassword(pass, salt);
         // inserimento del nuovo utente in APM.db
         SQLite_agent db_agent = new SQLite_agent();
-        db_agent.insertUser(username,hashed_pass,salt);
+        db_agent.insertUser(username, hashed_pass, salt);
 
     }
 
     public static boolean userLogin(String username, String password) {
         SQLite_agent db_agent = new SQLite_agent();
         boolean user_exist = db_agent.find_user(username);
-        if (user_exist == false){
+        if (user_exist == false) {
             System.out.println("username non trovato");
             return false;
         }
 
         String hashed_pass = db_agent.get_User_Hash(username);
         String user_salt = db_agent.get_Salt(username);
-        String login_hashed_pass = get_SecurePassword(password,user_salt);
+        String login_hashed_pass = get_SecurePassword(password, user_salt);
         // questo metodo di comparazione me l'ha suggerito IntelliJ, credo che le stringhe si possano confrontare solo in questo modo
         // dato che sono oggetti in java
-        if (Objects.equals(login_hashed_pass, hashed_pass)){
+        if (Objects.equals(login_hashed_pass, hashed_pass)) {
             System.out.println("Login ok");
             return true;
-        }
-        else {
+        } else {
             System.out.println("password non corretta");
         }
         return false;
 
     }
-
-
-
-
-
 
 
     // spazio alle funzioni crittografiche

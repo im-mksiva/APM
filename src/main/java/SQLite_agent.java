@@ -5,7 +5,7 @@ public class SQLite_agent {
     // manages connection to sqlite db
     Connection connection = null;
 
-    SQLite_agent(){
+    SQLite_agent() {
         try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
         } catch (SQLException e) {
@@ -13,20 +13,20 @@ public class SQLite_agent {
         }
     }
 
-    SQLite_agent(String user_id){
+    SQLite_agent(String user_id) {
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/"+ user_id + ".db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/" + user_id + ".db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    public boolean find_user(String username){
+    public boolean find_user(String username) {
         try {
             String sql = "select username from users where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1,username);
+            query.setString(1, username);
             ResultSet result = query.executeQuery();
             System.out.println(result.getString("username"));
 
@@ -41,11 +41,11 @@ public class SQLite_agent {
         return false;
     }
 
-    public String get_Salt(String username){
+    public String get_Salt(String username) {
         try {
             String sql = "select salt from users where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1,username);
+            query.setString(1, username);
             ResultSet result = query.executeQuery();
             return result.getString("salt");
 
@@ -55,13 +55,11 @@ public class SQLite_agent {
     }
 
 
-
-
-    public String get_User_Hash(String username){
+    public String get_User_Hash(String username) {
         try {
             String sql = "select passkey from users where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1,username);
+            query.setString(1, username);
             // executeQuery() serve per recuperare dati (esegue la query)
             return query.executeQuery().getString("passkey");
 
@@ -72,7 +70,7 @@ public class SQLite_agent {
     }
 
 
-    void insertValue(String value){
+    void insertValue(String value) {
         try {
             Statement statement = connection.createStatement();
             String query = "insert into prova values ('" + value + "')";
@@ -90,9 +88,9 @@ public class SQLite_agent {
             Statement statement = connection.createStatement();
             String sql = "insert into users values (?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1,username);
-            query.setString(2,hashed_password);
-            query.setString(3,salt);
+            query.setString(1, username);
+            query.setString(2, hashed_password);
+            query.setString(3, salt);
 
             query.executeUpdate();
         } catch (SQLException e) {
@@ -105,10 +103,10 @@ public class SQLite_agent {
             this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/1002.db");
             String sql = "insert into Credenziali (url,service,username,password) values (?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1,url);
-            query.setString(2,service);
-            query.setString(3,username);
-            query.setString(4,password);
+            query.setString(1, url);
+            query.setString(2, service);
+            query.setString(3, username);
+            query.setString(4, password);
             query.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
