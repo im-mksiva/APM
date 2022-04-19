@@ -1,3 +1,4 @@
+import java.beans.PropertyEditorSupport;
 import java.sql.*;
 
 public class SQLite_agent {
@@ -21,26 +22,53 @@ public class SQLite_agent {
     }
 
 
-
-    public void Select(){}
-
-    public String[] get_User_Hash(String username){
-        String db_hash;
-        String db_salt;
-        String[] result = new String[2]; // molto brutto, vorrei trovare una soluzione migliore
+    public boolean find_user(String username){
         try {
-            String sql = "select passkey,salt from users where username = ?";
+            String sql = "select username from users where username = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1,username);
+            ResultSet result = query.executeQuery();
+            System.out.println(result.getString("username"));
+
+            if (result.getString("username") != null)
+                return true;
+        } catch (SQLException e) {
+            // quando viene inserito uno username non trovato viene lanciata una eccezione (ResultSet closed)
+            return false;
+//            throw new RuntimeException(e);
+
+        }
+        return false;
+    }
+
+    public String get_Salt(String username){
+        try {
+            String sql = "select salt from users where username = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1,username);
+            ResultSet result = query.executeQuery();
+            return result.getString("salt");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+    public String get_User_Hash(String username){
+        try {
+            String sql = "select passkey from users where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1,username);
             // executeQuery() serve per recuperare dati (esegue la query)
-            db_hash = query.executeQuery().getString("passkey");
-            db_salt = query.executeQuery().getString("salt");
-            result[0] = db_hash;
-            result[1] = db_salt;
+            return query.executeQuery().getString("passkey");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return null;
     }
 
 

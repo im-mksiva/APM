@@ -3,34 +3,41 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Scanner;
+
 
 public class AuthManager {
 
-    public static void Register(String username, String pass) {
+    public static void userRegister(String username, String pass) {
         // creazione del digest a partire da password+salt
         String salt = getSalt(); // miglioramento della sicurezza
         String hashed_pass = get_SecurePassword(pass,salt);
-        System.out.println("L'hash della password è " + hashed_pass);
-        System.out.println("il salt è " + salt);
         // inserimento del nuovo utente in APM.db
         SQLite_agent db_agent = new SQLite_agent();
         db_agent.insertUser(username,hashed_pass,salt);
+
     }
 
-    public static void Login(String username, String password) {
+    public static boolean userLogin(String username, String password) {
         SQLite_agent db_agent = new SQLite_agent();
-        String[] result = db_agent.get_User_Hash(username);
-        String hashed_pass = get_SecurePassword(password,result[1]);
+        boolean user_exist = db_agent.find_user(username);
+        if (user_exist == false){
+            System.out.println("username non trovato");
+            return false;
+        }
+
+        String hashed_pass = db_agent.get_User_Hash(username);
+        String user_salt = db_agent.get_Salt(username);
+        String login_hashed_pass = get_SecurePassword(password,user_salt);
         // questo metodo di comparazione me l'ha suggerito IntelliJ, credo che le stringhe si possano confrontare solo in questo modo
         // dato che sono oggetti in java
-        if (Objects.equals(result[0], hashed_pass)){
-            System.out.println("Login funzionante");
+        if (Objects.equals(login_hashed_pass, hashed_pass)){
+            System.out.println("Login ok");
+            return true;
         }
-//        db_agebt.getValue("Users","salt",);
-
-
-
+        else {
+            System.out.println("password non corretta");
+        }
+        return false;
 
     }
 
@@ -50,8 +57,8 @@ public class AuthManager {
             md.update(salt.getBytes());
             byte[] bytes = md.digest(UserPasswordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
@@ -69,7 +76,7 @@ public class AuthManager {
             e.printStackTrace();
         }
         byte[] salt = new byte[16];
-        sr.nextBytes(salt);
+        Objects.requireNonNull(sr).nextBytes(salt);
         return Arrays.toString(salt);
     }
 
