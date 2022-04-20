@@ -3,6 +3,7 @@ import java.sql.*;
 
 public class SQLite_agent {
     // manages connection to sqlite db
+    // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
     Connection connection = null;
 
     SQLite_agent() {
@@ -70,13 +71,16 @@ public class SQLite_agent {
     }
 
 
-    void insertValue(String value) {
+    void insertCredential(String url, String service, String username, String pass) {
         try {
-            Statement statement = connection.createStatement();
-            String query = "insert into prova values ('" + value + "')";
-            System.out.println(query);
+            String sql = "insert into Credenziali(url,service,username,password) values (?,?,?,?)";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1, url);
+            query.setString(2, service);
+            query.setString(3, username);
+            query.setString(4, pass);
             // executeUpdate() serve per aggiornare lo stato del database, che sia inserimento o cancellazione
-            statement.executeUpdate(query);
+            query.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

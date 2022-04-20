@@ -13,6 +13,7 @@ public class AuthManager {
         String hashed_pass = get_SecurePassword(pass, salt);
         // inserimento del nuovo utente in APM.db
         SQLite_agent db_agent = new SQLite_agent();
+        System.out.println(username + hashed_pass + salt);
         db_agent.insertUser(username, hashed_pass, salt);
 
     }
