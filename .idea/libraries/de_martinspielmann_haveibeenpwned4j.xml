@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="de.martinspielmann.haveibeenpwned4j" type="repository">
+    <properties maven-id="de.martinspielmann.haveibeenpwned4j:haveibeenpwned4j:2.0.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/haveibeenpwned4j-2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-datatype-jsr310-2.11.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
