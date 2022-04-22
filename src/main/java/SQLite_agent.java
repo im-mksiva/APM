@@ -9,7 +9,7 @@ public class SQLite_agent {
     String db = "jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db";
 
     SQLite_agent() {
-// TODO: 22/04/22 //verifica se il file APM.db esiste
+        // verifico se il file del db esiste già. Se non c'è inizializzo il db con le tabelle necessarie
         File db_file = new File("/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
         if (!db_file.exists()) {
             db_create_table_users();
@@ -51,7 +51,7 @@ public class SQLite_agent {
             statement = connection.createStatement();
             String query = "CREATE TABLE USERS_APM(\n" +
                     "user_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "username varchar(30) not null,\n" +
+                    "username varchar(30) UNIQUE not null,\n" +
                     "password varchar(30) not null,\n" +
                     "salt varchar(30) not null,\n" +
                     "nome varchar(30) not null,\n" +

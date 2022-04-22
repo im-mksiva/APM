@@ -9,6 +9,9 @@ import java.util.Objects;
 public class AuthManager {
 
     public void userRegister(User new_user) {
+        // verifica se esiste già uno username con quell
+
+
         // creazione del digest a partire da password+salt
         new_user.setSalt(getSalt()); // miglioramento della sicurezza
         new_user.setPassword(get_SecurePassword(new_user.getPassword(), new_user.getSalt()));
@@ -23,7 +26,6 @@ public class AuthManager {
         }
         ;
         System.out.println("fatto");
-
     }
 
     public User userLogin(String username, String password) {

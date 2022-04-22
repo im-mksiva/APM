@@ -24,7 +24,6 @@ public class test {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 //        launch();
-//        Credenziali_servizi test = new Credenziali_servizi(45, 0, "pippo", "ciao", "www.google.it", "google");
 //        test.check_pwnd();
 
         AuthManager registrazione = new AuthManager();
@@ -32,6 +31,9 @@ public class test {
         registrazione.userRegister(new_user);
 //        Keychain prova = new Keychain(1);
 //        prova.import_csv("/home/mksiva/IdeaProjects/APM/APM/src/main/resources/Password Chrome.csv");
+        Credenziali_servizi test = new Credenziali_servizi(1, 0, "pippo", "ciao", "www.google.it", "google");
+        SQLite_agent prova = new SQLite_agent();
+        prova.insertCredential(test);
         return;
     }
 }
