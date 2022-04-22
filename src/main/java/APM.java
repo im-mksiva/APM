@@ -7,13 +7,6 @@ import java.util.Scanner;
 
 public class APM {
     public static void main(String[] args) {
-        String percorso="C:\\Users\\calog\\IdeaProjects\\test\\src\\Password Chrome.csv";
-        try {
-            gestione_file_csv.import_file(percorso);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        String percorso = "C:\\Users\\calog\\IdeaProjects\\test\\src\\Password Chrome.csv";
     }
 }

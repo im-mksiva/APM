@@ -1,12 +1,20 @@
-import java.beans.PropertyEditorSupport;
+import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class SQLite_agent {
     // manages connection to sqlite db
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
     Connection connection = null;
+    String db = "jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db";
 
     SQLite_agent() {
+// TODO: 22/04/22 //verifica se il file APM.db esiste
+        File db_file = new File("/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
+        if (!db_file.exists()) {
+            db_create_table_users();
+            db_create_credential();
+        }
         try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
         } catch (SQLException e) {
@@ -14,12 +22,46 @@ public class SQLite_agent {
         }
     }
 
-    SQLite_agent(String user_id) {
+    void db_create_credential() {
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/" + user_id + ".db");
+            this.connection = DriverManager.getConnection(db);
+            Statement statement = connection.createStatement();
+            String query = "CREATE TABLE \"CREDENZIALI\" (\n" +
+                    "\t\"id\"\tINTEGER,\n" +
+                    "\t\"user_apm\" int,\n" +
+                    "\t\"url\"\tvarchar(50) NOT NULL,\n" +
+                    "\t\"service\"\tvarchar(20),\n" +
+                    "\t\"username\"\tvarchar(50) NOT NULL,\n" +
+                    "\t\"password\"\tvarchar(50) NOT NULL,\n" +
+                    "\t\"strenght\"\tINT DEFAULT 0,\n" +
+                    "\t\"pwnd\"\tINT DEFAULT 0, tag VARCHAR(30),\n" +
+                    "\tPRIMARY KEY(\"id\"),\n" +
+                    "\tFOREIGN KEY (user_apm) references users_apm(user_id)\n" +
+                    ");";
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    void db_create_table_users() {
+        Statement statement = null;
+        try {
+            this.connection = DriverManager.getConnection(db);
+            statement = connection.createStatement();
+            String query = "CREATE TABLE USERS_APM(\n" +
+                    "user_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "username varchar(30) not null,\n" +
+                    "password varchar(30) not null,\n" +
+                    "salt varchar(30) not null,\n" +
+                    "nome varchar(30) not null,\n" +
+                    "cognome varchar(30) not null\n" +
+                    ", robustezza integer default 0, pwnd integer default 0);";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -58,11 +100,11 @@ public class SQLite_agent {
 
     public String get_User_Hash(String username) {
         try {
-            String sql = "select passkey from users where username = ?";
+            String sql = "select password from users where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             // executeQuery() serve per recuperare dati (esegue la query)
-            return query.executeQuery().getString("passkey");
+            return query.executeQuery().getString("password");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,14 +113,59 @@ public class SQLite_agent {
     }
 
 
-    void insertCredential(String url, String service, String username, String pass) {
+    void searchCredential(String word) {
         try {
-            String sql = "insert into Credenziali(url,service,username,password) values (?,?,?,?)";
+            String sql = "select service, username, url from Credenziali where url like ? OR service like ?";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1, url);
-            query.setString(2, service);
-            query.setString(3, username);
-            query.setString(4, pass);
+            query.setString(1, word);
+            query.setString(2, word);
+            ResultSet result = query.executeQuery(sql);
+            result.getObject(1);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    ArrayList<Credenziali_servizi> select_all_Credential() {
+        ArrayList<Credenziali_servizi> lista_credenziali = new ArrayList<>();
+        try {
+            String sql = "select * from CREDENZIALI";
+            Statement query = connection.prepareStatement(sql);
+            ResultSet result = query.executeQuery(sql);
+            while (result.next()) {
+                //int id, int robustezza, int pwnd, String username, String password, String url, String servizio, String tag
+                Credenziali_servizi elem = new Credenziali_servizi(
+                        result.getInt("id"),
+                        result.getInt("user_apm"),
+                        result.getInt("strenght"),
+                        result.getInt("pwnd"),
+                        result.getString("username"),
+                        result.getString("password"),
+                        result.getString("url"),
+                        result.getString("service"),
+                        result.getString("tag")
+                );
+                lista_credenziali.add(elem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista_credenziali;
+    }
+
+
+    void insertCredential(Credenziali_servizi nuova_credenziale) {
+        try {
+            String sql = "insert into CREDENZIALI(user_apm, url, service, username, password) values (?,?,?,?,?)";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, nuova_credenziale.getUser_id());
+            query.setString(2, nuova_credenziale.getUrl());
+            query.setString(3, nuova_credenziale.getServizio());
+            query.setString(4, nuova_credenziale.getUsername());
+            query.setString(5, nuova_credenziale.getPassword());
             // executeUpdate() serve per aggiornare lo stato del database, che sia inserimento o cancellazione
             query.executeUpdate();
 
@@ -87,19 +174,51 @@ public class SQLite_agent {
         }
     }
 
-    void insertUser(String username, String hashed_password, String salt) {
+    boolean insertUser(User new_user) {
         try {
-            Statement statement = connection.createStatement();
-            String sql = "insert into users values (?,?,?)";
+//            Statement statement = connection.createStatement();
+            String sql = "insert into USERS_APM ('username','password','salt','nome','cognome') values (?,?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1, username);
-            query.setString(2, hashed_password);
-            query.setString(3, salt);
+            query.setString(1, new_user.getUsername());
+            query.setString(2, new_user.getPassword());
+            query.setString(3, new_user.getSalt());
+            query.setString(4, new_user.getNome());
+            query.setString(5, new_user.getCognome());
 
             query.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() == 1) {
+                System.out.println("Sto creando un nuovo db");
+                //init
+                return false;
+            }
         }
+        return true;
+    }
+
+
+    User getUser(String username) {
+        try {
+            String sql = "select * from users where username = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1, username);
+            ResultSet result = query.executeQuery();
+            return new User(
+                    result.getInt("id"),
+                    result.getInt("robustezza"),
+                    result.getInt("pwnd"),
+                    result.getString("username"),
+                    result.getString("password"),
+                    result.getString("nome"),
+                    result.getString("cognome"),
+                    result.getString("salt")
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     void insertRecord(String url, String service, String username, String password) {

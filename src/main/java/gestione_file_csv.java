@@ -62,7 +62,7 @@ public class gestione_file_csv {
         return dizionario_inserimento;
     }
 
-    void import_file(String percorso) throws IOException {
+    void import_file(String percorso, int Keychain_id) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(percorso));
         //prima riga -> struttura del file
         String line = reader.readLine();
@@ -80,7 +80,7 @@ public class gestione_file_csv {
             String password = diz_ins.get("password");
             String nome_servizio = diz_ins.get("name");
             String url = diz_ins.get("url");
-            Credenziali_servizi nuovo_servizio = new Credenziali_servizi(username, password, nome_servizio, url);
+            Credenziali_servizi nuovo_servizio = new Credenziali_servizi(Keychain_id, username, password, nome_servizio, url);
             SQLite_agent inserimento_servizio = new SQLite_agent();
             inserimento_servizio.insertCredential(nuovo_servizio);
             //System.out.println("\n\ndizionario inserimento dati:\n" + diz_ins);

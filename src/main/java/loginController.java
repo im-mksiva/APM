@@ -13,12 +13,14 @@ public class loginController {
 
     @FXML
     protected void onClick() {
+        AuthManager login = new AuthManager();
         String user = username.getText();
         String pass = password.getText();
-        if (AuthManager.userLogin(user, pass)) {
+        User user_logged = login.userLogin(user, pass);
+        if (user_logged != null) {
             System.out.println("tutto ok");
         }
-        
+
 
     }
 }

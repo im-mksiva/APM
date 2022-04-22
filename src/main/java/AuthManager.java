@@ -1,3 +1,4 @@
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -7,23 +8,30 @@ import java.util.Objects;
 
 public class AuthManager {
 
-    public static void userRegister(String username, String pass) {
+    public void userRegister(User new_user) {
         // creazione del digest a partire da password+salt
-        String salt = getSalt(); // miglioramento della sicurezza
-        String hashed_pass = get_SecurePassword(pass, salt);
+        new_user.setSalt(getSalt()); // miglioramento della sicurezza
+        new_user.setPassword(get_SecurePassword(new_user.getPassword(), new_user.getSalt()));
+        new_user.setPwnd(0);
+        new_user.setRobustezza(0);
         // inserimento del nuovo utente in APM.db
         SQLite_agent db_agent = new SQLite_agent();
-        System.out.println(username + hashed_pass + salt);
-        db_agent.insertUser(username, hashed_pass, salt);
+//        System.out.println(username + hashed_pass + salt);
+        if (!db_agent.insertUser(new_user)) {
+            //riprovo
+            db_agent.insertUser(new_user);
+        }
+        ;
+        System.out.println("fatto");
 
     }
 
-    public static boolean userLogin(String username, String password) {
+    public User userLogin(String username, String password) {
         SQLite_agent db_agent = new SQLite_agent();
         boolean user_exist = db_agent.find_user(username);
         if (user_exist == false) {
             System.out.println("username non trovato");
-            return false;
+            return null;
         }
 
         String hashed_pass = db_agent.get_User_Hash(username);
@@ -33,11 +41,12 @@ public class AuthManager {
         // dato che sono oggetti in java
         if (Objects.equals(login_hashed_pass, hashed_pass)) {
             System.out.println("Login ok");
-            return true;
+            return db_agent.getUser(username);
+
         } else {
             System.out.println("password non corretta");
         }
-        return false;
+        return null;
 
     }
 
@@ -45,7 +54,7 @@ public class AuthManager {
     // spazio alle funzioni crittografiche
     // questo metodo mi consente di poter calcolare l'hash SHA-512 facendo uso di un salt generato al momento
     // il salt poi lo conservo in APM.db
-    private static String get_SecurePassword(String UserPasswordToHash, String salt) {
+    public String get_SecurePassword(String UserPasswordToHash, String salt) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -63,7 +72,7 @@ public class AuthManager {
     }
 
     // Add salt
-    private static String getSalt() {
+    public String getSalt() {
         SecureRandom sr = null;
         try {
             sr = SecureRandom.getInstance("SHA1PRNG");
@@ -71,8 +80,12 @@ public class AuthManager {
             e.printStackTrace();
         }
         byte[] salt = new byte[16];
+        System.out.println(salt);
         Objects.requireNonNull(sr).nextBytes(salt);
-        return Arrays.toString(salt);
+        String s = new String(salt, StandardCharsets.UTF_8);
+        System.out.println(s);
+        return s;
+
     }
 
 

@@ -21,7 +21,7 @@ public class registerController {
     protected void onClick() {
         String user = username.getText();
         String pass = password.getText();
-        AuthManager.userRegister(user, pass);
+//        AuthManager.userRegister(user, pass);
     }
 }
 
