@@ -129,31 +129,17 @@ public class SQLite_agent {
     }
 
 
-    ArrayList<Credenziali_servizi> select_all_Credential() {
-        ArrayList<Credenziali_servizi> lista_credenziali = new ArrayList<>();
+    ResultSet select_all_Credential() {
+        ResultSet result = null;
         try {
             String sql = "select * from CREDENZIALI";
             Statement query = connection.prepareStatement(sql);
-            ResultSet result = query.executeQuery(sql);
-            while (result.next()) {
-                //int id, int robustezza, int pwnd, String username, String password, String url, String servizio, String tag
-                Credenziali_servizi elem = new Credenziali_servizi(
-                        result.getInt("id"),
-                        result.getInt("user_apm"),
-                        result.getInt("strenght"),
-                        result.getInt("pwnd"),
-                        result.getString("username"),
-                        result.getString("password"),
-                        result.getString("url"),
-                        result.getString("service"),
-                        result.getString("tag")
-                );
-                lista_credenziali.add(elem);
-            }
+            result = query.executeQuery(sql);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return lista_credenziali;
+        return result;
     }
 
 
