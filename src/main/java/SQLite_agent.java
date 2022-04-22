@@ -129,11 +129,12 @@ public class SQLite_agent {
     }
 
 
-    ResultSet select_all_Credential() {
+    ResultSet get_all_Credential(int user_id) {
         ResultSet result = null;
         try {
-            String sql = "select * from CREDENZIALI";
-            Statement query = connection.prepareStatement(sql);
+            String sql = "select * from CREDENZIALI where user_apm = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, user_id);
             result = query.executeQuery(sql);
 
         } catch (SQLException e) {
