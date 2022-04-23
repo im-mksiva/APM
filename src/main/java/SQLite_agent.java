@@ -84,6 +84,25 @@ public class SQLite_agent {
         return false;
     }
 
+    //OVERLOADING
+
+    public String get_username(int user_id) {
+        try {
+            String sql = "select username from users where user_id = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, user_id);
+            ResultSet result = query.executeQuery();
+            if (result.getString("user_id") != null) {
+                return result.getString("user_id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+        return null;
+    }
+
+
     public String get_Salt(String username) {
         try {
             String sql = "select salt from users where username = ?";

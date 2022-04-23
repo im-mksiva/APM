@@ -2,15 +2,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.Objects;
 
 
 public class AuthManager {
 
-    public void userRegister(User new_user) {
-        // verifica se esiste già uno username con quell
-
+    public boolean userRegister(User new_user) {
+        // verifica se esiste già uno username uguale, se si restituisce un messaggio di errore nella UI
+        SQLite_agent db_agent = new SQLite_agent();
+        if (db_agent.find_user(new_user.getUsername())) {
+            return false;
+        }
 
         // creazione del digest a partire da password+salt
         new_user.setSalt(getSalt()); // miglioramento della sicurezza
@@ -18,7 +20,7 @@ public class AuthManager {
         new_user.setPwnd(0);
         new_user.setRobustezza(0);
         // inserimento del nuovo utente in APM.db
-        SQLite_agent db_agent = new SQLite_agent();
+
 //        System.out.println(username + hashed_pass + salt);
         if (!db_agent.insertUser(new_user)) {
             //riprovo
@@ -26,6 +28,7 @@ public class AuthManager {
         }
         ;
         System.out.println("fatto");
+        return true;
     }
 
     public User userLogin(String username, String password) {
@@ -89,6 +92,4 @@ public class AuthManager {
         return s;
 
     }
-
-
 }
