@@ -1,4 +1,4 @@
-import com.opencsv.CSVWriter;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.QuoteMode;
@@ -15,10 +15,11 @@ import java.util.ArrayList;
 
 public class Keychain implements base_operations {
     private int keychain_id;
+    private String user_pass;
     private ArrayList<Credenziali_servizi> lista_credenziali;
     private SQLite_agent db;
 
-    Keychain(int user_id) {
+    Keychain(int user_id, String user_pass) {
         db = new SQLite_agent();
         this.keychain_id = user_id;
     }

@@ -3,8 +3,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
@@ -22,18 +28,18 @@ import java.security.NoSuchAlgorithmException;
 public class test {
 
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 //        launch();
 //        test.check_pwnd();
+        Encrypt_Decrypt test = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, "aaaaaaaaaaaaaaaa");
+//        test.Encrypt("buonasera a tutti voi");
+//        test.Decrypt("x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=");
 
-        AuthManager registrazione = new AuthManager();
-        User new_user = new User("calmor", "aaaaaa", "calogero", "morreale");
-        registrazione.userRegister(new_user);
-//        Keychain prova = new Keychain(1);
-//        prova.import_csv("/home/mksiva/IdeaProjects/APM/APM/src/main/resources/Password Chrome.csv");
-        Credenziali_servizi test = new Credenziali_servizi(1, 0, "pippo", "ciao", "www.google.it", "google");
-        SQLite_agent prova = new SQLite_agent();
-        prova.insertCredential(test);
-        return;
+        String percorso = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db.cripto";
+        File file_da_criptare = new File(percorso);
+        test.Decrypt(file_da_criptare);
+
+
+        //x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=
     }
 }

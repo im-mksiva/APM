@@ -22,12 +22,12 @@ public class note implements Encrypt_decrypt_info {
 
 
     @Override
-    public void Encrypt() {
-
+    public String Encrypt(String testo) {
+        return null;
     }
 
     @Override
-    public void Decrypt() {
-
+    public String Decrypt(String testo) {
+        return null;
     }
 }

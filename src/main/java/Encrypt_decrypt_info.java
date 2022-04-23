@@ -1,9 +1,9 @@
 public interface Encrypt_decrypt_info {
 
 
-    void Encrypt();
+    String Encrypt(String user_pass);
 
-    void Decrypt();
+    String Decrypt(String user_pass);
 
 
 }

@@ -6,17 +6,18 @@ public class SQLite_agent {
     // manages connection to sqlite db
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
     Connection connection = null;
-    String db = "jdbc:sqlite:C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db";
+    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db";
+    String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     SQLite_agent() {
         // verifico se il file del db esiste già. Se non c'è inizializzo il db con le tabelle necessarie
-        File db_file = new File("C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db");
+        File db_file = new File(percorso_db_file);
         if (!db_file.exists()) {
             db_create_table_users();
             db_create_credential();
         }
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db");
+            this.connection = DriverManager.getConnection(db_conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,7 +25,6 @@ public class SQLite_agent {
 
     void db_create_credential() {
         try {
-            this.connection = DriverManager.getConnection(db);
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE \"CREDENZIALI\" (\n" +
                     "\t\"id\"\tINTEGER,\n" +
@@ -47,7 +47,6 @@ public class SQLite_agent {
     void db_create_table_users() {
         Statement statement = null;
         try {
-            this.connection = DriverManager.getConnection(db);
             statement = connection.createStatement();
             String query = "CREATE TABLE USERS_APM(\n" +
                     "user_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

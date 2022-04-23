@@ -1,3 +1,11 @@
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 public class Credenziali_servizi extends Credenziali implements Encrypt_decrypt_info {
 
     private String url, servizio, tag;
@@ -58,12 +66,16 @@ public class Credenziali_servizi extends Credenziali implements Encrypt_decrypt_
     }
 
     @Override
-    public void Encrypt() {
-        System.out.println("farò encryption");
+    public String Encrypt(String user_pass) {
+        Encrypt_Decrypt Crypt_pass = null;
+        Crypt_pass = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, user_pass);
+        return Crypt_pass.Encrypt(this.getPassword());
     }
 
     @Override
-    public void Decrypt() {
-        System.out.println("farò decryption");
+    public String Decrypt(String user_pass) {
+        Encrypt_Decrypt Decrypt_pass = null;
+        Decrypt_pass = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, user_pass);
+        return Decrypt_pass.Decrypt(this.getPassword());
     }
 }

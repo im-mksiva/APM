@@ -85,7 +85,7 @@ public class AuthManager {
             e.printStackTrace();
         }
         byte[] salt = new byte[16];
-        System.out.println(salt);
+//        System.out.println(salt);
         Objects.requireNonNull(sr).nextBytes(salt);
         String s = new String(salt, StandardCharsets.UTF_8);
         System.out.println(s);
