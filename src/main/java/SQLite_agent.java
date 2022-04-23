@@ -6,17 +6,17 @@ public class SQLite_agent {
     // manages connection to sqlite db
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
     Connection connection = null;
-    String db = "jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db";
+    String db = "jdbc:sqlite:C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db";
 
     SQLite_agent() {
         // verifico se il file del db esiste già. Se non c'è inizializzo il db con le tabelle necessarie
-        File db_file = new File("/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
+        File db_file = new File("C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db");
         if (!db_file.exists()) {
             db_create_table_users();
             db_create_credential();
         }
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/APM.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\calog\\IdeaProjects\\APM\\APM\\database\\APM.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -88,12 +88,12 @@ public class SQLite_agent {
 
     public String get_username(int user_id) {
         try {
-            String sql = "select username from users where user_id = ?";
+            String sql = "select username from USERS_APM where user_id = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, user_id);
             ResultSet result = query.executeQuery();
-            if (result.getString("user_id") != null) {
-                return result.getString("user_id");
+            if (result.getString("username") != null) {
+                return result.getString("username");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,7 +154,7 @@ public class SQLite_agent {
             String sql = "select * from CREDENZIALI where user_apm = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, user_id);
-            result = query.executeQuery(sql);
+            result = query.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();

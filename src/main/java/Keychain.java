@@ -1,5 +1,16 @@
+import com.opencsv.CSVWriter;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.QuoteMode;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Keychain implements base_operations {
@@ -46,8 +57,11 @@ public class Keychain implements base_operations {
         insert.import_file(percorso, getKeychain_id());
     }
 
-    File export_csv() {
-        return null;
+    void export_csv() throws IOException, SQLException {
+        ResultSet results = db.get_all_Credential(getKeychain_id());
+        gestione_file_csv export_file = new gestione_file_csv();
+        String username = db.get_username(getKeychain_id());
+        export_file.export_file(results, username);
     }
 }
 

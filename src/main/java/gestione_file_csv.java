@@ -1,7 +1,15 @@
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class gestione_file_csv {
@@ -86,6 +94,31 @@ public class gestione_file_csv {
             //System.out.println("\n\ndizionario inserimento dati:\n" + diz_ins);
             line = reader.readLine();
         }
+    }
+
+    void export_file(ResultSet results, String username) throws SQLException, IOException {
+        // Open CSV file.
+        BufferedWriter writer = Files.newBufferedWriter(Paths.get("C:\\Users\\calog\\IdeaProjects\\APM\\" + username + "_credenziali.csv"));
+
+        // Add table headers to CSV file.
+        int count = results.getMetaData().getColumnCount();
+        String intestazione = new String();
+        for (int i = 1; i < count; i++) {
+            intestazione += results.getMetaData().getColumnName(i) + ",";
+        }
+        intestazione = intestazione.substring(0, intestazione.length() - 1);
+        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(intestazione));
+        // Add data rows to CSV file.
+        while (results.next()) {
+            csvPrinter.printRecord(
+                    results.getInt(1),
+                    results.getString(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5));
+        }
+        csvPrinter.flush();
+        csvPrinter.close();
     }
 
 
