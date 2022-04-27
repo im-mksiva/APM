@@ -31,14 +31,17 @@ public class test {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 //        launch();
 //        test.check_pwnd();
-        Encrypt_Decrypt test = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, "aaaaaaaaaaaaaaaa");
+//        Encrypt_Decrypt test = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, "aaaaaaaaaaaaaaaa");
 //        test.Encrypt("buonasera a tutti voi");
 //        test.Decrypt("x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=");
 
-        String percorso = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db.cripto";
-        File file_da_criptare = new File(percorso);
-        test.Decrypt(file_da_criptare);
-
+//        String percorso = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db.cripto";
+//        File file_da_criptare = new File(percorso);
+//        test.Decrypt(file_da_criptare);
+        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara d'urso", 1, "ricordi");
+        nota.Encrypt("1234");
+        archivio_note test = new archivio_note(1);
+        test.add(nota);
 
         //x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=
     }

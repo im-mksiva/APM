@@ -1,19 +1,9 @@
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.QuoteMode;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Keychain implements base_operations {
+public class Keychain extends base_operations {
     private int keychain_id;
     private String user_pass;
     private ArrayList<Credenziali_servizi> lista_credenziali;

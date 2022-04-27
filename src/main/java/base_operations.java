@@ -1,10 +1,15 @@
-public interface base_operations {
+public abstract class base_operations {
+    //repository
+    void add() {
+    }
 
-    void add();
 
-    void remove();
+    void remove() {
+    }
 
-    void update();
+    void update() {
+    }
 
-    void find();
+    void find() {
+    }
 }

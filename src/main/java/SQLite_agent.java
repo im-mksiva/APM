@@ -1,6 +1,5 @@
 import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class SQLite_agent {
     // manages connection to sqlite db
@@ -10,7 +9,7 @@ public class SQLite_agent {
     String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     SQLite_agent() {
-        // verifico se il file del db esiste già. Se non c'è inizializzo il db con le tabelle necessarie
+        // Verifico se il file del db esiste già. Se non c'è inizializzo il db con le tabelle necessarie
         File db_file = new File(percorso_db_file);
         if (!db_file.exists()) {
             db_create_table_users();
@@ -222,9 +221,23 @@ public class SQLite_agent {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+    void insert_note(int user_id, note new_nota) {
+        try {
+            String sql = "insert into NOTE (user_id,tag,nome,testo) values (?,?,?,?)";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, user_id);
+            query.setInt(2, new_nota.tag);
+            query.setString(3, new_nota.nome);
+            query.setString(4, new_nota.testo);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ;
 
     void insertRecord(String url, String service, String username, String password) {
         try {

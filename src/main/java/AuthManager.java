@@ -4,6 +4,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Objects;
 
+//todo chiave master per rendere indipendente la chiave di criptazione dalla password dell'utente
+//todo crittografia della chiave master con la password dell'utente
+//todo meccanismo per la gestione della crittografia con password utente con un numero di caratteri diverso da 16
 
 public class AuthManager {
 
