@@ -1,12 +1,10 @@
-import java.nio.charset.StandardCharsets;
+import javax.crypto.Cipher;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.Objects;
-
-//todo chiave master per rendere indipendente la chiave di criptazione dalla password dell'utente
-//todo crittografia della chiave master con la password dell'utente
-//todo meccanismo per la gestione della crittografia con password utente con un numero di caratteri diverso da 16
 
 public class AuthManager {
 
@@ -16,20 +14,21 @@ public class AuthManager {
         if (db_agent.find_user(new_user.getUsername())) {
             return false;
         }
-
+        String user_pass = new_user.getPassword();
         // creazione del digest a partire da password+salt
         new_user.setSalt(getSalt()); // miglioramento della sicurezza
         new_user.setPassword(get_SecurePassword(new_user.getPassword(), new_user.getSalt()));
         new_user.setPwnd(0);
         new_user.setRobustezza(0);
-        // inserimento del nuovo utente in APM.db
+        //generazione della chiave di criptazione per l'utente
+        String encr_key = getSalt().substring(0, 16);
 
-//        System.out.println(username + hashed_pass + salt);
-        if (!db_agent.insertUser(new_user)) {
-            //riprovo
-            db_agent.insertUser(new_user);
-        }
-        ;
+
+        Encrypt_Decrypt crypt_text = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, user_pass);
+        new_user.setEncr_key(crypt_text.Encrypt(encr_key));
+
+        // inserimento del nuovo utente in APM.db
+        db_agent.insertUser(new_user);
         System.out.println("fatto");
         return true;
     }
@@ -37,7 +36,7 @@ public class AuthManager {
     public User userLogin(String username, String password) {
         SQLite_agent db_agent = new SQLite_agent();
         boolean user_exist = db_agent.find_user(username);
-        if (user_exist == false) {
+        if (!user_exist) {
             System.out.println("username non trovato");
             return null;
         }
@@ -49,13 +48,26 @@ public class AuthManager {
         // dato che sono oggetti in java
         if (Objects.equals(login_hashed_pass, hashed_pass)) {
             System.out.println("Login ok");
-            return db_agent.getUser(username);
+            User logged = db_agent.getUser(username);
+            try {
+                
+                db_agent.connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return logged;
 
         } else {
             System.out.println("password non corretta");
         }
         return null;
 
+    }
+
+
+    void userDelete(String user_id) {
+        SQLite_agent db_agent = new SQLite_agent();
+//        db_agent.
     }
 
 
@@ -88,11 +100,10 @@ public class AuthManager {
             e.printStackTrace();
         }
         byte[] salt = new byte[16];
-//        System.out.println(salt);
         Objects.requireNonNull(sr).nextBytes(salt);
-        String s = new String(salt, StandardCharsets.UTF_8);
-        System.out.println(s);
-        return s;
+        String salt_as_string = Base64.getEncoder().encodeToString(salt);
+
+        return salt_as_string;
 
     }
 }

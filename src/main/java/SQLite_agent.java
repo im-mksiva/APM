@@ -22,6 +22,17 @@ public class SQLite_agent {
         }
     }
 
+    void delete_userData(int user_id, String table) {
+        try {
+            String sql = "delete from " + table + " where user_id = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, user_id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     void db_create_credential() {
         try {
             Statement statement = connection.createStatement();
@@ -65,7 +76,7 @@ public class SQLite_agent {
 
     public boolean find_user(String username) {
         try {
-            String sql = "select username from users where username = ?";
+            String sql = "select username from USERS_APM where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             ResultSet result = query.executeQuery();
@@ -103,7 +114,7 @@ public class SQLite_agent {
 
     public String get_Salt(String username) {
         try {
-            String sql = "select salt from users where username = ?";
+            String sql = "select salt from USERS_APM where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             ResultSet result = query.executeQuery();
@@ -117,7 +128,7 @@ public class SQLite_agent {
 
     public String get_User_Hash(String username) {
         try {
-            String sql = "select password from users where username = ?";
+            String sql = "select password from USERS_APM where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             // executeQuery() serve per recuperare dati (esegue la query)
@@ -181,14 +192,14 @@ public class SQLite_agent {
     boolean insertUser(User new_user) {
         try {
 //            Statement statement = connection.createStatement();
-            String sql = "insert into USERS_APM ('username','password','salt','nome','cognome') values (?,?,?,?,?)";
+            String sql = "insert into USERS_APM ('username','password','salt','nome','cognome',encrypt_key) values (?,?,?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, new_user.getUsername());
             query.setString(2, new_user.getPassword());
             query.setString(3, new_user.getSalt());
             query.setString(4, new_user.getNome());
             query.setString(5, new_user.getCognome());
-
+            query.setString(6, new_user.getEncr_key());
             query.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 1) {
@@ -203,19 +214,20 @@ public class SQLite_agent {
 
     User getUser(String username) {
         try {
-            String sql = "select * from users where username = ?";
+            String sql = "select * from USERS_APM where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             ResultSet result = query.executeQuery();
             return new User(
-                    result.getInt("id"),
+                    result.getInt("user_id"),
                     result.getInt("robustezza"),
                     result.getInt("pwnd"),
                     result.getString("username"),
                     result.getString("password"),
                     result.getString("nome"),
                     result.getString("cognome"),
-                    result.getString("salt")
+                    result.getString("salt"),
+                    result.getString("encrypt_key")
             );
 
         } catch (SQLException e) {
@@ -237,20 +249,4 @@ public class SQLite_agent {
         }
     }
 
-    ;
-
-    void insertRecord(String url, String service, String username, String password) {
-        try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/mksiva/IdeaProjects/APM/APM/database/1002.db");
-            String sql = "insert into Credenziali (url,service,username,password) values (?,?,?,?)";
-            PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1, url);
-            query.setString(2, service);
-            query.setString(3, username);
-            query.setString(4, password);
-            query.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

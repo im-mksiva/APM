@@ -38,11 +38,28 @@ public class test {
 //        String percorso = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db.cripto";
 //        File file_da_criptare = new File(percorso);
 //        test.Decrypt(file_da_criptare);
-        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara d'urso", 1, "ricordi");
-        nota.Encrypt("1234");
-        archivio_note test = new archivio_note(1);
-        test.add(nota);
+//        User calogero = new User("calmor", "aaaaaaaaaa", "calogero", "morreale");
+        AuthManager prova = new AuthManager();
+//        prova.userRegister(calogero);
 
-        //x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=
+        User logged = prova.userLogin("calmor", "aaaaaaaaaa");
+        logged.Decrypt("aaaaaaaaaa");
+        System.out.println("la chiave master: " + logged.getEncr_key());
+        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara", 1, "ricordi");
+
+        System.out.println("========================== passiamo alla crittografia della nota ==========================");
+
+        nota.Encrypt(logged.getEncr_key());
+        System.out.println(nota.testo);
+        nota.Decrypt(logged.getEncr_key());
+        System.out.println("Il testo della nota sbloccata è: " + nota.testo);
+//        archivio_note test = new archivio_note(2);
+//        test.add(nota);
+//        SQLite_agent db_agent = new SQLite_agent();
+//        db_agent.delete_userData(1, "note");
+//        while (i < 10) {
+
+//        i++;
+//        }
     }
 }

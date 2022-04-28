@@ -15,6 +15,15 @@ public class Encrypt_Decrypt {
     // e passo la password dell'utente come base per la chiave di cifratura.
     Encrypt_Decrypt(int cipherMode, String chiave) {
         SecretKeySpec secretKey = null;
+        //criptazione della encr_key, come chiave uso la pass dell'utente, verifico prima se la user_pass è di 16 caratteri.
+        // In caso contrario creo una stringa a partire dalla user_pass
+
+        while (chiave.length() < 17) {
+            chiave += chiave;
+        }
+        chiave = chiave.substring(0, 16);
+        System.out.println("la chiave da 16 è: " + chiave);
+
         try {
             secretKey = new SecretKeySpec(chiave.getBytes("UTF-8"), "AES");
         } catch (UnsupportedEncodingException e) {
@@ -22,9 +31,7 @@ public class Encrypt_Decrypt {
         }
         try {
             this.cipher = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -40,9 +47,7 @@ public class Encrypt_Decrypt {
         byte[] encrypt = new byte[0];
         try {
             encrypt = this.cipher.doFinal(text.getBytes());
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
         return Base64.getEncoder().encodeToString(encrypt);    // codifico in una stringa per semplificare le operazioni di inserimento nel db (o di manipolazione)
@@ -54,12 +59,10 @@ public class Encrypt_Decrypt {
         byte[] decrypt = new byte[0];
         try {
             decrypt = this.cipher.doFinal(temp);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
-        return new String(decrypt);
+        return Base64.getEncoder().encodeToString(decrypt);
     }
 
 
@@ -81,9 +84,7 @@ public class Encrypt_Decrypt {
         byte[] outputBytes = new byte[0];
         try {
             outputBytes = cipher.doFinal(inputBytes);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
 //        FileOutputStream file_criptato = new FileOutputStream(percorso.substring(0, percorso.lastIndexOf(".")) + "_cripto");
@@ -105,8 +106,6 @@ public class Encrypt_Decrypt {
     void Decrypt(File file_da_decriptare) throws IOException, IllegalBlockSizeException, BadPaddingException {
         FileInputStream inputStream = new FileInputStream(file_da_decriptare);
         byte[] inputBytes = new byte[(int) file_da_decriptare.length()];
-        inputStream.read(inputBytes);
-
         byte[] outputBytes = cipher.doFinal(inputBytes);
 
         String percorso = file_da_decriptare.getAbsolutePath();

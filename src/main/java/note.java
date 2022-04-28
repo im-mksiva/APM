@@ -28,14 +28,14 @@ public class note implements Encrypt_decrypt_info {
 
 
     @Override
-    public String Encrypt(String user_pass) {
-        Encrypt_Decrypt decrypt = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, user_pass);
-        return decrypt.Decrypt(this.testo);
+    public void Encrypt(String encr_key) {
+        Encrypt_Decrypt crypt = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, encr_key);
+        this.testo = crypt.Encrypt(this.testo);
     }
 
     @Override
-    public String Decrypt(String user_pass) {
-        Encrypt_Decrypt decrypt = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, user_pass);
-        return decrypt.Decrypt(this.testo);
+    public void Decrypt(String encr_key) {
+        Encrypt_Decrypt decrypt = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, encr_key);
+        this.testo = decrypt.Decrypt(this.testo);
     }
 }

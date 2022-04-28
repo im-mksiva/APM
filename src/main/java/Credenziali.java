@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-public abstract class Credenziali {
+public abstract class Credenziali implements Encrypt_decrypt_info {
     private int id, robustezza, pwnd;
     private String username, password;
 
