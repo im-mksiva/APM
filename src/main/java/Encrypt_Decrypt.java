@@ -62,7 +62,7 @@ public class Encrypt_Decrypt {
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
-        return Base64.getEncoder().encodeToString(decrypt);
+        return new String(decrypt);
     }
 
 
