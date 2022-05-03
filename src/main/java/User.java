@@ -3,7 +3,7 @@ import javax.crypto.Cipher;
 public class User extends Credenziali {
     private String nome, cognome, salt, encr_key;
     private archivio_note note;
-    private Keychain portachiavi;
+    Keychain portachiavi;
 
 
     // quando faccio il login e mi serve l'oggetto User completo
@@ -12,8 +12,17 @@ public class User extends Credenziali {
         this.nome = nome;
         this.cognome = cognome;
         this.salt = salt;
-        this.encr_key = encr_key;
+        this.encr_key = encr_key; // in questa fase è ancora criptata
     }
+
+    public void create_keychain() {
+        this.portachiavi = new Keychain(this);
+    }
+
+    public void create_archivio_note() {
+        this.note = new archivio_note(this);
+    }
+
 
     public String getEncr_key() {
         return encr_key;
@@ -28,6 +37,7 @@ public class User extends Credenziali {
         super(username, password);
         this.nome = nome;
         this.cognome = cognome;
+
     }
 
     public String getNome() {
@@ -65,5 +75,13 @@ public class User extends Credenziali {
     public void Decrypt(String user_pass) {
         Encrypt_Decrypt decrypt = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, user_pass);
         this.encr_key = decrypt.Decrypt(encr_key);
+    }
+
+
+    public void self_unregister() {
+        portachiavi.removeAll();
+        note.removeAll();
+        AuthManager authManager = new AuthManager();
+        authManager.removeUser(getId());
     }
 }

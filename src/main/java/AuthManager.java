@@ -12,6 +12,7 @@ public class AuthManager {
         // verifica se esiste già uno username uguale, se si restituisce un messaggio di errore nella UI
         SQLite_agent db_agent = new SQLite_agent();
         if (db_agent.find_user(new_user.getUsername())) {
+            System.out.println("l'utente c'è già");
             return false;
         }
         String user_pass = new_user.getPassword();
@@ -30,6 +31,11 @@ public class AuthManager {
         // inserimento del nuovo utente in APM.db
         db_agent.insertUser(new_user);
         System.out.println("fatto");
+        try {
+            db_agent.connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
@@ -49,25 +55,18 @@ public class AuthManager {
         if (Objects.equals(login_hashed_pass, hashed_pass)) {
             System.out.println("Login ok");
             User logged = db_agent.getUser(username);
-            try {
-                
-                db_agent.connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            db_agent.closeConnection();
             return logged;
-
         } else {
             System.out.println("password non corretta");
         }
         return null;
-
     }
 
 
-    void userDelete(String user_id) {
+    void removeUser(int user_id) {
         SQLite_agent db_agent = new SQLite_agent();
-//        db_agent.
+        db_agent.deleteRecord(user_id, "users_apm", "user_id");
     }
 
 

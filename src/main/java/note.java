@@ -38,4 +38,8 @@ public class note implements Encrypt_decrypt_info {
         Encrypt_Decrypt decrypt = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, encr_key);
         this.testo = decrypt.Decrypt(this.testo);
     }
+
+    void update(SQLite_agent db_agent) {
+        
+    }
 }

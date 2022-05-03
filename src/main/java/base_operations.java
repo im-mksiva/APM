@@ -1,15 +1,18 @@
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public abstract class base_operations {
     //repository
-    void add() {
+    void add(Object temp) {
     }
 
-
-    void remove() {
+    void removeAll() {
     }
 
-    void update() {
+    void remove(Object temp) {
     }
 
-    void find() {
+    ArrayList find(String text) {
+        return null;
     }
 }

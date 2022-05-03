@@ -18,7 +18,7 @@ public class Encrypt_Decrypt {
         //criptazione della encr_key, come chiave uso la pass dell'utente, verifico prima se la user_pass è di 16 caratteri.
         // In caso contrario creo una stringa a partire dalla user_pass
 
-        while (chiave.length() < 17) {
+        while (chiave.length() < 16) {
             chiave += chiave;
         }
         chiave = chiave.substring(0, 16);
@@ -47,8 +47,10 @@ public class Encrypt_Decrypt {
         byte[] encrypt = new byte[0];
         try {
             encrypt = this.cipher.doFinal(text.getBytes());
+
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
+
         }
         return Base64.getEncoder().encodeToString(encrypt);    // codifico in una stringa per semplificare le operazioni di inserimento nel db (o di manipolazione)
     }

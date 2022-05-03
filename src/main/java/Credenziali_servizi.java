@@ -60,6 +60,13 @@ public class Credenziali_servizi extends Credenziali {
         this.servizio = servizio;
     }
 
+    void update(User logged) {
+        SQLite_agent db_agent = new SQLite_agent();
+        Encrypt_Decrypt encrypt = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, logged.getEncr_key());
+        this.setPassword(encrypt.Encrypt(this.getPassword()));
+        db_agent.updateCredential(this);
+    }
+
     @Override
     public void Encrypt(String encr_key) {
         Encrypt_Decrypt Crypt_pass = null;
@@ -71,6 +78,6 @@ public class Credenziali_servizi extends Credenziali {
     public void Decrypt(String encr_key) {
         Encrypt_Decrypt Decrypt_pass = null;
         Decrypt_pass = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, encr_key);
-        this.setPassword(Decrypt_pass.Encrypt(this.getPassword()));
+        this.setPassword(Decrypt_pass.Decrypt(this.getPassword()));
     }
 }

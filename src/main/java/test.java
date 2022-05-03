@@ -13,6 +13,7 @@ import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 //public class test extends Application {
 //    @Override
@@ -28,38 +29,54 @@ import java.security.NoSuchAlgorithmException;
 public class test {
 
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static void main(String[] args) {
 //        launch();
-//        test.check_pwnd();
-//        Encrypt_Decrypt test = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, "aaaaaaaaaaaaaaaa");
-//        test.Encrypt("buonasera a tutti voi");
-//        test.Decrypt("x3Oy/zl3X7FbBP32NaP4WX4dvmN9mlw64o0c9Ysw9iw=");
 
-//        String percorso = "/home/mksiva/IdeaProjects/APM/APM/database/APM.db.cripto";
-//        File file_da_criptare = new File(percorso);
-//        test.Decrypt(file_da_criptare);
-//        User calogero = new User("calmor", "aaaaaaaaaa", "calogero", "morreale");
+
+        Credenziali_servizi gomorra = new Credenziali_servizi(2, 0, "calmor", "aaaaaaa", "google.it", "gmail");
+
+        Credenziali_servizi libano = new Credenziali_servizi(2, 2, 0, 0, "calmor", "aaaaaaa", "google.it", "drive", null);
+
         AuthManager prova = new AuthManager();
-//        prova.userRegister(calogero);
-
+        User caloger = new User("calmor", "aaaaaaaaaa", "calogero", "morreale");
+//        prova.userRegister(caloger);
         User logged = prova.userLogin("calmor", "aaaaaaaaaa");
         logged.Decrypt("aaaaaaaaaa");
-        System.out.println("la chiave master: " + logged.getEncr_key());
-        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara", 1, "ricordi");
+        logged.create_keychain();
+//        logged.portachiavi.add(gomorra);
+//        logged.portachiavi.add(libano);
+        ArrayList<Credenziali_servizi> lista = logged.portachiavi.find("google");
+        for (Credenziali_servizi elem : lista) {
+            System.out.println(elem.getServizio());
+        }
 
-        System.out.println("========================== passiamo alla crittografia della nota ==========================");
 
-        nota.Encrypt(logged.getEncr_key());
-        System.out.println(nota.testo);
-        nota.Decrypt(logged.getEncr_key());
-        System.out.println("Il testo della nota sbloccata è: " + nota.testo);
+//        System.out.println("la chiave master: " + logged.getEncr_key());
+//
+//        gomorra.Encrypt(logged.getEncr_key());
+//        gomorra.Decrypt(logged.getEncr_key());
+//        System.out.println(gomorra.getPassword());
+
+//
+        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara d'urso", 1, "ricordi");
+//        System.out.println(nota.testo);
+
+//        System.out.println("========================== passiamo alla crittografia della nota ==========================");
+//
+//        nota.Encrypt(logged.getEncr_key());
+//        System.out.println(nota.testo);
+//
+//        nota.Decrypt(logged.getEncr_key());
+//        System.out.println("Il testo della nota sbloccata è: " + nota.testo);
 //        archivio_note test = new archivio_note(2);
-//        test.add(nota);
+//        for (int i = 0; i < 10; i++) {
+//            test.add(nota);
+//        }
 //        SQLite_agent db_agent = new SQLite_agent();
-//        db_agent.delete_userData(1, "note");
-//        while (i < 10) {
 
-//        i++;
+//        db_agent.deleteRecord(80, "note", "note_id");
+
+
 //        }
     }
 }
