@@ -38,45 +38,16 @@ public class test {
         Credenziali_servizi libano = new Credenziali_servizi(2, 2, 0, 0, "calmor", "aaaaaaa", "google.it", "drive", null);
 
         AuthManager prova = new AuthManager();
-        User caloger = new User("calmor", "aaaaaaaaaa", "calogero", "morreale");
+//        User caloger = new User("calmor", "aaaaaaaaaa", "calogero", "morreale");
 //        prova.userRegister(caloger);
-        User logged = prova.userLogin("calmor", "aaaaaaaaaa");
-        logged.Decrypt("aaaaaaaaaa");
-        logged.create_keychain();
+        User logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+        System.out.println(logged.getPassword());
+//        logged.Decrypt(logged.getPassword());
+//        logged.create_keychain();
+        System.out.println(logged.getEncr_key());
 //        logged.portachiavi.add(gomorra);
 //        logged.portachiavi.add(libano);
-        ArrayList<Credenziali_servizi> lista = logged.portachiavi.find("google");
-        for (Credenziali_servizi elem : lista) {
-            System.out.println(elem.getServizio());
-        }
 
 
-//        System.out.println("la chiave master: " + logged.getEncr_key());
-//
-//        gomorra.Encrypt(logged.getEncr_key());
-//        gomorra.Decrypt(logged.getEncr_key());
-//        System.out.println(gomorra.getPassword());
-
-//
-        note nota = new note("oggi hanno mandato in tv una nuova puntata di barbara d'urso", 1, "ricordi");
-//        System.out.println(nota.testo);
-
-//        System.out.println("========================== passiamo alla crittografia della nota ==========================");
-//
-//        nota.Encrypt(logged.getEncr_key());
-//        System.out.println(nota.testo);
-//
-//        nota.Decrypt(logged.getEncr_key());
-//        System.out.println("Il testo della nota sbloccata è: " + nota.testo);
-//        archivio_note test = new archivio_note(2);
-//        for (int i = 0; i < 10; i++) {
-//            test.add(nota);
-//        }
-//        SQLite_agent db_agent = new SQLite_agent();
-
-//        db_agent.deleteRecord(80, "note", "note_id");
-
-
-//        }
     }
 }

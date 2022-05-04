@@ -22,7 +22,6 @@ public class Encrypt_Decrypt {
             chiave += chiave;
         }
         chiave = chiave.substring(0, 16);
-        System.out.println("la chiave da 16 è: " + chiave);
 
         try {
             secretKey = new SecretKeySpec(chiave.getBytes("UTF-8"), "AES");

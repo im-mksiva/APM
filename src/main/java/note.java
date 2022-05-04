@@ -4,15 +4,26 @@ import java.util.Date;
 public class note implements Encrypt_decrypt_info {
 
     String testo, nome;
-    int tag;
+    String tag;
     private int id, user_id;
-    private Date last_modifed;
+    private String last_modifed;
 
-    public note(String testo, int tag, String nome) {
+    public note(String testo, String tag, String nome) {
         this.testo = testo;
         this.tag = tag;
         this.nome = nome;
     }
+
+
+    public note(int id, int user_id, String tag, String testo, String last_modifed, String nome) {
+        this.testo = testo;
+        this.tag = tag;
+        this.nome = nome;
+        this.id = id;
+        this.user_id = user_id;
+        this.last_modifed = last_modifed;
+    }
+
 
     public int getId() {
         return id;
@@ -22,7 +33,7 @@ public class note implements Encrypt_decrypt_info {
         return this.user_id;
     }
 
-    public Date getLast_modifed() {
+    public String getLast_modifed() {
         return last_modifed;
     }
 
@@ -40,6 +51,6 @@ public class note implements Encrypt_decrypt_info {
     }
 
     void update(SQLite_agent db_agent) {
-        
+
     }
 }

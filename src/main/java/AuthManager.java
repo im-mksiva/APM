@@ -55,7 +55,8 @@ public class AuthManager {
         if (Objects.equals(login_hashed_pass, hashed_pass)) {
             System.out.println("Login ok");
             User logged = db_agent.getUser(username);
-            db_agent.closeConnection();
+//            logged.setPassword(password);
+            logged.Decrypt(password);
             return logged;
         } else {
             System.out.println("password non corretta");

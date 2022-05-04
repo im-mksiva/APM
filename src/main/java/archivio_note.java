@@ -1,3 +1,4 @@
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -6,38 +7,64 @@ public class archivio_note extends base_operations {
     private ArrayList<note> lista_note;
     private String user_pass;
     private User user;
+    SQLite_agent db_agent;
 
     archivio_note(User user) {
         this.user = user;
+        this.db_agent = user.db_agent;
     }
 
 
     public void add(note new_nota) {
-        SQLite_agent db_agent = new SQLite_agent();
+
         new_nota.Encrypt(user.getEncr_key());
         db_agent.insert_note(user.getId(), new_nota);
-        db_agent.closeConnection();
+
     }
 
     @Override
     public void remove(Object nota) {
-        SQLite_agent db_agent = new SQLite_agent();
+
         note toRemove = (note) nota;
         db_agent.deleteRecord(toRemove.getId(), "note", "note_id");
-        db_agent.closeConnection();
+
 
     }
 
     public void removeAll() {
-        SQLite_agent db_agent = new SQLite_agent();
+
         db_agent.deleteRecord(user.getId(), "note", "user_id");
-        db_agent.closeConnection();
+
     }
 
 
     @Override
     public ArrayList find(String text) {
-        SQLite_agent db_agent = new SQLite_agent();
-        return null;
+
+        ResultSet result = db_agent.search(text, user.getId(), 1);
+        ArrayList<note> lista = new ArrayList<>();
+        boolean continua;
+        try {
+            continua = result.next();
+            while (continua) {
+                note nota = new note(
+                        result.getInt("note_id"),
+                        result.getInt("user_id"),
+                        result.getString("tag"),
+                        result.getString("testo"),
+                        result.getString("last_modified"),
+                        result.getString("nome")
+                );
+                // sblocco la password così l'utente se vuole la può vedere
+                nota.Decrypt(user.getEncr_key());
+                lista.add(nota);
+                continua = result.next();
+            }
+            return lista;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+

@@ -13,7 +13,9 @@ public class SQLite_agent {
         File db_file = new File(percorso_db_file);
         if (!db_file.exists()) {
             db_create_table_users();
-            db_create_credential();
+            db_create_table_credential();
+            db_create_table_note();
+            db_create_table_tag();
         }
         try {
             this.connection = DriverManager.getConnection(db_conn);
@@ -36,21 +38,20 @@ public class SQLite_agent {
 
     }
 
-
-    void db_create_credential() {
+    void db_create_table_credential() {
         try {
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE \"CREDENZIALI\" (\n" +
                     "\t\"id\"\tINTEGER,\n" +
-                    "\t\"user_apm\" int,\n" +
+                    "\t\"user_id\" int,\n" +
                     "\t\"url\"\tvarchar(50) NOT NULL,\n" +
                     "\t\"service\"\tvarchar(20),\n" +
                     "\t\"username\"\tvarchar(50) NOT NULL,\n" +
                     "\t\"password\"\tvarchar(50) NOT NULL,\n" +
                     "\t\"strenght\"\tINT DEFAULT 0,\n" +
-                    "\t\"pwnd\"\tINT DEFAULT 0, tag VARCHAR(30),\n" +
+                    "\t\"pwnd\"\tINT DEFAULT 0, tag VARCHAR(30) default null,\n" +
                     "\tPRIMARY KEY(\"id\"),\n" +
-                    "\tFOREIGN KEY (user_apm) references users_apm(user_id)\n" +
+                    "\tFOREIGN KEY (user_id) references users_apm(user_id)\n" +
                     ");";
             statement.executeUpdate(query);
         } catch (SQLException e) {
@@ -69,14 +70,45 @@ public class SQLite_agent {
                     "salt varchar(30) not null,\n" +
                     "nome varchar(30) not null,\n" +
                     "cognome varchar(30) not null\n" +
-                    ", robustezza integer default 0, pwnd integer default 0);";
+                    ", robustezza integer default 0, pwnd integer default 0, encrypt_key varchar(200) NOT NULL);";
             statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    void db_create_table_note() {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            String query = "CREATE TABLE NOTE (\n" +
+                    "\tnote_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "\tuser_id INT NOT NULL,\n" +
+                    "\ttag varchar(30) DEFAULT null,\n" +
+                    "\ttesto TEXT(255),\n" +
+                    "\tlast_modified DATETIME DEFAULT CURRENT_TIMESTAMP, nome VARCHAR(30) NOT NULL,\n" +
+                    "\tCONSTRAINT NOTE_FK FOREIGN KEY (user_id) REFERENCES USERS_APM(user_id),\n" +
+                    "\tCONSTRAINT NOTE_FK_1 FOREIGN KEY (note_id) REFERENCES TAG_NOTE(tag_id)\n" +
+                    ");";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void db_create_table_tag() {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            String query = "CREATE TABLE TAG(\n" +
+                    "tag_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "nome_tag varchar(30) not null,\n" +
+                    "user_id int not null);";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public boolean find_user(String username) {
         PreparedStatement query = null;
@@ -158,15 +190,17 @@ public class SQLite_agent {
     }
 
 
-    ResultSet searchCredential(String text, int user_id) {
+    ResultSet search(String text, int user_id, int flag) {
+        String sql = null;
+        if (flag == 0) {
+            sql = "select * from CREDENZIALI where url like '%" + text + "%' OR service like '%" + text + "%' and user_id = " + user_id;
+        } else {
+            sql = "select * from NOTE where nome like '%" + text + "%' and user_id = " + user_id;
+        }
         try {
-            String sql = "select service, username, url from CREDENZIALI where url like '%" + text + "%' OR service like '%" + text + "%' and user_id = " + user_id;
             Statement query = connection.createStatement();
             ResultSet result = query.executeQuery(sql);
-
             return result;
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -208,8 +242,6 @@ public class SQLite_agent {
 
     void updateCredential(Credenziali_servizi credenziale_aggiornata) {
         try {
-//            connection.close();
-
             String sql = "UPDATE CREDENZIALI SET url=?, service=?, username=?, password=?, strenght=?, pwnd=?, tag=? WHERE id=?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, credenziale_aggiornata.getUrl());
@@ -254,6 +286,21 @@ public class SQLite_agent {
         return true;
     }
 
+    void update_user_pass(User user, String hashed_pass) {
+        try {
+            String sql = "UPDATE USERS_APM SET password=?, salt=?, robustezza=?, pwnd=0, encrypt_key=? WHERE user_id=?;";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1, hashed_pass);
+            query.setString(2, user.getSalt());
+            query.setInt(3, user.getRobustezza());
+            query.setString(4, user.getEncr_key());
+            query.setInt(5, user.getId());
+            query.executeUpdate();
+            query.close();
+        } catch (SQLException e) {
+        }
+    }
+
 
     User getUser(String username) {
         try {
@@ -285,7 +332,7 @@ public class SQLite_agent {
             String sql = "insert into NOTE (user_id,tag,nome,testo) values (?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, user_id);
-            query.setInt(2, new_nota.tag);
+            query.setString(2, new_nota.tag);
             query.setString(3, new_nota.nome);
             query.setString(4, new_nota.testo);
             query.executeUpdate();

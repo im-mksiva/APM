@@ -4,6 +4,7 @@ public class User extends Credenziali {
     private String nome, cognome, salt, encr_key;
     private archivio_note note;
     Keychain portachiavi;
+    SQLite_agent db_agent;
 
 
     // quando faccio il login e mi serve l'oggetto User completo
@@ -13,6 +14,7 @@ public class User extends Credenziali {
         this.cognome = cognome;
         this.salt = salt;
         this.encr_key = encr_key; // in questa fase è ancora criptata
+        this.db_agent = new SQLite_agent();
     }
 
     public void create_keychain() {
@@ -77,6 +79,16 @@ public class User extends Credenziali {
         this.encr_key = decrypt.Decrypt(encr_key);
     }
 
+    void update_user_password(String new_pass) {
+        AuthManager change_pass = new AuthManager();
+        this.setSalt(change_pass.getSalt());
+        String hashed_pass = change_pass.get_SecurePassword(new_pass, this.getSalt());
+        this.setPassword(new_pass);
+        Encrypt_Decrypt encrypt_pass = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, new_pass); //cifrario con la nuova chiave
+        this.setEncr_key(encrypt_pass.Encrypt(encr_key));
+        db_agent.update_user_pass(this, hashed_pass);
+
+    }
 
     public void self_unregister() {
         portachiavi.removeAll();
