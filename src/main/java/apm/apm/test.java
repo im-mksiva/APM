@@ -40,6 +40,6 @@ public class test extends Application {
 //        credentialController schermata = new credentialController(logged);
 
         launch();
-        System.out.println("ciao");
+//        System.out.println("ciao");
     }
 }
