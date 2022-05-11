@@ -13,7 +13,6 @@ public class favicon {
             BufferedImage image = null;
             image = ImageIO.read(url);
             String servizio = url_diviso[1].substring(0, url_diviso[1].indexOf("."));
-            //System.out.println(servizio);
             File file = new File("C:\\Users\\calog\\IdeaProjects\\APM\\favicon\\"+servizio+".png");
             ImageIO.write(image, "png", file);
         } catch (MalformedURLException e) {

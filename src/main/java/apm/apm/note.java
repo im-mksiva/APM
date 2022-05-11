@@ -8,7 +8,7 @@ public class note implements Encrypt_decrypt_info {
     String testo, nome;
     String tag;
     private int id, user_id;
-    private String last_modifed;
+    private String last_modified;
 
     public note(String testo, String tag, String nome) {
         this.testo = testo;
@@ -16,6 +16,29 @@ public class note implements Encrypt_decrypt_info {
         this.nome = nome;
     }
 
+    public String getTesto() {
+        return testo;
+    }
+
+    public void setTesto(String testo) {
+        this.testo = testo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public note(int id, int user_id, String tag, String testo, String last_modifed, String nome) {
         this.testo = testo;
@@ -23,7 +46,7 @@ public class note implements Encrypt_decrypt_info {
         this.nome = nome;
         this.id = id;
         this.user_id = user_id;
-        this.last_modifed = last_modifed;
+        this.last_modified = last_modifed;
     }
 
 
@@ -35,8 +58,8 @@ public class note implements Encrypt_decrypt_info {
         return this.user_id;
     }
 
-    public String getLast_modifed() {
-        return last_modifed;
+    public String getLast_modified() {
+        return last_modified;
     }
 
 

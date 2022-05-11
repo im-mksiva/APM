@@ -1,10 +1,13 @@
 package apm.apm;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyListView;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +53,12 @@ public class credentialController {
     @FXML
     private MenuItem editCred;
 
+    @FXML
+    private TableColumn<credentialTableCell, String> tag;
+
+    @FXML
+    private MFXTextField search_credential;
+
     User logged;
     private ObservableList<Credenziali_servizi> lista_credenziali;
     ObservableList<credentialTableCell> lista_cred;
@@ -58,24 +67,60 @@ public class credentialController {
     public void initialize() {
         AuthManager prova = new AuthManager();
         logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
-
         ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
-
-        lista_cred = FXCollections.observableArrayList(lista);
 
 //        ObservableList<Credenziali_servizi> lista = (ObservableList<Credenziali_servizi>) logged.portachiavi.getLista_credenziali();
 
+        tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         servizio.setCellValueFactory(new PropertyValueFactory<>("servizio"));
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
         cp_user.setCellValueFactory(new PropertyValueFactory<>("copia_user"));
         cp_pass.setCellValueFactory(new PropertyValueFactory<>("copia_pass"));
 
+        tag.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         servizio.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         url.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         cp_pass.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         cp_user.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
-//        tabella.setItems(lista);
+
+        lista_cred = FXCollections.observableArrayList(lista);
         tabella.setItems(lista_cred);
+        FilteredList<credentialTableCell> filtro_dati = new FilteredList<>(lista_cred, b -> true);
+        search_credential.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtro_dati.setPredicate(lista_cred -> {
+                if (newValue.isEmpty() || newValue.isBlank()){
+                    return true;
+                }
+                String searchKeyword = newValue.toLowerCase();
+                if(lista_cred.getTag().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else if ((lista_cred.getServizio().toLowerCase().indexOf(searchKeyword) > -1)){
+                    return true;
+                }else if (lista_cred.getUrl().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        });
+        SortedList<credentialTableCell> ordinamento_dati = new SortedList<>(filtro_dati);
+        ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
+        tabella.setItems(ordinamento_dati);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        for (Credenziali_servizi elem : lista) {
 //            tabella.getItems().add(elem);

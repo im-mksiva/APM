@@ -347,12 +347,17 @@ public class SQLite_agent {
         }
     }
 
-    void closeConnection() {
+    ResultSet get_all_Note(int user_id) {
+        ResultSet result = null;
         try {
-            this.connection.close();
+            String sql = "select * from NOTE where user_id = ?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setInt(1, user_id);
+            result = query.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return result;
     }
 
 }

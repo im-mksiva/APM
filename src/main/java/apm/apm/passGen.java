@@ -24,7 +24,17 @@ public class passGen {
         // regole per la password generata
         CharacterRule alphabets = new CharacterRule(EnglishCharacterData.Alphabetical);
         CharacterRule digits = new CharacterRule(EnglishCharacterData.Digit);
-//        CharacterRule special = new CharacterRule(EnglishCharacterData.Special);
+        CharacterRule special = new CharacterRule(new CharacterData() {
+            @Override
+            public String getErrorCode() {
+                return null;
+            }
+
+            @Override
+            public String getCharacters() {
+                return "\"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}";
+            }
+        });
         // oggetto che crea le password
         PasswordGenerator passwordGenerator = new PasswordGenerator();
         // creazione sulla base delle regole
