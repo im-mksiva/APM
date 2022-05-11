@@ -35,11 +35,18 @@ public class test extends Application {
     }
 
     public static void main(String[] args) {
-        AuthManager prova = new AuthManager();
-        User logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+//        AuthManager prova = new AuthManager();
+//        User logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
 //        credentialController schermata = new credentialController(logged);
 
-        launch();
+//        launch();
 //        System.out.println("ciao");
+
+        favicon test = new favicon();
+        test.getfavicon("http://www.poste.it");
+        test.getfavicon("http://www.ebay.it");
+        test.getfavicon("http://www.netflix.com");
+        test.getfavicon("http://www.yahoo.com");
+        //test.ficon();
     }
 }
