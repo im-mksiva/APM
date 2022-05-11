@@ -17,13 +17,12 @@ public class Keychain extends base_operations {
         lista_credenziali = new ArrayList<>();
     }
 
-    public ArrayList<Credenziali_servizi> getLista_credenziali() {
+    public ArrayList getLista_credenziali() {
         ResultSet result = db_agent.get_all_Credential(user.getId());
         boolean continua;
         try {
             continua = result.next();
             while (continua) {
-                System.out.println(result.getString("username"));
                 Credenziali_servizi credenziale = new Credenziali_servizi(
                         result.getInt("id"),
                         result.getInt("user_id"),
@@ -37,7 +36,7 @@ public class Keychain extends base_operations {
                 );
                 // sblocco la password così l'utente se vuole la può vedere
                 credenziale.Decrypt(user.getEncr_key());
-                lista_credenziali.add(credenziale);
+                lista_credenziali.add( new credentialTableCell(credenziale));
                 continua = result.next();
 
             }
