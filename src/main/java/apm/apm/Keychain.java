@@ -76,7 +76,7 @@ public class Keychain extends base_operations {
     public ArrayList find(String text) {
 
         ResultSet result = db_agent.search(text, user.getId(), 0);
-        ArrayList<Credenziali_servizi> lista = new ArrayList<>();
+        ArrayList<credentialTableCell> lista = new ArrayList<>();
         boolean continua;
         try {
             continua = result.next();
@@ -94,7 +94,7 @@ public class Keychain extends base_operations {
                 );
                 // sblocco la password così l'utente se vuole la può vedere
                 credenziale.Decrypt(user.getEncr_key());
-                lista.add(credenziale);
+                lista.add(new credentialTableCell(credenziale));
                 continua = result.next();
             }
 

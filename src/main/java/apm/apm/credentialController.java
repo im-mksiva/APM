@@ -5,12 +5,15 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyListView;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class credentialController {
@@ -29,22 +32,24 @@ public class credentialController {
 
     @FXML
     private TableColumn<?, ?> cp_pass;
-
+//
     @FXML
     private TableColumn<?, ?> cp_user;
 
+    @FXML
+    private ContextMenu tastoDestro;
+
+    User logged;
     private ObservableList<Credenziali_servizi> lista_credenziali;
 
     @FXML
     public void initialize() {
         AuthManager prova = new AuthManager();
-        User logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
-        System.out.println(logged.getId());
-        System.out.println("PARTEEEEE");
-        Credenziali_servizi esempio = (Credenziali_servizi) logged.portachiavi.find("google").get(0);
-        credentialTableCell esempio1 = new credentialTableCell(esempio);
-        lista_credenziali = FXCollections.observableArrayList(esempio);
-        lista_credenziali.add(esempio);
+        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+
+        ArrayList<credentialTableCell> lista = logged.portachiavi.find("google");
+
+        ObservableList<credentialTableCell> lista_cred = FXCollections.observableArrayList(lista);
 
 //        ObservableList<Credenziali_servizi> lista = (ObservableList<Credenziali_servizi>) logged.portachiavi.getLista_credenziali();
 
@@ -57,11 +62,29 @@ public class credentialController {
         url.setStyle("-fx-alignment: CENTER");
         cp_pass.setStyle("-fx-alignment: CENTER");
         cp_user.setStyle("-fx-alignment: CENTER");
-        tabella.getItems().add(esempio1);
 //        tabella.setItems(lista);
+        tabella.setItems(lista_cred);
 
 //        for (Credenziali_servizi elem : lista) {
 //            tabella.getItems().add(elem);
 //        }
     }
-}
+
+
+    @FXML
+    void edit(ActionEvent event) {
+        credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+
+
+    }
+
+    @FXML
+    void deleteRow(ActionEvent event) {
+        System.out.println("cancellazione");
+        credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+        this.logged.portachiavi.remove(selezione);
+        tabella.getItems().remove(selezione);
+    }
+
+    }
+
