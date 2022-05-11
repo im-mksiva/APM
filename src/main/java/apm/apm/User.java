@@ -4,7 +4,7 @@ import javax.crypto.Cipher;
 
 public class User extends Credenziali {
     private String nome, cognome, salt, encr_key;
-    private archivio_note note;
+    archivio_note note;
     Keychain portachiavi;
     SQLite_agent db_agent;
 
@@ -18,6 +18,7 @@ public class User extends Credenziali {
         this.encr_key = encr_key; // in questa fase è ancora criptata
         this.db_agent = new SQLite_agent();
         portachiavi = new Keychain(this);
+        note = new archivio_note(this);
     }
 
     public void create_keychain() {

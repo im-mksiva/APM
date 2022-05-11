@@ -38,7 +38,7 @@ public class passGen {
         // oggetto che crea le password
         PasswordGenerator passwordGenerator = new PasswordGenerator();
         // creazione sulla base delle regole
-        return passwordGenerator.generatePassword(lunghezza, alphabets, digits);
+        return passwordGenerator.generatePassword(lunghezza, alphabets, digits, special);
     }
 
     // ------------ OVERLOADING ------------

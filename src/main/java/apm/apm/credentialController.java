@@ -152,8 +152,6 @@ public class credentialController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @FXML
