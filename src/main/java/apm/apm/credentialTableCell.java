@@ -3,6 +3,7 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -24,6 +25,7 @@ public class credentialTableCell extends Credenziali_servizi {
             System.out.println("Password copiata");
             copyToClip(credenziale.getPassword());
         });
+
     }
 
     public MFXButton getCopia_user() {
@@ -47,5 +49,6 @@ public class credentialTableCell extends Credenziali_servizi {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
     }
-}
+    }
+
 

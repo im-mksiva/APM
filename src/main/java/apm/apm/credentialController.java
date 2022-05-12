@@ -2,7 +2,7 @@ package apm.apm;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.materialfx.controls.legacy.MFXLegacyListView;
+
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +11,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class credentialController {
+
+public class credentialController extends sceneController {
 
     @FXML
     private MFXButton account;
@@ -59,6 +60,14 @@ public class credentialController {
     @FXML
     private MFXTextField search_credential;
 
+
+    @FXML
+    private MFXButton note_button;
+
+
+    @FXML
+    private MFXButton file_button;
+
     User logged;
     private ObservableList<Credenziali_servizi> lista_credenziali;
     ObservableList<credentialTableCell> lista_cred;
@@ -85,6 +94,17 @@ public class credentialController {
 
         lista_cred = FXCollections.observableArrayList(lista);
         tabella.setItems(lista_cred);
+        tabella.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2){
+                this.edit(null);
+            }
+        });
+
+
+
+
+
+        // ricerca nella lista credenziali
         FilteredList<credentialTableCell> filtro_dati = new FilteredList<>(lista_cred, b -> true);
         search_credential.textProperty().addListener((observable, oldValue, newValue) -> {
             filtro_dati.setPredicate(lista_cred -> {
@@ -107,24 +127,6 @@ public class credentialController {
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        for (Credenziali_servizi elem : lista) {
-//            tabella.getItems().add(elem);
-//        }
     }
 
 
@@ -145,10 +147,8 @@ public class credentialController {
             edit_credController.selezione = selezione;
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
-            edit_credController.setData();
+            edit_credController.setup();
             stage.show();
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -163,7 +163,13 @@ public class credentialController {
 
     }
 
-
-
+    public void fileScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"file_enc.fxml");
     }
+
+
+    public void noteScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"note.fxml");
+    }
+}
 

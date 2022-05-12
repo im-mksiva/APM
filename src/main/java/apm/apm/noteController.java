@@ -9,16 +9,22 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class noteController {
+public class noteController extends sceneController {
 
     @FXML
     private MFXButton account;
@@ -79,7 +85,11 @@ public class noteController {
 
     }
 
+    public void credentialScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"credential.fxml");
+    }
 
-
-
+    public void fileScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"file_enc.fxml");
+    }
 }

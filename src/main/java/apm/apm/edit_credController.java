@@ -3,10 +3,11 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
@@ -42,28 +43,38 @@ public class edit_credController {
     credentialTableCell selezione;
     User logged;
 
-    public void setData() {
+    public void setup() {
         password.setText(selezione.getPassword());
         url.setText(selezione.getUrl());
         tag.setText(selezione.getTag());
         servizio.setText(selezione.getServizio());
         username.setText(selezione.getUsername());
+        setFavicon();
         checkPassStrenght();
     }
 
+    public void setFavicon(){
+        favicon setter = new favicon();
+        String nome = setter.getfavicon(selezione.getUrl());
+        favicon.setFill(new ImagePattern( new Image("file:favicon/"+ nome + ".png")));
+    }
+
     public void apply(ActionEvent actionEvent) {
-        selezione.setPassword(password.getText());
+        String nuova_pass = password.getText();
+        selezione.setPassword(nuova_pass);
         selezione.setUrl(url.getText());
         selezione.setTag(tag.getText());
         selezione.setServizio(servizio.getText());
         selezione.setUsername(username.getText());
         selezione.update(logged);
+        selezione.setPassword(nuova_pass);
         tabella.refresh();
 
     }
 
     @FXML
-    void getSecurePass(ActionEvent event) {
+    void getSecurePass(MouseEvent mouseEvent) {
+        System.out.println("È partita la funzione SecurePass");
         passGen generator = new passGen();
         password.setText(generator.genPass(20));
         checkPassStrenght();
@@ -87,6 +98,8 @@ public class edit_credController {
         } else {
             password.setStyle("-fx-border-color: red;");
             password.setFloatingText("Password debole");
+
         }
     }
+
 }

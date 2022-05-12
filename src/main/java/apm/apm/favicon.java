@@ -6,19 +6,30 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class favicon {
-    void getfavicon(String url_servizio) {
+    String getfavicon(String url_servizio) {
+        String servizio = null;
       try {
-            String[] url_diviso = url_servizio.split("www.");
-            URL url = new URL("https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www."+url_diviso[1]+"&size=256");
-            BufferedImage image = null;
-            image = ImageIO.read(url);
-            String servizio = url_diviso[1].substring(0, url_diviso[1].indexOf("."));
-            File file = new File("C:\\Users\\calog\\IdeaProjects\\APM\\favicon\\"+servizio+".png");
-            ImageIO.write(image, "png", file);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+          //amazon.com
+          String[] url_diviso = url_servizio.split("www.");
+          servizio = url_diviso[0].substring(0, url_diviso[0].indexOf("."));
+          File file = new File("favicon/"+servizio+".png");
+          if (file.exists()) {
+              return servizio;
+          }
+          URL url = new URL("https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www."+url_diviso[0]+"&size=256");
+          BufferedImage image = null;
+          image = ImageIO.read(url); // se non si trova una icona allora ci penserà il blocco di catch a risolvere passando il nome dell'icona predefinita
+          servizio = url_diviso[0].substring(0, url_diviso[0].indexOf("."));
+          if (!ImageIO.write(image, "png", file))
+              System.err.println("errore nella scrittura");
+      }
+      catch (MalformedURLException e) {
+          e.printStackTrace();
+      }
+      catch (IOException e) {
+          servizio = "default";
         }
+      return servizio;
     }
+
 }
