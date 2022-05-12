@@ -10,8 +10,8 @@ public class SQLite_agent {
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
 //    Class.forName("org.sqlite.JDBC");
     Connection connection = null;
-    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
-//    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
+//    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
+    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
     String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     SQLite_agent() {

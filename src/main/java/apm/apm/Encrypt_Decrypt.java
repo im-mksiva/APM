@@ -69,54 +69,50 @@ public class Encrypt_Decrypt {
     }
 
 
-    void Encrypt(File file_da_criptare) {
+    void Encrypt(File file_da_criptare, String percorso_salva_file) {
         FileInputStream inputStream = null;
         String percorso = file_da_criptare.getAbsolutePath();
+        int punto = percorso.lastIndexOf(".");
+        String estensione = percorso.substring(punto, percorso.length());
+        if(estensione.contentEquals(".cripto")){
+            System.out.println("*** file gia' criptato ***");
+            return;
+        }
         try {
             inputStream = new FileInputStream(file_da_criptare);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        byte[] inputBytes = new byte[(int) file_da_criptare.length()];
-        try {
+            byte[] inputBytes = new byte[(int) file_da_criptare.length()];
             inputStream.read(inputBytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        byte[] outputBytes = new byte[0];
-        try {
+            byte[] outputBytes = new byte[0];
             outputBytes = cipher.doFinal(inputBytes);
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-//        FileOutputStream file_criptato = new FileOutputStream(percorso.substring(0, percorso.lastIndexOf(".")) + "_cripto");
-        FileOutputStream file_criptato = null;
-        try {
-            file_criptato = new FileOutputStream(percorso + ".cripto");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+            FileOutputStream file_criptato = null;
+            file_criptato = new FileOutputStream(percorso_salva_file + ".cripto");
             file_criptato.write(outputBytes);
             inputStream.close();
             file_criptato.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IllegalBlockSizeException | IOException | BadPaddingException e) {
+            e.printStackTrace();
         }
+
     }
 
-    void Decrypt(File file_da_decriptare) throws IOException, IllegalBlockSizeException, BadPaddingException {
-        FileInputStream inputStream = new FileInputStream(file_da_decriptare);
-        byte[] inputBytes = new byte[(int) file_da_decriptare.length()];
-        byte[] outputBytes = cipher.doFinal(inputBytes);
+    void Decrypt(File file_da_decriptare, String percorso_file_da_decriptare)  {
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file_da_decriptare);
+            byte[] inputBytes = inputStream.readAllBytes();
+            byte[] outputBytes = cipher.doFinal(inputBytes);
+            //String percorso = file_da_decriptare.getAbsolutePath();
+            //FileOutputStream file_criptato = new FileOutputStream(percorso.substring(0, percorso.lastIndexOf(".")));
+            System.out.println("percorso dentro la funzione di decripta -> " + percorso_file_da_decriptare);
+            FileOutputStream file_criptato = new FileOutputStream(percorso_file_da_decriptare);
+            file_criptato.write(outputBytes);
+            inputStream.close();
+            file_criptato.close();
+        } catch (IllegalBlockSizeException | BadPaddingException | IOException e) {
+            e.printStackTrace();
+        }
 
-        String percorso = file_da_decriptare.getAbsolutePath();
-        FileOutputStream file_criptato = new FileOutputStream(percorso.substring(0, percorso.lastIndexOf(".")));
-        file_criptato.write(outputBytes);
 
-        inputStream.close();
-        file_criptato.close();
     }
 
 }
