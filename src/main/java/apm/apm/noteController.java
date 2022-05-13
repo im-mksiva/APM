@@ -15,6 +15,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 
 public class noteController extends sceneController {
 
+    public Circle credCircle;
     @FXML
     private MFXButton account;
 
@@ -50,6 +54,9 @@ public class noteController extends sceneController {
     private MFXTextField search_text;
 
     @FXML
+    private Circle noteCircle;
+
+    @FXML
     public void initialize(){
         AuthManager login = new AuthManager();
         User logged = login.userLogin("calmor","bbbbbbbbbbbbbbbbbbbbb");
@@ -58,6 +65,10 @@ public class noteController extends sceneController {
         titolo.setCellValueFactory(new PropertyValueFactory<>("nome"));
         testo.setCellValueFactory(new PropertyValueFactory<>("testo"));
         Ultima_modifica.setCellValueFactory(new PropertyValueFactory<>("last_modified"));
+
+        tag.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        titolo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        Ultima_modifica.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
         new_list = FXCollections.observableArrayList(lista_note);
         tabella.setItems(new_list);
@@ -82,6 +93,11 @@ public class noteController extends sceneController {
         SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
+        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note1.png")));
+        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
+
+
+        
 
     }
 

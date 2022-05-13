@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -15,9 +16,12 @@
     <children>
         <AnchorPane layoutX="-1.0" layoutY="603.0" prefHeight="87.0" prefWidth="1002.0" style="-fx-background-color: #12203a;">
             <children>
-                <MFXButton fx:id="fileButton" layoutX="126.0" layoutY="27.0" onAction="#fileScene" text="File Criptati" />
-                <MFXButton fx:id="credentialButton" layoutX="431.0" layoutY="27.0" onAction="#credentialScene" text="Gestione credenziali" />
-                <MFXButton layoutX="810.0" layoutY="27.0" text="Note sicure" />
+            <Circle fx:id="noteCircle" fill="WHITE" layoutX="852.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="credCircle" fill="WHITE" layoutX="496.0" layoutY="44.0" radius="28.0" strokeType="INSIDE" />
+                <MFXButton fx:id="fileButton" layoutX="138.0" layoutY="18.0" onAction="#fileScene" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="2" />
+                <MFXButton fx:id="credentialButton" layoutX="467.0" layoutY="16.0" onAction="#credentialScene" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="1" />
+                <MFXButton layoutX="824.0" layoutY="17.0" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="3" />
+            <Circle fill="WHITE" layoutX="167.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
             </children>
         </AnchorPane>
         <MFXLegacyTableView fx:id="tabella" fixedCellSize="40.0" layoutX="62.0" layoutY="191.0" prefHeight="395.0" prefWidth="880.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">

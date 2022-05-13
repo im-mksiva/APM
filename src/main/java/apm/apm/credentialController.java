@@ -19,19 +19,26 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 
 public class credentialController extends sceneController {
 
+    public Circle noteCircle;
+    public Circle accountCircle;
     @FXML
     private MFXButton account;
+
+    @FXML
+    private Circle credCircle;
 
     @FXML
     private MFXLegacyTableView<credentialTableCell> tabella;
@@ -78,8 +85,6 @@ public class credentialController extends sceneController {
         logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
         ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
 
-//        ObservableList<Credenziali_servizi> lista = (ObservableList<Credenziali_servizi>) logged.portachiavi.getLista_credenziali();
-
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         servizio.setCellValueFactory(new PropertyValueFactory<>("servizio"));
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
@@ -101,9 +106,6 @@ public class credentialController extends sceneController {
         });
 
 
-
-
-
         // ricerca nella lista credenziali
         FilteredList<credentialTableCell> filtro_dati = new FilteredList<>(lista_cred, b -> true);
         search_credential.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -112,11 +114,11 @@ public class credentialController extends sceneController {
                     return true;
                 }
                 String searchKeyword = newValue.toLowerCase();
-                if(lista_cred.getTag().toLowerCase().indexOf(searchKeyword) > -1){
+                if(lista_cred.getTag() != null && lista_cred.getTag().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
-                }else if ((lista_cred.getServizio().toLowerCase().indexOf(searchKeyword) > -1)){
+                }else if (lista_cred.getUrl() != null && lista_cred.getServizio().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
-                }else if (lista_cred.getUrl().toLowerCase().indexOf(searchKeyword) > -1){
+                }else if (lista_cred.getServizio() != null && lista_cred.getUrl().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
                 }else{
                     return false;
@@ -127,6 +129,9 @@ public class credentialController extends sceneController {
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
 
+        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
+        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali.png")));
+//        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
     }
 
 
@@ -139,15 +144,16 @@ public class credentialController extends sceneController {
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
             Scene scene = new Scene(fxmlLoader.load(), 567, 540);
             Stage stage = new Stage();
-
-            stage.setUserData(selezione);
             stage.setTitle("Modifica credenziale");
             stage.setScene(scene);
+
+            stage.setUserData(selezione);
             edit_credController edit_credController = fxmlLoader.getController();
             edit_credController.selezione = selezione;
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
             edit_credController.setup();
+
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

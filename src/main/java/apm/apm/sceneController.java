@@ -20,7 +20,7 @@ public class sceneController {
         Parent root;
         try
         {
-            root = (Parent)loader.load();
+            root = loader.load();
             stage.setScene(new Scene(root));
             stage.show();
         }
