@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Stack;
 
 public class loginController extends sceneController {
     @FXML
@@ -28,24 +27,35 @@ public class loginController extends sceneController {
         AuthManager login = new AuthManager();
         String user = username.getText();
         String pass = password.getText();
-        User user_logged = login.userLogin(user, pass);
+//        User user_logged = login.userLogin(user, pass);
+        User user_logged = login.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
         if (user_logged != null) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
             System.out.println("tutto ok");
             stage = new Stage();
+
+            credentialController credentialController = new credentialController();
+            credentialController.setLogged(user_logged);
             URL fxmlLocation = getClass().getResource("credential.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
-
+            fxmlLoader.setController(credentialController);
             Parent root = fxmlLoader.load();
+
+
+            System.out.println("verifica");
             Scene scene = new Scene(root, 1000, 690);
-            stage.setTitle("APM Login");
+
+
+
+            stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
-            credentialController toFill = fxmlLoader.getController()
+
+
             stage.show();
         }
         }
-
+// bbbbbbbbbbbbbbbbbbbbb
 
     public void registerScene(MouseEvent mouseEvent) {
     }

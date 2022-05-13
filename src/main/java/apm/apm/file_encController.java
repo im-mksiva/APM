@@ -21,7 +21,6 @@ public class file_encController extends sceneController{
     public Circle credCircle;
     public Circle fileCircle;
     public MFXButton file_button;
-    User logged;
 
     @FXML
     private Circle back;
@@ -39,20 +38,18 @@ public class file_encController extends sceneController{
     String estensione;
     int flag;
 
+    public void setLogged(User logged) {
+        this.logged = logged;
+    }
 
+    private User logged;
 
-    public void initialize(){
-        AuthManager prova = new AuthManager();
-        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
-        setBack();
+    public void initialize() {
+        back.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/back1.png")));
         accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
         noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
         credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
         fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file.png")));
-    }
-
-    void setBack(){
-        back.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/back1.png")));
     }
 
     @FXML
@@ -134,11 +131,13 @@ public class file_encController extends sceneController{
 
 
 
+    @FXML
     public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml");
+        changeScene(actionEvent,"credential.fxml",logged);
     }
 
+    @FXML
     public void noteScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"note.fxml");
+        changeScene(actionEvent,"note.fxml",logged);
     }
 }

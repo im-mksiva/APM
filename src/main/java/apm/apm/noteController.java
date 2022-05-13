@@ -58,10 +58,14 @@ public class noteController extends sceneController {
     @FXML
     private Circle noteCircle;
 
+    public void setLogged(User logged) {
+        this.logged = logged;
+    }
+
+    private User logged;
+
     @FXML
     public void initialize(){
-        AuthManager login = new AuthManager();
-        User logged = login.userLogin("calmor","bbbbbbbbbbbbbbbbbbbbb");
         ArrayList<note> lista_note = logged.note.getLista_note();
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         titolo.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -106,11 +110,13 @@ public class noteController extends sceneController {
 
     }
 
+    @FXML
     public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml");
+        changeScene(actionEvent,"credential.fxml",logged);
     }
 
+    @FXML
     public void fileScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"file_enc.fxml");
+        changeScene(actionEvent,"file_enc.fxml",logged);
     }
 }

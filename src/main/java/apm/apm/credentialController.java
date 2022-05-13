@@ -77,14 +77,17 @@ public class credentialController extends sceneController {
     @FXML
     private MFXButton file_button;
 
-    User logged;
+    public void setLogged(User logged) {
+        this.logged = logged;
+    }
+
+    private User logged;
     private ObservableList<Credenziali_servizi> lista_credenziali;
     ObservableList<credentialTableCell> lista_cred;
 
     @FXML
     public void initialize() {
-        AuthManager prova = new AuthManager();
-        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+
         ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
 
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
@@ -172,13 +175,15 @@ public class credentialController extends sceneController {
 
     }
 
+    @FXML
     public void fileScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"file_enc.fxml");
+        changeScene(actionEvent,"file_enc.fxml", logged);
     }
 
 
+    @FXML
     public void noteScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"note.fxml");
+        changeScene(actionEvent,"note.fxml", logged);
     }
 }
 
