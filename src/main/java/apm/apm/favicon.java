@@ -26,8 +26,8 @@ public class favicon {
       catch (MalformedURLException e) {
           e.printStackTrace();
       }
-      catch (IOException e) {
-          servizio = "default";
+      catch (IOException | StringIndexOutOfBoundsException e) { // in questo modo sia quando non mi viene data una favicon dall'url, sia quando l'url non è una stringa adatta
+          servizio = "default"; // ho una icona da mettere nella UI
         }
       return servizio;
     }
