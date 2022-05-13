@@ -16,12 +16,12 @@
     <children>
         <AnchorPane layoutX="-1.0" layoutY="603.0" prefHeight="87.0" prefWidth="1002.0" style="-fx-background-color: #12203a;">
             <children>
-            <Circle fx:id="noteCircle" fill="WHITE" layoutX="852.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="credCircle" fill="WHITE" layoutX="496.0" layoutY="44.0" radius="28.0" strokeType="INSIDE" />
-                <MFXButton fx:id="fileButton" layoutX="138.0" layoutY="18.0" onAction="#fileScene" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="2" />
-                <MFXButton fx:id="credentialButton" layoutX="467.0" layoutY="16.0" onAction="#credentialScene" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="1" />
-                <MFXButton layoutX="824.0" layoutY="17.0" opacity="0.0" prefHeight="56.0" prefWidth="56.0" text="3" />
-            <Circle fill="WHITE" layoutX="167.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+                <Circle fx:id="noteCircle" fill="WHITE" layoutX="854.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <Circle fx:id="credCircle" fill="WHITE" layoutX="495.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <Circle fx:id="fileCircle" fill="WHITE" layoutX="160.0" layoutY="45.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <MFXButton fx:id="file_button" layoutX="127.0" layoutY="9.0" onAction="#fileScene" opacity="0.0" prefHeight="70.0" prefWidth="67.0" text="3" />
+                <MFXButton fx:id="credentialButton" layoutX="459.0" layoutY="10.0" onAction="#credentialScene" opacity="0.0" prefHeight="70.0" prefWidth="73.0" text="1" />
+                <MFXButton fx:id="note_button" layoutX="821.0" layoutY="9.0" opacity="0.0" prefHeight="70.0" prefWidth="67.0" text="2" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1002.0" style="-fx-background-color: #f4f4f4;">

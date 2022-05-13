@@ -31,6 +31,7 @@ public class noteController extends sceneController {
 
     public Circle credCircle;
     public Circle accountCircle;
+    public Circle fileCircle;
     @FXML
     private MFXButton account;
 
@@ -80,7 +81,7 @@ public class noteController extends sceneController {
                     return true;
                 }
                 String searchKeyword = newValue.toLowerCase();
-                if (new_list.getTag().toLowerCase().indexOf(searchKeyword) > -1){
+                if(new_list.getTag() != null && new_list.getTag().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
                 }else if(new_list.getTesto().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
@@ -94,9 +95,11 @@ public class noteController extends sceneController {
         SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
+        
         noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note1.png")));
         credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
         accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
+        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
 
 
         

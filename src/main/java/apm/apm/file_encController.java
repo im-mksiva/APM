@@ -15,6 +15,12 @@ import java.io.File;
 public class file_encController extends sceneController{
 
 
+    public Circle accountCircle;
+    public MFXButton credentialButton;
+    public Circle noteCircle;
+    public Circle credCircle;
+    public Circle fileCircle;
+    public MFXButton file_button;
     User logged;
 
     @FXML
@@ -33,8 +39,20 @@ public class file_encController extends sceneController{
     String estensione;
     int flag;
 
+
+
+    public void initialize(){
+        AuthManager prova = new AuthManager();
+        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+        setBack();
+        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
+        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
+        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
+        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file.png")));
+    }
+
     void setBack(){
-        back.setFill(new ImagePattern( new Image("C:\\Users\\calog\\IdeaProjects\\APM\\immagini scene\\back1.png")));
+        back.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/back1.png")));
     }
 
     @FXML
@@ -115,11 +133,12 @@ public class file_encController extends sceneController{
     }
 
 
-    public void initialize(){
-        AuthManager prova = new AuthManager();
-        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
-        setBack();
+
+    public void credentialScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"credential.fxml");
     }
 
-
+    public void noteScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"note.fxml");
+    }
 }

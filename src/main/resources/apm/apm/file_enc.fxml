@@ -9,34 +9,42 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apm.apm.file_encController">
     <children>
-        <AnchorPane layoutX="-1.0" layoutY="613.0" prefHeight="79.0" prefWidth="1002.0" style="-fx-background-color: #00487C;">
+        <AnchorPane layoutX="-1.0" layoutY="603.0" prefHeight="87.0" prefWidth="1002.0" style="-fx-background-color: #12203a;">
             <children>
-                <MFXButton layoutX="126.0" layoutY="27.0" text="File Criptati" />
-                <MFXButton layoutX="431.0" layoutY="27.0" text="Gestione credenziali" />
-                <MFXButton layoutX="810.0" layoutY="27.0" text="Note sicure" />
+                <Circle fx:id="fileCircle" fill="WHITE" layoutX="160.0" layoutY="45.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <Circle fx:id="noteCircle" fill="WHITE" layoutX="854.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <Circle fx:id="credCircle" fill="WHITE" layoutX="495.0" layoutY="44.0" radius="28.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+                <MFXButton fx:id="file_button" layoutX="124.0" layoutY="8.0" opacity="0.0" prefHeight="70.0" prefWidth="73.0" text="3" />
+                <MFXButton fx:id="credentialButton" layoutX="459.0" layoutY="10.0" onAction="#credentialScene" opacity="0.0" prefHeight="70.0" prefWidth="73.0" text="1" />
+                <MFXButton fx:id="note_button" layoutX="821.0" layoutY="9.0" onAction="#noteScene" opacity="0.0" prefHeight="70.0" prefWidth="67.0" text="2" />
             </children>
         </AnchorPane>
-        <MFXButton fx:id="account" layoutX="825.0" layoutY="41.0" text="Impostazioni Account" />
-      <Text layoutX="412.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criptazione file" textAlignment="CENTER">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Text>
-      <MFXButton fx:id="cripta_file" buttonType="RAISED" layoutX="139.0" layoutY="153.0" onAction="#open_file_cripto" prefHeight="112.0" prefWidth="239.0" rippleAnimateBackground="false" text="Scegli file da&#10;criptare 📂" textAlignment="CENTER">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </MFXButton>
-      <MFXButton fx:id="decripta_file" buttonType="RAISED" layoutX="632.0" layoutY="153.0" onAction="#open_file_decripto" prefHeight="112.0" prefWidth="247.0" text="Scegli file da&#10;decriptare 📂">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </MFXButton>
-      <MFXButton fx:id="salva" buttonType="RAISED" disable="true" layoutX="446.0" layoutY="465.0" onAction="#salva_file" prefHeight="49.0" prefWidth="108.0" rippleAnimateBackground="false" style="-fx-background-color: #5eba7d;" text="Salva" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </MFXButton>
-      <Circle fx:id="back" fill="DODGERBLUE" layoutX="500.0" layoutY="345.0" onMouseClicked="#torna_indietro" radius="51.0" stroke="BLACK" strokeType="INSIDE" />
+        <AnchorPane layoutX="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1002.0" style="-fx-background-color: #f4f4f4;">
+         <children>
+             <Circle fx:id="accountCircle" fill="WHITE" layoutX="948.0" layoutY="54.0" radius="19.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+             <MFXButton fx:id="account" layoutX="926.0" layoutY="34.0" opacity="0.0" prefHeight="39.0" prefWidth="45.0" text="6" />
+            <Text layoutX="413.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criptazione file" textAlignment="CENTER">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <MFXButton fx:id="cripta_file" buttonType="RAISED" layoutX="131.0" layoutY="145.0" onAction="#open_file_cripto" prefHeight="112.0" prefWidth="239.0" rippleAnimateBackground="false" text="Scegli file da&#10;criptare 📂" textAlignment="CENTER">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </MFXButton>
+            <MFXButton fx:id="decripta_file" buttonType="RAISED" layoutX="624.0" layoutY="145.0" onAction="#open_file_decripto" prefHeight="112.0" prefWidth="247.0" text="Scegli file da&#10;decriptare 📂">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </MFXButton>
+            <MFXButton fx:id="salva" buttonType="RAISED" disable="true" layoutX="447.0" layoutY="455.0" onAction="#salva_file" prefHeight="49.0" prefWidth="108.0" rippleAnimateBackground="false" style="-fx-background-color: #5eba7d;" text="Salva" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </MFXButton>
+            <Circle fx:id="back" fill="DODGERBLUE" layoutX="501.0" layoutY="323.0" onMouseClicked="#torna_indietro" radius="51.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
     </children>
 </Pane>
