@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public class noteController extends sceneController {
 
     public Circle credCircle;
+    public Circle accountCircle;
     @FXML
     private MFXButton account;
 
@@ -95,6 +96,7 @@ public class noteController extends sceneController {
         tabella.setItems(ordinamento_dati);
         noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note1.png")));
         credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
+        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
 
 
         

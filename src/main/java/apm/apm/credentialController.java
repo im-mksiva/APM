@@ -131,7 +131,7 @@ public class credentialController extends sceneController {
 
         noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
         credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali.png")));
-//        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
+        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
     }
 
 
