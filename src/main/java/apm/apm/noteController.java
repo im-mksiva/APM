@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class noteController extends sceneController {
+public class noteController {
 
     public Circle credCircle;
     public Circle accountCircle;

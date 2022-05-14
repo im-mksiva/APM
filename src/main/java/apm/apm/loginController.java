@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class loginController extends sceneController {
+public class loginController {
     @FXML
     private MFXTextField username;
     @FXML
@@ -42,7 +42,6 @@ public class loginController extends sceneController {
             Scene scene = new Scene(root, 1000, 690);
             stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
-
 
             stage.show();
         }

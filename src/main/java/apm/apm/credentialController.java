@@ -26,7 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class credentialController extends sceneController {
+public class credentialController {
 
     public Circle noteCircle;
     public Circle accountCircle;

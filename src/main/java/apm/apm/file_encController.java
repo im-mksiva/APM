@@ -12,7 +12,7 @@ import javafx.stage.FileChooser;
 import javax.crypto.Cipher;
 import java.io.File;
 
-public class file_encController extends sceneController{
+public class file_encController {
 
 
     public Circle accountCircle;
