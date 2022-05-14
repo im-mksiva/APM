@@ -2,7 +2,6 @@ package apm.apm;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +10,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -27,7 +24,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-
 
 
 public class credentialController extends sceneController {
@@ -53,7 +49,7 @@ public class credentialController extends sceneController {
 
     @FXML
     private TableColumn<?, ?> cp_pass;
-//
+    //
     @FXML
     private TableColumn<?, ?> cp_user;
 
@@ -82,14 +78,12 @@ public class credentialController extends sceneController {
     }
 
     private User logged;
-    private ObservableList<Credenziali_servizi> lista_credenziali;
     ObservableList<credentialTableCell> lista_cred;
 
     @FXML
     public void initialize() {
-
-        ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
-
+        logged = APM.user;
+        lista_cred = null;
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         servizio.setCellValueFactory(new PropertyValueFactory<>("servizio"));
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
@@ -102,8 +96,12 @@ public class credentialController extends sceneController {
         cp_pass.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         cp_user.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
-        lista_cred = FXCollections.observableArrayList(lista);
-        tabella.setItems(lista_cred);
+        if (lista_cred == null){
+
+            ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
+            lista_cred = FXCollections.observableArrayList(lista);
+            tabella.setItems(lista_cred);
+        }
         tabella.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2){
                 this.edit(null);
@@ -133,11 +131,6 @@ public class credentialController extends sceneController {
         SortedList<credentialTableCell> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
-
-        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
-        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali.png")));
-        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
-        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
     }
 
 
@@ -173,17 +166,6 @@ public class credentialController extends sceneController {
         this.logged.portachiavi.remove(selezione);
         tabella.getItems().remove(selezione);
 
-    }
-
-    @FXML
-    public void fileScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"file_enc.fxml", logged);
-    }
-
-
-    @FXML
-    public void noteScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"note.fxml", logged);
     }
 }
 

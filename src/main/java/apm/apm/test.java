@@ -12,9 +12,10 @@ import java.net.URL;
 
 
 public class test extends Application {
+    public static User user;
     @Override
     public void start(Stage stage) throws IOException {
-        URL fxmlLocation = getClass().getResource("credential.fxml");
+        URL fxmlLocation = getClass().getResource("principale.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
 
         Parent root = fxmlLoader.load();

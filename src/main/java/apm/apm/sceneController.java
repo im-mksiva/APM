@@ -1,6 +1,7 @@
 package apm.apm;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 
 public class sceneController {
     User logged;
@@ -55,7 +57,6 @@ public class sceneController {
             switch (fxml){
                 case "note.fxml":
                     noteController note_controller = new noteController();
-                    note_controller.setLogged(user);
                     loader.setController(note_controller);
                     break;
                 case "credential.fxml":
@@ -65,7 +66,6 @@ public class sceneController {
                     break;
                 case "file_enc.fxml":
                     file_encController file_controller = new file_encController();
-                    file_controller.setLogged(user);
                     loader.setController(file_controller);
                     break;
             }
@@ -82,5 +82,21 @@ public class sceneController {
         }
     }
 
+    public void userScene(){
+            try {
+                URL fxmlLocation = getClass().getResource("user_page.fxml");
+                FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+                Scene scene = new Scene(fxmlLoader.load(), 567, 540);
+                Stage stage = new Stage();
+                stage.setTitle("Impostazioni account");
+                stage.setScene(scene);
+                userController userController = fxmlLoader.getController();
 
-}
+                userController.logged = logged;
+
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }

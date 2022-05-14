@@ -38,18 +38,11 @@ public class file_encController extends sceneController{
     String estensione;
     int flag;
 
-    public void setLogged(User logged) {
-        this.logged = logged;
-    }
-
     private User logged;
 
     public void initialize() {
+        logged = APM.user;
         back.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/back1.png")));
-        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
-        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
-        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
-        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file.png")));
     }
 
     @FXML
@@ -126,18 +119,8 @@ public class file_encController extends sceneController{
 
     @FXML
     void torna_indietro(MouseEvent event) {
-        changeScene(event,"file_enc.fxml");
+        cripta_file.setText("Scegli file da decriptare");
+        salva.setDisable(true);
     }
 
-
-
-    @FXML
-    public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml",logged);
-    }
-
-    @FXML
-    public void noteScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"note.fxml",logged);
-    }
 }

@@ -28,26 +28,18 @@ public class loginController extends sceneController {
         String user = username.getText();
         String pass = password.getText();
 //        User user_logged = login.userLogin(user, pass);
-        User user_logged = login.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+        APM.user = login.userLogin("calmor", "1234");
+        User user_logged = APM.user;
         if (user_logged != null) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
             System.out.println("tutto ok");
             stage = new Stage();
 
-            credentialController credentialController = new credentialController();
-            credentialController.setLogged(user_logged);
-            URL fxmlLocation = getClass().getResource("credential.fxml");
+            URL fxmlLocation = getClass().getResource("principale.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
-            fxmlLoader.setController(credentialController);
             Parent root = fxmlLoader.load();
-
-
-            System.out.println("verifica");
             Scene scene = new Scene(root, 1000, 690);
-
-
-
             stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
 

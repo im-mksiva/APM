@@ -58,14 +58,11 @@ public class noteController extends sceneController {
     @FXML
     private Circle noteCircle;
 
-    public void setLogged(User logged) {
-        this.logged = logged;
-    }
-
     private User logged;
 
     @FXML
     public void initialize(){
+        logged = APM.user;
         ArrayList<note> lista_note = logged.note.getLista_note();
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         titolo.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -99,24 +96,6 @@ public class noteController extends sceneController {
         SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
-        
-        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note1.png")));
-        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
-        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
-        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
-
-
-        
-
     }
 
-    @FXML
-    public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml",logged);
-    }
-
-    @FXML
-    public void fileScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"file_enc.fxml",logged);
-    }
 }
