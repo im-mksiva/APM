@@ -8,17 +8,16 @@ import java.util.ArrayList;
 
 public class Keychain extends base_operations {
     private User user;
-    private ArrayList<Credenziali_servizi> lista_credenziali;
     SQLite_agent db_agent;
 
     Keychain(User user) {
         this.user = user;
         this.db_agent = user.db_agent;
-        lista_credenziali = new ArrayList<>();
     }
 
     public ArrayList getLista_credenziali() {
         ResultSet result = db_agent.get_all_Credential(user.getId());
+        ArrayList<Credenziali_servizi> lista_credenziali = new ArrayList<>();
         boolean continua;
         try {
             continua = result.next();
@@ -45,6 +44,7 @@ public class Keychain extends base_operations {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return lista_credenziali;
     }
 

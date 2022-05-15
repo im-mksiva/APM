@@ -21,13 +21,14 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class noteController extends sceneController {
+public class noteController {
 
     public Circle credCircle;
     public Circle accountCircle;
@@ -58,10 +59,11 @@ public class noteController extends sceneController {
     @FXML
     private Circle noteCircle;
 
+    private User logged;
+
     @FXML
     public void initialize(){
-        AuthManager login = new AuthManager();
-        User logged = login.userLogin("calmor","bbbbbbbbbbbbbbbbbbbbb");
+        logged = APM.user;
         ArrayList<note> lista_note = logged.note.getLista_note();
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         titolo.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -70,6 +72,7 @@ public class noteController extends sceneController {
 
         tag.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         titolo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        testo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         Ultima_modifica.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
         new_list = FXCollections.observableArrayList(lista_note);
@@ -95,22 +98,24 @@ public class noteController extends sceneController {
         SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
-        
-        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note1.png")));
-        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
-        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
-        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
-
-
-        
-
     }
 
-    public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml");
+    @FXML
+    void InsertNewNote(ActionEvent event) {
+        try {
+            URL fxmlLocation = getClass().getResource("ins_note.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+            Scene scene = new Scene(fxmlLoader.load(), 567, 540);
+            Stage stage = new Stage();
+            stage.setTitle("Inserisci nota");
+            stage.setScene(scene);
+            insNoteController ins = fxmlLoader.getController();
+            ins.logged = logged;
+            ins.tabella = tabella;
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void fileScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"file_enc.fxml");
-    }
 }

@@ -12,7 +12,7 @@ import javafx.stage.FileChooser;
 import javax.crypto.Cipher;
 import java.io.File;
 
-public class file_encController extends sceneController{
+public class file_encController {
 
 
     public Circle accountCircle;
@@ -21,7 +21,6 @@ public class file_encController extends sceneController{
     public Circle credCircle;
     public Circle fileCircle;
     public MFXButton file_button;
-    User logged;
 
     @FXML
     private Circle back;
@@ -39,19 +38,10 @@ public class file_encController extends sceneController{
     String estensione;
     int flag;
 
+    private User logged;
 
-
-    public void initialize(){
-        AuthManager prova = new AuthManager();
-        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
-        setBack();
-        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
-        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
-        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali_WHITE.png")));
-        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file.png")));
-    }
-
-    void setBack(){
+    public void initialize() {
+        logged = APM.user;
         back.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/back1.png")));
     }
 
@@ -129,16 +119,8 @@ public class file_encController extends sceneController{
 
     @FXML
     void torna_indietro(MouseEvent event) {
-        changeScene(event,"file_enc.fxml");
+        cripta_file.setText("Scegli file da decriptare");
+        salva.setDisable(true);
     }
 
-
-
-    public void credentialScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"credential.fxml");
-    }
-
-    public void noteScene(ActionEvent actionEvent) {
-        changeScene(actionEvent,"note.fxml");
-    }
 }
