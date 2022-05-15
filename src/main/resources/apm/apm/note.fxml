@@ -32,7 +32,7 @@
                   <Font size="25.0" />
                </font>
             </Text>
-            <MFXButton layoutX="675.0" layoutY="110.0" prefHeight="38.0" prefWidth="183.0" style="-fx-background-color: #59cb91; -fx-text-fill: white;" text="+ Inserisci nuova nota&#10;&#10;" textAlignment="CENTER">
+            <MFXButton layoutX="675.0" layoutY="110.0" prefHeight="38.0" prefWidth="183.0" fx:id="button_insert" onAction="#InsertNewNote" style="-fx-background-color: #59cb91; -fx-text-fill: white;" text="+ Inserisci nuova nota&#10;&#10;" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

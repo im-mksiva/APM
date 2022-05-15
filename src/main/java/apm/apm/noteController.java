@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,6 +72,7 @@ public class noteController {
 
         tag.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         titolo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        testo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         Ultima_modifica.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
         new_list = FXCollections.observableArrayList(lista_note);
@@ -96,6 +98,24 @@ public class noteController {
         SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
+    }
+
+    @FXML
+    void InsertNewNote(ActionEvent event) {
+        try {
+            URL fxmlLocation = getClass().getResource("ins_note.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+            Scene scene = new Scene(fxmlLoader.load(), 567, 540);
+            Stage stage = new Stage();
+            stage.setTitle("Inserisci nota");
+            stage.setScene(scene);
+            insNoteController ins = fxmlLoader.getController();
+            ins.logged = logged;
+            ins.tabella = tabella;
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

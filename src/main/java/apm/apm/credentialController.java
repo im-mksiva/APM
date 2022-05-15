@@ -167,5 +167,24 @@ public class credentialController {
         tabella.getItems().remove(selezione);
 
     }
+
+    public void insertNewCredential(ActionEvent actionEvent) {
+        try {
+            URL fxmlLocation = getClass().getResource("insert_credential.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+            Scene scene = new Scene(fxmlLoader.load(), 567, 540);
+            Stage stage = new Stage();
+            stage.setTitle("Inserisci credenziale");
+            stage.setScene(scene);
+            edit_credController edit_credController = fxmlLoader.getController();
+            edit_credController.logged = logged;
+            edit_credController.tabella = tabella;
+            edit_credController.favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 

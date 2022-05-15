@@ -82,4 +82,12 @@ public class Credenziali_servizi extends Credenziali {
         Decrypt_pass = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, encr_key);
         this.setPassword(Decrypt_pass.Decrypt(this.getPassword()));
     }
+
+    public Credenziali_servizi(int user_id, String username, String password, String servizio, String url, String tag) {
+        super(username, password);
+        this.url = url;
+        this.servizio = servizio;
+        this.user_id = user_id;
+        this.tag = tag;
+    }
 }

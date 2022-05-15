@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class edit_credController {
 
     @FXML
-    private Circle favicon;
+    Circle favicon;
     @FXML
     private MFXButton generatePass;
     @FXML
@@ -40,8 +40,24 @@ public class edit_credController {
     MFXLegacyTableView<credentialTableCell> tabella;
 
 
-    credentialTableCell selezione;
+    credentialTableCell selezione, new_credential;
+    @FXML
+    private MFXButton bottoneInsert;
+
+    @FXML
+    private MFXButton bottoneReset;
+
+    @FXML
+    private MFXButton bottoneConferma;
     User logged;
+
+    @FXML
+    public void initialize() {
+        logged = APM.user;
+        this.favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+    }
+
+
 
     public void setup() {
         password.setText(selezione.getPassword());
@@ -49,13 +65,13 @@ public class edit_credController {
         tag.setText(selezione.getTag());
         servizio.setText(selezione.getServizio());
         username.setText(selezione.getUsername());
-        setFavicon();
+        setFavicon(selezione.getUrl());
         checkPassStrenght();
     }
 
-    public void setFavicon(){
+    public void setFavicon(String url){
         favicon setter = new favicon();
-        String nome = setter.getfavicon(selezione.getUrl());
+        String nome = setter.getfavicon(url);
         favicon.setFill(new ImagePattern( new Image("file:favicon/"+ nome + ".png")));
     }
 
@@ -71,6 +87,58 @@ public class edit_credController {
         tabella.refresh();
 
     }
+
+    @FXML
+    void insert_credential(ActionEvent event) {
+        //int user_id, String username, String password, String servizio, String url, String tag
+        Credenziali_servizi new_credential = new Credenziali_servizi (
+                logged.getId(),
+                username.getText(),
+                password.getText(),
+                servizio.getText(),
+                url.getText(),
+                tag.getText());
+
+        credentialTableCell new_cell = new credentialTableCell(new_credential);
+        logged.portachiavi.add(new_credential);
+        setFavicon(url.getText());
+        //System.out.println("prima di essere cancellato l'username " + new_cell.getUsername());
+        username.clear();
+        password.clear();
+        servizio.clear();
+        url.clear();
+        tag.clear();
+        favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+        bottoneInsert.setDisable(true);
+        bottoneConferma.setDisable(false);
+        //tabella.getItems().
+        tabella.refresh();
+    }
+
+    @FXML
+    void confermaCredenziale(ActionEvent event) {
+        setFavicon(url.getText());
+        bottoneInsert.setDisable(false);
+        bottoneConferma.setDisable(true);
+        bottoneReset.setDisable(false);
+
+    }
+    @FXML
+    void reset(ActionEvent event) {
+
+        username.clear();
+        password.clear();
+        servizio.clear();
+        url.clear();
+        tag.clear();
+        favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+        bottoneInsert.setDisable(true);
+        bottoneConferma.setDisable(false);
+        bottoneReset.setDisable(true);
+
+    }
+
+
 
     @FXML
     void getSecurePass(MouseEvent mouseEvent) {
