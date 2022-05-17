@@ -12,6 +12,8 @@ target/
 *.iml
 *.ipr
 APM.iml
+pom.xml
+database/APM.db
 
 ### Eclipse ###
 .apt_generated
