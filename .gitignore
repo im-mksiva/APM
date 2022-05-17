@@ -15,6 +15,7 @@ APM.iml
 pom.xml
 database/APM.db
 
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -39,3 +40,20 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/favicon/amazon.png
+/credenziali.psd
+/src/main/resources/apm/apm/icons/credenziali_white.png
+/favicon/default.png
+/file.psd
+/favicon/google.png
+/favicon/hp.png
+/src/main/resources/apm/apm/ins_note.fxml
+/src/main/resources/apm/apm/insert_credential.fxml
+/src/main/java/apm/apm/insNoteController.java
+/favicon/metacritic.png
+/note.psd
+/favicon/sielte.png
+/src.zip
+/favicon/unime.png
+/favicon/youtube.png
+/favicon/zara.png
