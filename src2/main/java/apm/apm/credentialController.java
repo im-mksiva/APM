@@ -2,6 +2,7 @@ package apm.apm;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +11,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -19,17 +22,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 
-public class credentialController {
+
+public class credentialController extends sceneController {
 
     public Circle noteCircle;
     public Circle accountCircle;
@@ -52,7 +53,7 @@ public class credentialController {
 
     @FXML
     private TableColumn<?, ?> cp_pass;
-    //
+//
     @FXML
     private TableColumn<?, ?> cp_user;
 
@@ -76,18 +77,16 @@ public class credentialController {
     @FXML
     private MFXButton file_button;
 
-    public void setLogged(User logged) {
-        this.logged = logged;
-    }
-
-    private User logged;
+    User logged;
+    private ObservableList<Credenziali_servizi> lista_credenziali;
     ObservableList<credentialTableCell> lista_cred;
-    gestione_file_csv imp_exp_file_csv = new gestione_file_csv();
 
     @FXML
     public void initialize() {
-        logged = APM.user;
-        lista_cred = null;
+        AuthManager prova = new AuthManager();
+        logged = prova.userLogin("calmor", "bbbbbbbbbbbbbbbbbbbbb");
+        ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
+
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         servizio.setCellValueFactory(new PropertyValueFactory<>("servizio"));
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
@@ -100,12 +99,8 @@ public class credentialController {
         cp_pass.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         cp_user.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
-        if (lista_cred == null){
-
-            ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
-            lista_cred = FXCollections.observableArrayList(lista);
-            tabella.setItems(lista_cred);
-        }
+        lista_cred = FXCollections.observableArrayList(lista);
+        tabella.setItems(lista_cred);
         tabella.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2){
                 this.edit(null);
@@ -135,6 +130,11 @@ public class credentialController {
         SortedList<credentialTableCell> ordinamento_dati = new SortedList<>(filtro_dati);
         ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
         tabella.setItems(ordinamento_dati);
+
+        noteCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/note_white.png")));
+        credCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/credenziali.png")));
+        accountCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/account.png")));
+        fileCircle.setFill(new ImagePattern( new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
     }
 
 
@@ -172,52 +172,13 @@ public class credentialController {
 
     }
 
-    public void insertNewCredential(ActionEvent actionEvent) {
-        try {
-            URL fxmlLocation = getClass().getResource("insert_credential.fxml");
-            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
-            Scene scene = new Scene(fxmlLoader.load(), 567, 540);
-            Stage stage = new Stage();
-            stage.setTitle("Inserisci credenziale");
-            stage.setScene(scene);
-            edit_credController edit_credController = fxmlLoader.getController();
-            edit_credController.logged = logged;
-            edit_credController.tabella = tabella;
-            edit_credController.favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void import_csv(){
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Scegli file da importare");
-        fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
-        File file = fc.showOpenDialog(null);
-        if (file != null){
-            //System.out.println(file.getAbsolutePath());
-            APM.user.portachiavi.import_csv(file.getAbsolutePath());
-        }
-    }
-
-    @FXML
-    public void export_csv(){
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Salva file");
-        fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
-        File file = fc.showSaveDialog(null);
-        if (file != null) {
-            //System.out.println(file.getAbsolutePath());
-            APM.user.portachiavi.export_csv(file.getAbsolutePath());
-        }
+    public void fileScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"file_enc.fxml");
     }
 
 
-
-
-
-
+    public void noteScene(ActionEvent actionEvent) {
+        changeScene(actionEvent,"note.fxml");
+    }
 }
 
