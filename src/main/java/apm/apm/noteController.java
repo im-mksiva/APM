@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -38,6 +39,9 @@ public class noteController {
 
     @FXML
     private MFXLegacyTableView<note> tabella;
+
+    @FXML
+    private ContextMenu tastoDestro;
 
     @FXML
     private TableColumn<?, ?> tag;
@@ -97,6 +101,19 @@ public class noteController {
         });
         tabella.setItems(filtro_dati);
     }
+
+    @FXML
+    void deleteRow(ActionEvent event) {
+        System.out.println("cancellazione");
+        note selezione = tabella.getSelectionModel().getSelectedItem();
+        this.logged.note.remove(selezione);
+        FilteredList esterna = (FilteredList) tabella.getItems();
+        esterna.getSource().remove(selezione);
+        tabella.refresh();
+    }
+
+    @FXML
+    void edit(ActionEvent event){}
 
     @FXML
     void InsertNewNote(ActionEvent event) {
