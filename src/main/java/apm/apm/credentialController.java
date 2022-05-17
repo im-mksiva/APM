@@ -51,10 +51,10 @@ public class credentialController {
     public TableColumn<credentialTableCell, String> url;
 
     @FXML
-    private TableColumn<?, ?> cp_pass;
+    private TableColumn<?, ?> copia_pass;
     //
     @FXML
-    private TableColumn<?, ?> cp_user;
+    private TableColumn<?, ?> copia_user;
 
     @FXML
     private ContextMenu tastoDestro;
@@ -88,17 +88,11 @@ public class credentialController {
     public void initialize() {
         logged = APM.user;
         lista_cred = null;
-        tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
-        servizio.setCellValueFactory(new PropertyValueFactory<>("servizio"));
-        url.setCellValueFactory(new PropertyValueFactory<>("url"));
-        cp_user.setCellValueFactory(new PropertyValueFactory<>("copia_user"));
-        cp_pass.setCellValueFactory(new PropertyValueFactory<>("copia_pass"));
 
-        tag.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
-        servizio.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
-        url.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
-        cp_pass.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
-        cp_user.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        for (TableColumn elem: tabella.getColumns()) {
+            elem.setCellValueFactory(new PropertyValueFactory<>(elem.getId()));
+            elem.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
+        }
 
         if (lista_cred == null){
 

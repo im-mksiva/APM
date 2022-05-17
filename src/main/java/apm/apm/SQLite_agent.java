@@ -231,13 +231,14 @@ public class SQLite_agent {
 
     void insertCredential(Credenziali_servizi nuova_credenziale) {
         try {
-            String sql = "insert into CREDENZIALI(user_id, url, service, username, password) values (?,?,?,?,?)";
+            String sql = "insert into CREDENZIALI(user_id, url, service, username, password, tag) values (?,?,?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, nuova_credenziale.getUser_id());
             query.setString(2, nuova_credenziale.getUrl());
             query.setString(3, nuova_credenziale.getServizio());
             query.setString(4, nuova_credenziale.getUsername());
             query.setString(5, nuova_credenziale.getPassword());
+            query.setString(6,nuova_credenziale.getTag());
             // executeUpdate() serve per aggiornare lo stato del database, che sia inserimento o cancellazione
             query.executeUpdate();
             query.close();
