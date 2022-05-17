@@ -105,21 +105,15 @@ public class Keychain extends base_operations {
     }
 
 
-    void import_csv(String percorso) throws IOException {
+    void import_csv(String percorso){
         gestione_file_csv insert = new gestione_file_csv();
-        insert.import_file(percorso, user.getId());
+        insert.import_file(percorso);
     }
 
-    void listCredential() {
 
-    }
-
-    void export_csv() throws IOException, SQLException {
-        ResultSet results = db_agent.get_all_Credential(user.getId());
+    void export_csv(String percorso){
         gestione_file_csv export_file = new gestione_file_csv();
-        String username = user.getUsername();
-        export_file.export_file(results, username);
-
+        export_file.export_file(this.getLista_credenziali(), percorso);
     }
 }
 

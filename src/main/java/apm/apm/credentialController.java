@@ -19,8 +19,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -79,6 +82,7 @@ public class credentialController {
 
     private User logged;
     ObservableList<credentialTableCell> lista_cred;
+    gestione_file_csv imp_exp_file_csv = new gestione_file_csv();
 
     @FXML
     public void initialize() {
@@ -187,10 +191,31 @@ public class credentialController {
     }
 
     @FXML
-    public void import_csv(){}
+    public void import_csv(){
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Scegli file da importare");
+        fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
+        File file = fc.showOpenDialog(null);
+        if (file != null){
+            //System.out.println(file.getAbsolutePath());
+            APM.user.portachiavi.import_csv(file.getAbsolutePath());
+        }
+    }
 
     @FXML
-    public void export_csv(){}
+    public void export_csv(){
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Salva file");
+        fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
+        File file = fc.showSaveDialog(null);
+        if (file != null) {
+            //System.out.println(file.getAbsolutePath());
+            APM.user.portachiavi.export_csv(file.getAbsolutePath());
+        }
+    }
+
+
+
 
 
 

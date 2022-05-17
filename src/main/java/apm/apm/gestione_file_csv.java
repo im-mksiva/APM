@@ -3,10 +3,7 @@ package apm.apm;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -72,33 +69,42 @@ public class gestione_file_csv {
         return dizionario_inserimento;
     }
 
-    void import_file(String percorso, int Keychain_id) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(percorso));
-        //prima riga -> struttura del file
-        String line = reader.readLine();
-        String[] prima_riga = separa_stringa(line);
-        Map<String, Integer> diz_indici = dizionario_indice(prima_riga);
-        //System.out.println("dizionario indici:\n" + diz_indici);
-        //dalla seconda riga in poi
-        line = reader.readLine();
-        while (line != null) {
-            //System.out.println("line prima di essere spezzata " + line);
-            String[] riga_successiva = separa_stringa(line);
-            Map<String, String> diz_ins = inserimento_campi(riga_successiva, diz_indici);
-            //aggiungere metodo per inserimento dati nel DB
-            String username = diz_ins.get("username");
-            String password = diz_ins.get("password");
-            String nome_servizio = diz_ins.get("name");
-            String url = diz_ins.get("url");
-            Credenziali_servizi nuovo_servizio = new Credenziali_servizi(Keychain_id, username, password, nome_servizio, url);
-            SQLite_agent inserimento_servizio = new SQLite_agent();
-            inserimento_servizio.insertCredential(nuovo_servizio);
-            //System.out.println("\n\ndizionario inserimento dati:\n" + diz_ins);
+    void import_file(String percorso) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(percorso));
+            //prima riga -> struttura del file
+            String line = reader.readLine();
+            String[] prima_riga = separa_stringa(line);
+            Map<String, Integer> diz_indici = dizionario_indice(prima_riga);
+            //System.out.println("dizionario indici:\n" + diz_indici);
+            //dalla seconda riga in poi
             line = reader.readLine();
+            while (line != null) {
+                //System.out.println("line prima di essere spezzata " + line);
+                String[] riga_successiva = separa_stringa(line);
+                Map<String, String> diz_ins = inserimento_campi(riga_successiva, diz_indici);
+                //aggiungere metodo per inserimento dati nel DB
+                String username = diz_ins.get("username");
+                String password = diz_ins.get("password");
+                String nome_servizio = diz_ins.get("name");
+                String url = diz_ins.get("url");
+                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), username, password, nome_servizio, url);
+                //Keychain inserimento_servizio = new Keychain()
+                //SQLite_agent inserimento_servizio = new SQLite_agent();
+                //inserimento_servizio.insertCredential(nuovo_servizio);
+                APM.user.portachiavi.add(nuovo_servizio);
+                //System.out.println("\n\ndizionario inserimento dati:\n" + diz_ins);
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 
-    void export_file(ResultSet results, String username) throws SQLException, IOException {
+    /*void export_file(ResultSet results, String username) throws SQLException, IOException {
         // Open CSV file.
         BufferedWriter writer = Files.newBufferedWriter(Paths.get("C:\\Users\\calog\\IdeaProjects\\APM\\" + username + "_credenziali.csv"));
 
@@ -122,6 +128,22 @@ public class gestione_file_csv {
         csvPrinter.flush();
         csvPrinter.close();
     }
+*/
+    void export_file(ArrayList<Credenziali_servizi> lista_credenziali, String percorso){
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(percorso));
+            //BufferedWriter writer = Files.newBufferedWriter(Paths.get("C:\\Users\\calog\\IdeaProjects\\APM\\" + username + "_credenziali.csv"));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("name,url,username,password"));
+            //ArrayList<Credenziali_servizi> lista_credenziali = APM.user.portachiavi.getLista_credenziali();
+            for(Credenziali_servizi elem : lista_credenziali){
+                csvPrinter.printRecord(elem.getServizio(),elem.getUrl(),elem.getUsername(),elem.getPassword());
+            }
+            csvPrinter.flush();
+            csvPrinter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
 
 }
