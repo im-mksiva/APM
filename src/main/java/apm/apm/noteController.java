@@ -95,9 +95,7 @@ public class noteController {
                 }
             });
         });
-        SortedList<note> ordinamento_dati = new SortedList<>(filtro_dati);
-        ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
-        tabella.setItems(ordinamento_dati);
+        tabella.setItems(filtro_dati);
     }
 
     @FXML

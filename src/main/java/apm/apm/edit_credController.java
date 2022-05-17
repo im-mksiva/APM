@@ -3,6 +3,7 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -111,7 +112,10 @@ public class edit_credController {
         favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
         bottoneInsert.setDisable(true);
         bottoneConferma.setDisable(false);
-        //tabella.getItems().
+        // il problema era che FilteredList è un oggetto read-only che racchiude la lista di partenza,
+        // quindi dobbiamo aggiungere la nuova cella alla lista "interna"
+        FilteredList esterna = (FilteredList) tabella.getItems();
+        esterna.getSource().add(new_cell);
         tabella.refresh();
     }
 
