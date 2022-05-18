@@ -10,8 +10,8 @@ public class SQLite_agent {
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
 //    Class.forName("org.sqlite.JDBC");
     Connection connection = null;
-    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
-//    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
+//    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
+    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
     String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     SQLite_agent() {
@@ -247,6 +247,7 @@ public class SQLite_agent {
         }
     }
 
+
     void updateCredential(Credenziali_servizi credenziale_aggiornata) {
         try {
             String sql = "UPDATE CREDENZIALI SET url=?, service=?, username=?, password=?, strenght=?, pwnd=?, tag=? WHERE id=?";
@@ -352,7 +353,7 @@ public class SQLite_agent {
     ResultSet get_all_Note(int user_id) {
         ResultSet result = null;
         try {
-            String sql = "select * from NOTE where user_id = ?";
+            String sql = "select note_id, user_id, tag, testo, STRFTIME('%d/%m/%Y %H:%M:%S', DATETIME(last_modified, 'localtime')) as last_modified, nome from NOTE where user_id = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, user_id);
             result = query.executeQuery();
@@ -361,5 +362,28 @@ public class SQLite_agent {
         }
         return result;
     }
+
+    void updateNote(note nota_aggiornata) {
+        try {
+            String sql = "UPDATE NOTE SET tag=?, testo=?, nome=? WHERE note_id=?";
+            PreparedStatement query = connection.prepareStatement(sql);
+            query.setString(1, nota_aggiornata.getTag());
+            query.setString(2, nota_aggiornata.getTesto());
+            //query.setString(3, nota_aggiornata.getLast_modified());
+            query.setString(3, nota_aggiornata.getNome());
+            query.setInt(4, nota_aggiornata.getId());
+            // executeUpdate() serve per aggiornare lo stato del database, che sia inserimento o cancellazione
+            query.executeUpdate();
+            query.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 
 }

@@ -49,6 +49,9 @@ public class note implements Encrypt_decrypt_info {
         this.last_modified = last_modifed;
     }
 
+    public void setLast_modified(String last_modified) {
+        this.last_modified = last_modified;
+    }
 
     public int getId() {
         return id;
@@ -75,7 +78,8 @@ public class note implements Encrypt_decrypt_info {
         this.testo = decrypt.Decrypt(this.testo);
     }
 
-    void update(SQLite_agent db_agent) {
-
+    void update(User user) {
+        this.Encrypt(user.getEncr_key());
+        user.db_agent.updateNote(this);
     }
 }

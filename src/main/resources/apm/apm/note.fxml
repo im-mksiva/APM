@@ -29,8 +29,8 @@
                </columnResizePolicy>
                <contextMenu>
                   <ContextMenu>
-                     <items>
-                        <MenuItem fx:id="editCred" mnemonicParsing="false" onAction="#edit" text="Modifica" />
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#visualModifyNote" text="Visualizza/Modifica" />
                         <MenuItem fx:id="cancella" mnemonicParsing="false" onAction="#deleteRow" text="Elimina" />
                      </items>
                   </ContextMenu>
