@@ -21,6 +21,15 @@ public class User extends Credenziali {
         note = new archivio_note(this);
     }
 
+
+    // nella fase di registrazione
+    public User(String username, String password, String nome, String cognome) {
+        super(username, password);
+        this.nome = nome;
+        this.cognome = cognome;
+
+    }
+
     public void create_keychain() {
         this.portachiavi = new Keychain(this);
     }
@@ -38,13 +47,6 @@ public class User extends Credenziali {
         this.encr_key = encr_key;
     }
 
-    // nella fase di registrazione
-    public User(String username, String password, String nome, String cognome) {
-        super(username, password);
-        this.nome = nome;
-        this.cognome = cognome;
-
-    }
 
     public String getNome() {
         return nome;

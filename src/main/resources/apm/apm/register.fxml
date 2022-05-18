@@ -8,34 +8,38 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="800.0" style="-fx-background-color: #00aae8;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apm.apm.registerController">
-   <children>
-      <AnchorPane layoutX="74.0" layoutY="68.0" prefHeight="444.0" prefWidth="652.0" style="-fx-background-radius: 20; -fx-background-color: white; -fx-border-radius: 20;">
-         <children>
-            <MFXTextField fx:id="username" alignment="CENTER" floatMode="ABOVE" floatingText="email" graphicTextGap="0.0" layoutX="233.0" layoutY="180.0" prefHeight="49.0" prefWidth="191.0" />
-            <MFXPasswordField fx:id="password" alignment="TOP_CENTER" allowPaste="true" floatMode="ABOVE" floatingText="Password" graphicTextGap="0.0" layoutX="233.0" layoutY="261.0" prefHeight="49.0" prefWidth="191.0" textLimit="255" />
-            <Text layoutX="185.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati in APM">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <MFXButton fx:id="loginButton" layoutX="276.0" layoutY="339.0" onAction="#onClick" style="-fx-background-color: #e8e8e8;" text="Accedi" textAlignment="CENTER" viewOrder="1.0">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </MFXButton>
-            <Text layoutX="240.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sei registrato?" wrappingWidth="107.15900039672852">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <Text fx:id="register" fill="#0080ae" layoutX="342.0" layoutY="421.0" onMouseClicked="#registerScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca qui" underline="true" wrappingWidth="70.15900039672852">
+<Pane fx:id="schermata" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="800.0" style="-fx-background-color: #12203a;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apm.apm.registerController">
+    <children>
+        <AnchorPane layoutX="74.0" layoutY="68.0" prefHeight="444.0" prefWidth="652.0" style="-fx-background-radius: 20; -fx-background-color: white; -fx-border-radius: 20;">
+            <children>
+                <MFXTextField fx:id="username" alignment="CENTER" floatMode="ABOVE" floatingText="Nome utente" graphicTextGap="0.0" layoutX="231.0" layoutY="154.0" prefHeight="49.0" prefWidth="191.0" />
+                <MFXPasswordField fx:id="password" alignment="TOP_CENTER" allowPaste="true" floatMode="ABOVE" floatingText="Password" graphicTextGap="0.0" layoutX="231.0" layoutY="235.0" prefHeight="49.0" prefWidth="191.0" textLimit="255" />
+                <Text layoutX="183.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati in APM">
+                    <font>
+                        <Font size="35.0" />
+                    </font>
+                </Text>
+                <MFXButton fx:id="registerButton" layoutX="261.0" layoutY="313.0" onAction="#onClick" style="-fx-background-color: #59cb91; -fx-text-fill: white;" text="Registrati" textAlignment="CENTER" viewOrder="1.0">
+                    <font>
+                        <Font size="23.0" />
+                    </font>
+                </MFXButton>
+            <Text layoutX="229.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sei già registrato?" wrappingWidth="126.15900039672852">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <MFXTextField fx:id="username1" alignment="CENTER" floatMode="ABOVE" floatingText="Nome utente" graphicTextGap="0.0" layoutX="231.0" layoutY="100.0" prefHeight="49.0" prefWidth="191.0" />
-         </children>
-      </AnchorPane>
-   </children>
+            <Text fx:id="login" fill="#0080ae" layoutX="353.0" layoutY="395.0" onMouseClicked="#loginScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca qui" underline="true" wrappingWidth="70.15900039672852">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="200.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dopo la registrazione sarai riportato alla schermata di accesso" textAlignment="CENTER" wrappingWidth="252.15900039672852">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            </children>
+        </AnchorPane>
+    </children>
 </Pane>

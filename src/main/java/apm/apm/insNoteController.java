@@ -3,6 +3,7 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -53,7 +54,7 @@ public class insNoteController {
 
     @FXML
     void insertNote(ActionEvent event) {
-        //String testo, String tag, String nome
+        String testo_in_chiaro = InserisciTesto.getText();
 
         System.out.println("prova testo " + InserisciTesto.getParagraphs());
         note new_nota = new note(
@@ -68,7 +69,9 @@ public class insNoteController {
         InserisciTesto.clear();
         InserisciTag.clear();
         InserisciTitolo.clear();
-        //tabella.getItems().add(new_nota);
+        FilteredList esterna = (FilteredList) tabella.getItems();
+        new_nota.setTesto(testo_in_chiaro);
+        esterna.getSource().add(new_nota);
         tabella.refresh();
     }
 

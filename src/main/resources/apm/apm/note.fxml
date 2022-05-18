@@ -31,8 +31,8 @@
                   <ContextMenu>
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#visualModifyNote" text="Visualizza/Modifica" />
-                        <MenuItem mnemonicParsing="false" onAction="#deleteNote" text="Elimina" />
-                    </items>
+                        <MenuItem fx:id="cancella" mnemonicParsing="false" onAction="#deleteRow" text="Elimina" />
+                     </items>
                   </ContextMenu>
                </contextMenu>
             </MFXLegacyTableView>

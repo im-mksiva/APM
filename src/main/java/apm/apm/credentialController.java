@@ -126,9 +126,7 @@ public class credentialController {
                 }
             });
         });
-        SortedList<credentialTableCell> ordinamento_dati = new SortedList<>(filtro_dati);
-        ordinamento_dati.comparatorProperty().bind(tabella.comparatorProperty());
-        tabella.setItems(ordinamento_dati);
+        tabella.setItems(filtro_dati);
     }
 
 
@@ -162,8 +160,9 @@ public class credentialController {
         System.out.println("cancellazione");
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
         this.logged.portachiavi.remove(selezione);
-        tabella.getItems().remove(selezione);
-
+        FilteredList esterna = (FilteredList) tabella.getItems();
+        esterna.getSource().remove(selezione);
+        tabella.refresh();
     }
 
     public void insertNewCredential(ActionEvent actionEvent) {
@@ -207,10 +206,6 @@ public class credentialController {
             APM.user.portachiavi.export_csv(file.getAbsolutePath());
         }
     }
-
-
-
-
 
 
 }
