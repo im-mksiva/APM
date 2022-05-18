@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apm.apm.insNoteController">
+   <children>
+      <Text layoutX="154.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza/Modifica nota">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <MFXTextField fx:id="visualTitolo" floatMode="BORDER" floatingText="Titolo" layoutX="82.0" layoutY="99.0" prefHeight="50.0" prefWidth="150.0" />
+      <MFXTextField fx:id="visualTag" floatMode="BORDER" floatingText="Tag\Categoria" layoutX="335.0" layoutY="99.0" prefHeight="50.0" prefWidth="150.0" />
+      <TextArea fx:id="visualTesto" layoutX="18.0" layoutY="177.0" prefHeight="244.0" prefWidth="532.0" />
+      <MFXButton fx:id="bottoneSalva" buttonType="RAISED" layoutX="231.0" layoutY="458.0" onAction="#salvaNote" prefHeight="35.0" prefWidth="105.0" style="-fx-background-color: #5eba7d; -fx-text-fill: white;" text="Salva">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></MFXButton>
+      <Text fx:id="inserimento_effettuato" layoutX="182.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="203.7366943359375" />
+   </children>
+</AnchorPane>

@@ -58,7 +58,6 @@ public class edit_credController {
     }
 
 
-
     public void setup() {
         password.setText(selezione.getPassword());
         url.setText(selezione.getUrl());

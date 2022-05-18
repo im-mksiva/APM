@@ -117,9 +117,9 @@ public class credentialController {
                 String searchKeyword = newValue.toLowerCase();
                 if(lista_cred.getTag() != null && lista_cred.getTag().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
-                }else if (lista_cred.getUrl() != null && lista_cred.getServizio().toLowerCase().indexOf(searchKeyword) > -1){
+                }else if (lista_cred.getServizio() != null && lista_cred.getServizio().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
-                }else if (lista_cred.getServizio() != null && lista_cred.getUrl().toLowerCase().indexOf(searchKeyword) > -1){
+                }else if (lista_cred.getUrl() != null && lista_cred.getUrl().toLowerCase().indexOf(searchKeyword) > -1){
                     return true;
                 }else{
                     return false;

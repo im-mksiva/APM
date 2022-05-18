@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class insNoteController {
     @FXML
     private MFXTextField InserisciTag;
@@ -28,8 +31,23 @@ public class insNoteController {
     private Text inserimento_effettuato;
 
     @FXML
+    private MFXTextField visualTag;
+
+    @FXML
+    private TextArea visualTesto;
+
+    @FXML
+    private MFXTextField visualTitolo;
+
+    @FXML
+    private MFXButton bottoneSalva;
+
+
+    @FXML
     MFXLegacyTableView<note> tabella;
 
+
+    note selezione;
     User logged;
 
 
@@ -60,6 +78,32 @@ public class insNoteController {
         InserisciTag.clear();
         InserisciTitolo.clear();
         inserimento_effettuato.setText("");
+    }
+
+
+
+    @FXML
+    void salvaNote(ActionEvent event) {
+        String testo = visualTesto.getText();
+        selezione.setTag(visualTag.getText());
+        selezione.setNome(visualTitolo.getText());
+        selezione.setTesto(visualTesto.getText());
+        LocalDateTime dateTime = LocalDateTime.now();
+        String timeStamp = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(dateTime);
+        selezione.setLast_modified(timeStamp);
+        //selezione.setLast_modified("CURRENT_TIMESTAMP");
+        //System.out.println("date   " + selezione.getLast_modified());
+        selezione.update(logged);
+        tabella.refresh();
+        selezione.setTesto(testo);
+
+    }
+
+    public void setup(){
+        visualTitolo.setText(selezione.getNome());
+        visualTag.setText(selezione.getTag());
+        visualTesto.setText(selezione.getTesto());
+
     }
 
 

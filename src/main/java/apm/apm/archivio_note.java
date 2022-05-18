@@ -89,6 +89,7 @@ public class archivio_note extends base_operations {
                 //System.out.println("criptata " + nota.getTesto());
                 nota.Decrypt(user.getEncr_key());
                 //System.out.println("       ->    decriptata" + nota.getTesto());
+
                 lista.add(nota);
                 continua = result.next();
             }

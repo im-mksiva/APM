@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -75,6 +76,17 @@ public class noteController {
         testo.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
         Ultima_modifica.setStyle("-fx-alignment: CENTER; -fx-text-fill: black");
 
+        tabella.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2){
+                this.visualModifyNote(null);
+            }
+        });
+
+
+
+
+
+
         new_list = FXCollections.observableArrayList(lista_note);
         tabella.setItems(new_list);
         FilteredList<note> filtro_dati = new FilteredList<>(new_list, b -> true);
@@ -116,6 +128,42 @@ public class noteController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
+
+
+    @FXML
+    void visualModifyNote(ActionEvent event) {
+        note selezione = tabella.getSelectionModel().getSelectedItem();
+        try {
+            URL fxmlLocation = getClass().getResource("modif_note.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+            Scene scene = new Scene(fxmlLoader.load(), 567, 540);
+            Stage stage = new Stage();
+            stage.setTitle("Modifica nota");
+            stage.setScene(scene);
+            stage.setUserData(selezione);
+            insNoteController vis_mod_controller = fxmlLoader.getController();
+            vis_mod_controller.selezione = selezione;
+            vis_mod_controller.logged = logged;
+            vis_mod_controller.tabella = tabella;
+            vis_mod_controller.setup();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    void deleteNote(ActionEvent event) {
+
+    }
+
+
+
+
+
+
 
 }
