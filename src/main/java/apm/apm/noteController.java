@@ -86,11 +86,6 @@ public class noteController {
             }
         });
 
-
-
-
-
-
         new_list = FXCollections.observableArrayList(lista_note);
         tabella.setItems(new_list);
         FilteredList<note> filtro_dati = new FilteredList<>(new_list, b -> true);
@@ -169,16 +164,5 @@ public class noteController {
         }
 
     }
-
-    @FXML
-    void deleteNote(ActionEvent event) {
-
-    }
-
-
-
-
-
-
 
 }

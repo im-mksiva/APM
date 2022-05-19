@@ -65,9 +65,9 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
         this.password = password;
     }
 
-    protected String check_pwnd() throws NoSuchAlgorithmException, IOException {
+    protected void check_pwnd() throws NoSuchAlgorithmException, IOException {
         HaveIBeenPwned tester = new HaveIBeenPwned();
-        return tester.valuta_password(this.password);
+        pwnd = tester.valuta_password(this.password);
     }
 
 

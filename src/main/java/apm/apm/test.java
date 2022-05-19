@@ -15,7 +15,10 @@ public class test extends Application {
     public static User user;
     @Override
     public void start(Stage stage) throws IOException {
-        URL fxmlLocation = getClass().getResource("principale.fxml");
+        AuthManager login = new AuthManager();
+        APM.user = login.userLogin("calmor", "1234");
+        User user_logged = APM.user;
+        URL fxmlLocation = getClass().getResource("checkScene.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
 
         Parent root = fxmlLoader.load();

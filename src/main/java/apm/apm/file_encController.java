@@ -3,14 +3,18 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import javax.crypto.Cipher;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class file_encController {
 
@@ -119,8 +123,14 @@ public class file_encController {
 
     @FXML
     void torna_indietro(MouseEvent event) {
-        cripta_file.setText("Scegli file da decriptare");
-        salva.setDisable(true);
+        Pane schermata = (Pane) cripta_file.getScene().lookup("#schermata");
+        URL fxmlLocation = getClass().getResource("file_enc.fxml");
+        FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        try {
+            schermata.getChildren().add(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

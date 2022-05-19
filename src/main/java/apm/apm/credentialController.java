@@ -6,7 +6,7 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +17,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +42,7 @@ public class credentialController {
     private Circle fileCircle;
 
     @FXML
-    private MFXLegacyTableView<credentialTableCell> tabella;
+    MFXLegacyTableView<credentialTableCell> tabella;
 
     @FXML
     public TableColumn<credentialTableCell, String> servizio;
@@ -191,22 +191,52 @@ public class credentialController {
         File file = fc.showOpenDialog(null);
         if (file != null){
             //System.out.println(file.getAbsolutePath());
-            APM.user.portachiavi.import_csv(file.getAbsolutePath());
+            Task task = new Task<Void>() {
+                @FXML
+                MFXLegacyTableView<credentialTableCell> tabella;
+                @Override public Void call() {
+                    APM.user.portachiavi.import_csv(file.getAbsolutePath());
+                    tabella.refresh();
+                    return null;
+                };
+            };
+            new Thread(task).start();
+            tabella.refresh();
         }
     }
 
     @FXML
     public void export_csv(){
+        tabella.refresh();
         FileChooser fc = new FileChooser();
         fc.setTitle("Salva file");
         fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
         File file = fc.showSaveDialog(null);
         if (file != null) {
             //System.out.println(file.getAbsolutePath());
-            APM.user.portachiavi.export_csv(file.getAbsolutePath());
+            Task task = new Task<Void>() {
+                @Override public Void call() {
+                    APM.user.portachiavi.export_csv(file.getAbsolutePath());
+                    return null;
+                };
+            };
+            new Thread(task).start();
         }
     }
 
 
-}
+
+    public void checkScene(ActionEvent event) {
+        Pane schermata = (Pane) tabella.getScene().lookup("#schermata");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL fxmlLocation = getClass().getResource("checkScene.fxml");
+        FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        try {
+            schermata.getChildren().add(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    }
+
 

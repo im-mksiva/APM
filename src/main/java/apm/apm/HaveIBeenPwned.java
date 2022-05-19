@@ -38,7 +38,7 @@ public class HaveIBeenPwned {
     }
 
     //prende in ingresso un i primi 5 caratteri del digest per ottenere il file tramite URL
-    String valuta_password(String password) throws NoSuchAlgorithmException, IOException {
+    int valuta_password(String password) throws NoSuchAlgorithmException, IOException {
         String digest = digest_sha1(password);
         String[] lista = prefix_suffix(digest);
         String prefix = lista[0];
@@ -52,12 +52,12 @@ public class HaveIBeenPwned {
         while (line != null) {
             String[] linea_divisa = line.split(":");
             if (Objects.equals(linea_divisa[0], suffix)) {
-                return linea_divisa[1];
+                return Integer.valueOf(linea_divisa[1]);
             }
             line = read.readLine();
         }
         read.close();
-        return null;
+        return 0;
     }
 
 

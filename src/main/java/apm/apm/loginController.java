@@ -31,8 +31,8 @@ public class loginController {
         AuthManager login = new AuthManager();
         String user = username.getText();
         String pass = password.getText();
-//        APM.user = login.userLogin(user, pass);
-        APM.user = login.userLogin("calmor", "1234");
+        APM.user = login.userLogin(user, pass);
+//        APM.user = login.userLogin("calmor", "1234");
         User user_logged = APM.user;
         if (user_logged != null) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -50,7 +50,6 @@ public class loginController {
             stage.show();
         }
         }
-// bbbbbbbbbbbbbbbbbbbbb
 
     public void registerScene(MouseEvent mouseEvent) {
         Pane schermata = (Pane) register.getScene().lookup("#schermata");

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +34,8 @@ public class finestra {
     public MFXButton credentialButton;
     public MFXButton note_button;
     public Circle accountCircle;
-    public MFXButton account;
+    public MenuItem userSettings;
+    public MenuItem logout;
     @FXML
     private Pane schermata;
     @FXML
@@ -100,4 +103,25 @@ public class finestra {
             credCircle.setFill(new ImagePattern(new Image("file:src/main/resources/apm/apm/icons/credenziali.png")));
             fileCircle.setFill(new ImagePattern(new Image("file:src/main/resources/apm/apm/icons/file_white.png")));
         }
+
+    public void userLogout(ActionEvent event) {
+        APM.user = null;
+        Stage stage = (Stage) schermata.getScene().getWindow();
+        stage.close();
+
+        stage = new Stage();
+        URL fxmlLocation = getClass().getResource("login.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+            Scene scene = new Scene(root, 800, 580);
+            stage.setTitle("APM Login");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+}

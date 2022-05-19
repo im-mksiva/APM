@@ -147,8 +147,11 @@ public class edit_credController {
     void getSecurePass(MouseEvent mouseEvent) {
         System.out.println("È partita la funzione SecurePass");
         passGen generator = new passGen();
-        password.setText(generator.genPass(20));
+        password.setText(generator.genPass(10));
+        password.requestFocus();
         checkPassStrenght();
+
+//        password.setStyle("-mfx-float-mode: BORDER");
     }
 
     @FXML
