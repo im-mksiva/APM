@@ -12,8 +12,8 @@
     <children>
         <AnchorPane layoutX="74.0" layoutY="68.0" prefHeight="444.0" prefWidth="652.0" style="-fx-background-radius: 20; -fx-background-color: white; -fx-border-radius: 20;">
             <children>
-                <MFXTextField fx:id="username" alignment="CENTER" floatMode="ABOVE" floatingText="Nome utente" graphicTextGap="0.0" layoutX="231.0" layoutY="154.0" prefHeight="49.0" prefWidth="191.0" />
-                <MFXPasswordField fx:id="password" alignment="TOP_CENTER" allowPaste="true" floatMode="ABOVE" floatingText="Password" graphicTextGap="0.0" layoutX="231.0" layoutY="235.0" prefHeight="49.0" prefWidth="191.0" textLimit="255" />
+                <MFXTextField fx:id="username" alignment="CENTER" floatMode="ABOVE" floatingText="Nome utente" graphicTextGap="0.0" layoutX="231.0" layoutY="154.0" onKeyPressed="#catch_enter" prefHeight="49.0" prefWidth="191.0" />
+                <MFXPasswordField fx:id="password" alignment="TOP_CENTER" allowPaste="true" floatMode="ABOVE" floatingText="Password" graphicTextGap="0.0" layoutX="231.0" layoutY="235.0" onKeyPressed="#catch_enter" prefHeight="49.0" prefWidth="191.0" textLimit="255" />
                 <Text layoutX="175.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in APM">
                     <font>
                         <Font size="35.0" />
