@@ -60,7 +60,8 @@ public class insNoteController {
         note new_nota = new note(
                 InserisciTesto.getText(),
                 InserisciTag.getText(),
-                InserisciTitolo.getText()
+                InserisciTitolo.getText(),
+                APM.user.getId()
         );
         if (InserisciTesto.getText() != "" && InserisciTitolo.getText()!="") {
             logged.note.add(new_nota);

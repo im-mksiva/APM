@@ -10,10 +10,11 @@ public class note implements Encrypt_decrypt_info {
     private int id, user_id;
     private String last_modified;
 
-    public note(String testo, String tag, String nome) {
+    public note(String testo, String tag, String nome, int user_id) {
         this.testo = testo;
         this.tag = tag;
         this.nome = nome;
+        this.user_id = user_id;
     }
 
     public String getTesto() {

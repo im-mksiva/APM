@@ -47,6 +47,9 @@ public class checkController {
     public void initialize() {
         User logged = APM.user;
         ArrayList<Credenziali_servizi> lista = logged.portachiavi.getLista_credenziali();
+//        for (Credenziali_servizi elem : lista ) {
+//            System.out.println(elem.getPwnd());
+//        }
 
         for (TableColumn elem: tabella.getColumns()) {
             elem.setCellValueFactory(new PropertyValueFactory<>(elem.getId()));
@@ -77,7 +80,6 @@ public class checkController {
     void check_pwnd(ActionEvent event){
         Task task = new Task<Void>() {
             @Override public Void call() {
-                HaveIBeenPwned haveIBeenPwned = new HaveIBeenPwned();
                 ObservableList lista = tabella.getItems();
                 for (int i = 0; i < lista.size(); i++) {
                     try {

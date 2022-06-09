@@ -10,8 +10,8 @@ public class SQLite_agent {
     // Valutare se scomporre in due classi distinte, una per la gestione di APM, una per le credenziali dell'utente
 //    Class.forName("org.sqlite.JDBC");
     Connection connection = null;
-    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
-//    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
+//    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
+    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
     String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     SQLite_agent() {
@@ -117,104 +117,6 @@ public class SQLite_agent {
         }
     }
 
-    public boolean find_user(String username) {
-        PreparedStatement query = null;
-        try {
-            String sql = "select username from users_apm where username = ?";
-            query = connection.prepareStatement(sql);
-            query.setString(1, username);
-            ResultSet result = query.executeQuery();
-            System.out.println(result.getString("username"));
-            if (result.getString("username") != null) {
-                query.close();
-                return true;
-            }
-        } catch (SQLException e) {
-            // quando viene inserito uno username non trovato viene lanciata una eccezione (ResultSet closed)
-            return false;
-//            throw new RuntimeException(e);
-        }
-        try {
-            query.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
-    //OVERLOADING
-
-    public String get_username(int user_id) {
-        try {
-            String sql = "select username from USERS_APM where user_id = ?";
-            PreparedStatement query = connection.prepareStatement(sql);
-            query.setInt(1, user_id);
-            ResultSet result = query.executeQuery();
-
-            if (result.getString("username") != null) {
-                String username = result.getString("username");
-                query.close();
-                return username;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-
-        }
-        return null;
-    }
-
-
-    public String get_Salt(String username) {
-        try {
-            String sql = "select salt from USERS_APM where username = ?";
-            PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1, username);
-            ResultSet result = query.executeQuery();
-            String salt = result.getString("salt");
-            query.close();
-            return salt;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public String get_User_Hash(String username) {
-        try {
-            String sql = "select password from USERS_APM where username = ?";
-            PreparedStatement query = connection.prepareStatement(sql);
-            query.setString(1, username);
-            // executeQuery() serve per recuperare dati (esegue la query)
-            ResultSet result = query.executeQuery();
-            String hash = result.getString("password");
-            query.close();
-            return hash;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    ResultSet search(String text, int user_id, int flag) {
-        String sql = null;
-        if (flag == 0) {
-            sql = "select * from CREDENZIALI where url like '%" + text + "%' OR service like '%" + text + "%' and user_id = " + user_id;
-        } else {
-            sql = "select * from NOTE where nome like '%" + text + "%' and user_id = " + user_id;
-        }
-        try {
-            Statement query = connection.createStatement();
-            ResultSet result = query.executeQuery(sql);
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
     ResultSet get_all_Credential(int user_id) {
         ResultSet result = null;
         try {
@@ -231,7 +133,7 @@ public class SQLite_agent {
 
     void insertCredential(Credenziali_servizi nuova_credenziale) {
         try {
-            String sql = "insert into CREDENZIALI(user_id, url, service, username, password, tag) values (?,?,?,?,?,?)";
+            String sql = "insert into CREDENZIALI(user_id, url, service, username, password, tag, strenght) values (?,?,?,?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, nuova_credenziale.getUser_id());
             query.setString(2, nuova_credenziale.getUrl());
@@ -239,6 +141,7 @@ public class SQLite_agent {
             query.setString(4, nuova_credenziale.getUsername());
             query.setString(5, nuova_credenziale.getPassword());
             query.setString(6,nuova_credenziale.getTag());
+            query.setInt(7,nuova_credenziale.getRobustezza());
             // executeUpdate() serve per aggiornare lo stato del database, che sia inserimento o cancellazione
             query.executeUpdate();
             query.close();
@@ -246,6 +149,7 @@ public class SQLite_agent {
             e.printStackTrace();
         }
     }
+
 
 
     void updateCredential(Credenziali_servizi credenziale_aggiornata) {
@@ -312,12 +216,16 @@ public class SQLite_agent {
 
 
     User getUser(String username) {
+        User logged = null;
         try {
             String sql = "select * from USERS_APM where username = ?";
             PreparedStatement query = connection.prepareStatement(sql);
             query.setString(1, username);
             ResultSet result = query.executeQuery();
-            User logged = new User(
+            if (!result.next()){
+                return null;
+            }
+            logged = new User(
                     result.getInt("user_id"),
                     result.getInt("robustezza"),
                     result.getInt("pwnd"),
@@ -329,18 +237,18 @@ public class SQLite_agent {
                     result.getString("encrypt_key")
             );
             query.close();
-            return logged;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return logged;
     }
 
-    void insert_note(int user_id, note new_nota) {
+    void insert_note(note new_nota) {
         try {
             String sql = "insert into NOTE (user_id,tag,nome,testo) values (?,?,?,?)";
             PreparedStatement query = connection.prepareStatement(sql);
-            query.setInt(1, user_id);
+            query.setInt(1, new_nota.getUser_id());
             query.setString(2, new_nota.tag);
             query.setString(3, new_nota.nome);
             query.setString(4, new_nota.testo);

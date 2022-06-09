@@ -3,6 +3,7 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -68,6 +70,8 @@ public class credentialController {
     @FXML
     private MFXTextField search_credential;
 
+    @FXML
+    private Text credenziale_rimossa;
 
     @FXML
     private MFXButton note_button;
@@ -133,7 +137,6 @@ public class credentialController {
     @FXML
     void edit(ActionEvent event) {
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
-        Parent root;
         try {
             URL fxmlLocation = getClass().getResource("edit_credential.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
@@ -160,6 +163,34 @@ public class credentialController {
         System.out.println("cancellazione");
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
         this.logged.portachiavi.remove(selezione);
+
+
+
+
+        //dissolvenza_testo test = new dissolvenza_testo();
+        //test.dissolvenza(credenziale_rimossa);
+
+            //credenziale_rimossa.setText("Credenziale rimossa correttamente");
+
+            Task task = new Task<Void>() {
+                @Override public Void call() {
+                    try {
+                        credenziale_rimossa.setVisible(true);
+                        Thread.sleep(500);
+                        credenziale_rimossa.setOpacity(0.7);
+                        Thread.sleep(500);
+                        credenziale_rimossa.setOpacity(0.4);
+                        Thread.sleep(500);
+                        credenziale_rimossa.setOpacity(0.2);
+                        credenziale_rimossa.setVisible(false);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                };
+            };
+            new Thread(task).start();
+
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().remove(selezione);
         tabella.refresh();

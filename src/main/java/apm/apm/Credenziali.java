@@ -22,9 +22,6 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
         this.password = password;
     }
 
-    protected void RobustezzaPass() {
-    }
-
     public int getId() {
         return id;
     }
@@ -67,7 +64,7 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
 
     protected void check_pwnd() throws NoSuchAlgorithmException, IOException {
         HaveIBeenPwned tester = new HaveIBeenPwned();
-        pwnd = tester.valuta_password(this.password);
+        this.pwnd = tester.valuta_password(this.password);
     }
 
 

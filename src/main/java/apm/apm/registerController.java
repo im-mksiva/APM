@@ -35,9 +35,7 @@ public class registerController {
     @FXML
     protected void onClick() {
         AuthManager register = new AuthManager();
-        String user = username.getText();
-        String pass = password.getText();
-        User new_user = new User(user,pass,"nome","cognome");
+        User new_user = new User(username.getText(),password.getText(),"nome","cognome");
         register.userRegister(new_user);
         loginScene(null);
     }

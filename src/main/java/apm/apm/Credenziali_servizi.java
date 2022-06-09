@@ -19,6 +19,7 @@ public class Credenziali_servizi extends Credenziali {
         this.url = url;
         this.servizio = servizio;
         this.tag = tag;
+        this.user_id = user_id;
     }
 
     //OVERLOADING per quando creo una nuova credenziale, non posso sapere parametri come l'id visto che se ne occupa il db. TRAMITE INTERFACCIA GRAFICA
@@ -27,7 +28,7 @@ public class Credenziali_servizi extends Credenziali {
         this.url = url;
         this.servizio = servizio;
         this.user_id = user_id;
-
+        this.setRobustezza(robustezza);
     }
 
     public Credenziali_servizi(int user_id, String username, String password, String servizio, String url) {

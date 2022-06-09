@@ -89,12 +89,14 @@ public class gestione_file_csv {
                 String password = diz_ins.get("password");
                 String nome_servizio = diz_ins.get("name");
                 String url = diz_ins.get("url");
-                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), username, password, nome_servizio, url);
-                //Keychain inserimento_servizio = new Keychain()
-                //SQLite_agent inserimento_servizio = new SQLite_agent();
-                //inserimento_servizio.insertCredential(nuovo_servizio);
+                RobustezzaPass valutazione_pass = new RobustezzaPass();
+                ArrayList<Integer> esito_valutazione = valutazione_pass.valutazione(password);
+                int somma_val = 0;
+                for(int elem : esito_valutazione){
+                    somma_val+=elem;
+                }
+                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), somma_val, username, password, nome_servizio, url);
                 APM.user.portachiavi.add(nuovo_servizio);
-                //System.out.println("\n\ndizionario inserimento dati:\n" + diz_ins);
                 line = reader.readLine();
             }
         } catch (IOException e) {
@@ -104,31 +106,6 @@ public class gestione_file_csv {
 
     }
 
-    /*void export_file(ResultSet results, String username) throws SQLException, IOException {
-        // Open CSV file.
-        BufferedWriter writer = Files.newBufferedWriter(Paths.get("C:\\Users\\calog\\IdeaProjects\\APM\\" + username + "_credenziali.csv"));
-
-        // Add table headers to CSV file.
-        int count = results.getMetaData().getColumnCount();
-        String intestazione = new String();
-        for (int i = 1; i < count; i++) {
-            intestazione += results.getMetaData().getColumnName(i) + ",";
-        }
-        intestazione = intestazione.substring(0, intestazione.length() - 1);
-        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(intestazione));
-        // Add data rows to CSV file.
-        while (results.next()) {
-            csvPrinter.printRecord(
-                    results.getInt(1),
-                    results.getString(2),
-                    results.getString(3),
-                    results.getString(4),
-                    results.getString(5));
-        }
-        csvPrinter.flush();
-        csvPrinter.close();
-    }
-*/
     void export_file(ArrayList<Credenziali_servizi> lista_credenziali, String percorso){
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(percorso));

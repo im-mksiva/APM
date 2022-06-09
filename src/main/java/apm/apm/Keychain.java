@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Keychain extends base_operations {
+public class Keychain implements base_operations {
     private User user;
     SQLite_agent db_agent;
 
@@ -37,6 +37,7 @@ public class Keychain extends base_operations {
                 credenziale.Decrypt(user.getEncr_key());
                 lista_credenziali.add( new credentialTableCell(credenziale));
                 continua = result.next();
+                System.out.println("pwnd  " + credenziale.getPwnd());
 
             }
             System.out.println(lista_credenziali.size());
@@ -67,41 +68,8 @@ public class Keychain extends base_operations {
     }
 
     @Override
-    void removeAll() {
+    public void removeAll() {
         db_agent.deleteRecord(user.getId(), "credenziali", "user_id");
-    }
-
-    @Override
-    public ArrayList find(String text) {
-
-        ResultSet result = db_agent.search(text, user.getId(), 0);
-        ArrayList<credentialTableCell> lista = new ArrayList<>();
-        boolean continua;
-        try {
-            continua = result.next();
-            while (continua) {
-                Credenziali_servizi credenziale = new Credenziali_servizi(
-                        result.getInt("id"),
-                        result.getInt("user_id"),
-                        result.getInt("strenght"),
-                        result.getInt("pwnd"),
-                        result.getString("username"),
-                        result.getString("password"),
-                        result.getString("url"),
-                        result.getString("service"),
-                        result.getString("tag")
-                );
-                // sblocco la password così l'utente se vuole la può vedere
-                credenziale.Decrypt(user.getEncr_key());
-                lista.add(new credentialTableCell(credenziale));
-                continua = result.next();
-            }
-
-            return lista;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
