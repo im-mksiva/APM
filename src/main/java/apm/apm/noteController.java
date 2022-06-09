@@ -107,6 +107,9 @@ public class noteController {
             });
         });
         tabella.setItems(filtro_dati);
+        for (note elem : tabella.getItems()){
+            System.out.println(elem.getId());
+        }
     }
 
     @FXML
