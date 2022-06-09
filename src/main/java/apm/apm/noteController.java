@@ -137,6 +137,7 @@ public class noteController {
             insNoteController ins = fxmlLoader.getController();
             ins.logged = logged;
             ins.tabella = tabella;
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -161,6 +162,7 @@ public class noteController {
             vis_mod_controller.logged = logged;
             vis_mod_controller.tabella = tabella;
             vis_mod_controller.setup();
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

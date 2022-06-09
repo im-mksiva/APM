@@ -33,8 +33,8 @@ public class loginController {
         AuthManager login = new AuthManager();
         String user = username.getText();
         String pass = password.getText();
-//        APM.user = login.userLogin(user, pass);
-        APM.user = login.userLogin("calmor", "1234");
+        APM.user = login.userLogin(user, pass);
+//        APM.user = login.userLogin("calmor", "1234");
         User user_logged = APM.user;
         if (user_logged != null) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -48,6 +48,7 @@ public class loginController {
             Scene scene = new Scene(root, 1000, 690);
             stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
+            stage.setResizable(false);
 
             stage.show();
         }

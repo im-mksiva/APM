@@ -133,6 +133,10 @@ public class credentialController {
     @FXML
     void edit(ActionEvent event) {
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+        if (selezione == null){
+            System.out.println("nessun elemento selezionato");
+            return;
+        }
         Parent root;
         try {
             URL fxmlLocation = getClass().getResource("edit_credential.fxml");
@@ -148,7 +152,7 @@ public class credentialController {
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
             edit_credController.setup();
-
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -157,8 +161,14 @@ public class credentialController {
 
     @FXML
     void deleteRow(ActionEvent event) {
-        System.out.println("cancellazione");
+//        System.out.println("cancellazione");
+
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+        if (selezione == null){
+            System.out.println("nessun elemento selezionato");
+            return;
+        }
+
         this.logged.portachiavi.remove(selezione);
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().remove(selezione);
@@ -177,6 +187,7 @@ public class credentialController {
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
             edit_credController.favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

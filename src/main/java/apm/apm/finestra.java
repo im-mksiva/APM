@@ -73,6 +73,7 @@ public class finestra {
                 Stage stage = new Stage();
                 stage.setTitle("Impostazioni utente");
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
             } catch (IOException e) {
                 throw new RuntimeException(e);

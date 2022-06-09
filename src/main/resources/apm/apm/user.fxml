@@ -20,7 +20,7 @@
          </font>
       </MFXButton>
       <Circle fx:id="favicon" fill="DODGERBLUE" layoutX="284.0" layoutY="143.0" radius="57.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
-      <Text layoutX="67.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vedi che cambiare la password chiude tutto quanto">
+      <Text layoutX="56.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procedendo con il cambio della password&#10;verrai disconnesso automaticamente dal programma!" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
