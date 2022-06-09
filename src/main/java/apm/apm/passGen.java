@@ -7,17 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class passGen {
-
-    List<Rule> addRules(){
-        // creo una lista di regole che dovranno essere seguite dalla password
-        List<Rule> regole = new ArrayList<>();
-        // aggiungiamo una serie di regole
-        regole.add(new LengthRule(8, 16));
-        regole.add(new CharacterRule(EnglishCharacterData.Digit, 1));
-        return regole;
-    }
-
-
     // ------------ OVERLOADING ------------
 
     String genPass(int lunghezza){
