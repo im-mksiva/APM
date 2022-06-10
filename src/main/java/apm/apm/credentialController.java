@@ -3,6 +3,7 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -68,6 +70,8 @@ public class credentialController {
     @FXML
     private MFXTextField search_credential;
 
+    @FXML
+    private Text messaggio_da_mostrare;
 
     @FXML
     private MFXButton note_button;
@@ -137,7 +141,6 @@ public class credentialController {
             System.out.println("nessun elemento selezionato");
             return;
         }
-        Parent root;
         try {
             URL fxmlLocation = getClass().getResource("edit_credential.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
@@ -170,6 +173,7 @@ public class credentialController {
         }
 
         this.logged.portachiavi.remove(selezione);
+        new dissolvenza_testo(messaggio_da_mostrare, "Credenziale rimossa Correttamente");
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().remove(selezione);
         tabella.refresh();
@@ -207,6 +211,7 @@ public class credentialController {
                 MFXLegacyTableView<credentialTableCell> tabella;
                 @Override public Void call() {
                     APM.user.portachiavi.import_csv(file.getAbsolutePath());
+                    new dissolvenza_testo(messaggio_da_mostrare, "Credenziali importate correttamente");
                     tabella.refresh();
                     return null;
                 };
@@ -228,6 +233,7 @@ public class credentialController {
             Task task = new Task<Void>() {
                 @Override public Void call() {
                     APM.user.portachiavi.export_csv(file.getAbsolutePath());
+                    new dissolvenza_testo(messaggio_da_mostrare, "Credenziali esportate correttamente");
                     return null;
                 };
             };

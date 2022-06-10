@@ -5,6 +5,7 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class userController {
 
@@ -16,6 +17,9 @@ public class userController {
 
     @FXML
     private MFXPasswordField user_pass;
+
+    @FXML
+    private Text pass_user_modificata;
 
     User logged;
 

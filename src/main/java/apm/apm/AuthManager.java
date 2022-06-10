@@ -9,11 +9,18 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class AuthManager {
+    SQLite_agent db_agent;
+    public AuthManager (){
+        this.db_agent = new SQLite_agent();
+    }
+
+
+
 
     public boolean userRegister(User new_user) {
         // verifica se esiste già uno username uguale, se si restituisce un messaggio di errore nella UI
-        SQLite_agent db_agent = new SQLite_agent();
-        if (db_agent.find_user(new_user.getUsername())) {
+//        SQLite_agent db_agent = new SQLite_agent();
+        if (db_agent.getUser(new_user.getUsername()) != null) {
             System.out.println("l'utente c'è già");
             return false;
         }
@@ -42,21 +49,21 @@ public class AuthManager {
     }
 
     public User userLogin(String username, String password) {
-        SQLite_agent db_agent = new SQLite_agent();
-        boolean user_exist = db_agent.find_user(username);
-        if (!user_exist) {
+        User logged = db_agent.getUser(username);
+        if (logged == null) {
             System.out.println("username non trovato");
             return null;
         }
 
-        String hashed_pass = db_agent.get_User_Hash(username);
-        String user_salt = db_agent.get_Salt(username);
-        String login_hashed_pass = get_SecurePassword(password, user_salt);
+
+//        String hashed_pass = db_agent.get_User_Hash(username);
+//        String user_salt = db_agent.get_Salt(username);
+        String login_hashed_pass = get_SecurePassword(password, logged.getSalt());
         // questo metodo di comparazione me l'ha suggerito IntelliJ, credo che le stringhe si possano confrontare solo in questo modo
         // dato che sono oggetti in java
-        if (Objects.equals(login_hashed_pass, hashed_pass)) {
+        if (Objects.equals(login_hashed_pass, logged.getPassword())) {
             System.out.println("Login ok");
-            User logged = db_agent.getUser(username);
+            logged = db_agent.getUser(username);
 //            logged.setPassword(password);
             logged.Decrypt(password);
             return logged;
@@ -68,7 +75,6 @@ public class AuthManager {
 
 
     void removeUser(int user_id) {
-        SQLite_agent db_agent = new SQLite_agent();
         db_agent.deleteRecord(user_id, "users_apm", "user_id");
     }
 

@@ -10,11 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
 public class edit_credController {
 
+    int punteggio;
     @FXML
     Circle favicon;
     @FXML
@@ -38,8 +40,13 @@ public class edit_credController {
     private MFXTextField username;
 
     @FXML
+    private Text inserimento_effettuato;
+
+    @FXML
     MFXLegacyTableView<credentialTableCell> tabella;
 
+    @FXML
+    private Text modifica_effettuata;
 
     credentialTableCell selezione, new_credential;
     @FXML
@@ -82,7 +89,9 @@ public class edit_credController {
         selezione.setTag(tag.getText());
         selezione.setServizio(servizio.getText());
         selezione.setUsername(username.getText());
+        selezione.setRobustezza(punteggio);
         selezione.update(logged);
+        new dissolvenza_testo(modifica_effettuata, "Credenziale modificata correttamente");
         selezione.setPassword(nuova_pass);
         tabella.refresh();
 
@@ -90,17 +99,23 @@ public class edit_credController {
 
     @FXML
     void insert_credential(ActionEvent event) {
+        //int id, int user_id, int robustezza, int pwnd, String username, String password, String url, String servizio, String tag
         //int user_id, String username, String password, String servizio, String url, String tag
         Credenziali_servizi new_credential = new Credenziali_servizi (
+                0,
                 logged.getId(),
+                punteggio,
+                0,
                 username.getText(),
                 password.getText(),
-                servizio.getText(),
                 url.getText(),
+                servizio.getText(),
                 tag.getText());
 
         credentialTableCell new_cell = new credentialTableCell(new_credential);
         logged.portachiavi.add(new_credential);
+        inserimento_effettuato.setText("Credenziale inserita correttamente");
+        new dissolvenza_testo(inserimento_effettuato, "Credenziale inserita correttamente");
         setFavicon(url.getText());
         //System.out.println("prima di essere cancellato l'username " + new_cell.getUsername());
         username.clear();
@@ -162,7 +177,7 @@ public class edit_credController {
         for (int elem : valutazione) {
             punteggio += elem;
         }
-
+        this.punteggio = punteggio;
         if (punteggio == 5) {
             password.setStyle("-fx-border-color: green;");
             password.setFloatingText("Password forte!");
@@ -174,6 +189,8 @@ public class edit_credController {
             password.setFloatingText("Password debole");
 
         }
+
+
     }
 
 }

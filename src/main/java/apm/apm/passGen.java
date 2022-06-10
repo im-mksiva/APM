@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class passGen {
+
     // ------------ OVERLOADING ------------
 
     String genPass(int lunghezza){

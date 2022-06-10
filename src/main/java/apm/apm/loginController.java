@@ -27,7 +27,8 @@ public class loginController {
     private MFXPasswordField password;
     @FXML
     private MFXButton loginButton;
-
+    @FXML
+    private Text messaggio_login;
     @FXML
     protected void onClick() throws IOException {
         AuthManager login = new AuthManager();
@@ -51,8 +52,10 @@ public class loginController {
             stage.setResizable(false);
 
             stage.show();
+        }else{
+            new dissolvenza_testo(messaggio_login, "Nome utente o Password errati");
         }
-        }
+    }
 
     @FXML
     void catch_enter(KeyEvent event) throws IOException {

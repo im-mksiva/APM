@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +41,9 @@ public class checkController {
     @FXML
     private TableColumn<?, ?> url;
 
+    @FXML
+    private Text controllo_compromessa;
+
     ObservableList lista_cred;
     double percentage,step;
 
@@ -47,6 +51,9 @@ public class checkController {
     public void initialize() {
         User logged = APM.user;
         ArrayList<Credenziali_servizi> lista = logged.portachiavi.getLista_credenziali();
+//        for (Credenziali_servizi elem : lista ) {
+//            System.out.println(elem.getPwnd());
+//        }
 
         for (TableColumn elem: tabella.getColumns()) {
             elem.setCellValueFactory(new PropertyValueFactory<>(elem.getId()));
@@ -60,6 +67,7 @@ public class checkController {
         System.out.println(step);
         percentage = 0;
         progressBar.setProgress(percentage);
+
     }
 
 
@@ -77,7 +85,6 @@ public class checkController {
     void check_pwnd(ActionEvent event){
         Task task = new Task<Void>() {
             @Override public Void call() {
-                HaveIBeenPwned haveIBeenPwned = new HaveIBeenPwned();
                 ObservableList lista = tabella.getItems();
                 for (int i = 0; i < lista.size(); i++) {
                     try {
@@ -86,6 +93,13 @@ public class checkController {
                         temp.update(APM.user);
                         percentage += step;
                         progressBar.setProgress(percentage);
+                        /*
+                        System.out.println(" dentro il thread - " + percentage);
+                        if (percentage>1){
+                            new dissolvenza_testo(controllo_compromessa, "Controllo password terminato");
+                            progressBar.setProgress(0);
+                        }
+                        */
                     } catch (NoSuchAlgorithmException | IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -95,5 +109,8 @@ public class checkController {
             };
         };
         new Thread(task).start();
+
+
+
     }
 }

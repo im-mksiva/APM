@@ -14,7 +14,7 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <MFXButton fx:id="submit" buttonType="RAISED" layoutX="183.0" layoutY="443.0" onAction="#changePass" style="-fx-background-color: #5eba7d; -fx-text-fill: white;" text="Modifica password">
+      <MFXButton fx:id="submit" buttonType="RAISED" layoutX="181.0" layoutY="442.0" onAction="#changePass" style="-fx-background-color: #5eba7d; -fx-text-fill: white;" text="Modifica password">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -25,6 +25,11 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <MFXPasswordField fx:id="user_pass" floatMode="BORDER" floatingText="Nuova password per APM" layoutX="159.0" layoutY="341.0" prefHeight="51.0" prefWidth="250.0" />
+      <MFXPasswordField fx:id="user_pass" floatMode="BORDER" floatingText="Nuova password per APM" layoutX="160.0" layoutY="329.0" prefHeight="51.0" prefWidth="250.0" />
+      <Text fx:id="pass_user_modificata" fill="#12809e" layoutX="126.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="314.193359375">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
