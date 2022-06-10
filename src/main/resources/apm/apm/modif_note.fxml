@@ -17,10 +17,14 @@
       <MFXTextField fx:id="visualTitolo" floatMode="BORDER" floatingText="Titolo" layoutX="82.0" layoutY="99.0" prefHeight="50.0" prefWidth="150.0" />
       <MFXTextField fx:id="visualTag" floatMode="BORDER" floatingText="Tag\Categoria" layoutX="335.0" layoutY="99.0" prefHeight="50.0" prefWidth="150.0" />
       <TextArea fx:id="visualTesto" layoutX="18.0" layoutY="177.0" prefHeight="244.0" prefWidth="532.0" />
-      <MFXButton fx:id="bottoneSalva" buttonType="RAISED" layoutX="231.0" layoutY="458.0" onAction="#salvaNote" prefHeight="35.0" prefWidth="105.0" style="-fx-background-color: #5eba7d; -fx-text-fill: white;" text="Salva">
+      <MFXButton fx:id="bottoneSalva" buttonType="RAISED" layoutX="231.0" layoutY="465.0" onAction="#salvaNote" prefHeight="35.0" prefWidth="105.0" style="-fx-background-color: #5eba7d; -fx-text-fill: white;" text="Salva">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></MFXButton>
-      <Text fx:id="inserimento_effettuato" layoutX="182.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="203.7366943359375" />
+      <Text fx:id="modifica_effettuata" fill="#12809e" layoutX="149.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="267.19998779296884">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

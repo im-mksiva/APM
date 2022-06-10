@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import javax.crypto.Cipher;
@@ -37,6 +38,9 @@ public class file_encController {
 
     @FXML
     private MFXButton salva;
+
+    @FXML
+    private Text messaggio_file;
 
     File file_selezionato;
     String estensione;
@@ -103,6 +107,7 @@ public class file_encController {
             if (file != null) {
                 System.out.println(file.getAbsolutePath());
                 cripta.Encrypt(this.file_selezionato, file.getAbsolutePath());
+                new dissolvenza_testo(messaggio_file, "File criptato correttamente");
             }
         }else if (this.flag==0){
             System.out.println("flag -> " + this.flag);
@@ -113,6 +118,7 @@ public class file_encController {
             if (file != null) {
                 System.out.println(file.getAbsolutePath());
                 decripta.Decrypt(this.file_selezionato, file.getAbsolutePath());
+                new dissolvenza_testo(messaggio_file, "File decriptato correttamente");
             }
 
         }else{

@@ -134,6 +134,9 @@ public class SQLite_agent {
     void insertCredential(Credenziali_servizi nuova_credenziale) {
         try {
             String sql = "insert into CREDENZIALI(user_id, url, service, username, password, tag, strenght) values (?,?,?,?,?,?,?)";
+            System.out.println(nuova_credenziale.getUser_id() + " - " + nuova_credenziale.getUrl()+ " - " +
+                    nuova_credenziale.getServizio() + " - " + nuova_credenziale.getUsername() + " - " +
+                    nuova_credenziale.getPassword() + " - " + nuova_credenziale.getTag() + " - " + nuova_credenziale.getRobustezza());
             PreparedStatement query = connection.prepareStatement(sql);
             query.setInt(1, nuova_credenziale.getUser_id());
             query.setString(2, nuova_credenziale.getUrl());

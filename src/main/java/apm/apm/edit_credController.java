@@ -91,7 +91,7 @@ public class edit_credController {
         selezione.setUsername(username.getText());
         selezione.setRobustezza(punteggio);
         selezione.update(logged);
-        modifica_effettuata.setText("Credenziale modificata correttamente");
+        new dissolvenza_testo(modifica_effettuata, "Credenziale modificata correttamente");
         selezione.setPassword(nuova_pass);
         tabella.refresh();
 
@@ -115,6 +115,7 @@ public class edit_credController {
         credentialTableCell new_cell = new credentialTableCell(new_credential);
         logged.portachiavi.add(new_credential);
         inserimento_effettuato.setText("Credenziale inserita correttamente");
+        new dissolvenza_testo(inserimento_effettuato, "Credenziale inserita correttamente");
         setFavicon(url.getText());
         //System.out.println("prima di essere cancellato l'username " + new_cell.getUsername());
         username.clear();

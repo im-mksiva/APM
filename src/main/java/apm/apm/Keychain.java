@@ -55,7 +55,6 @@ public class Keychain implements base_operations {
         Credenziali_servizi cred_da_inserire = (Credenziali_servizi) credenziale;
         cred_da_inserire.Encrypt(user.getEncr_key());
         db_agent.insertCredential(cred_da_inserire);
-
     }
 
     @Override

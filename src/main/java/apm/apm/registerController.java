@@ -33,11 +33,19 @@ public class registerController {
     private MFXTextField nome;
 
     @FXML
+    private Text utente_registrato;
+
+    @FXML
     protected void onClick() {
         AuthManager register = new AuthManager();
         User new_user = new User(username.getText(),password.getText(),"nome","cognome");
-        register.userRegister(new_user);
-        loginScene(null);
+        boolean registrato = register.userRegister(new_user);
+        if (registrato == true){
+            loginScene(null);
+        }else{
+            new dissolvenza_testo(utente_registrato, "Utente già registrato");
+        }
+
     }
 
     public void loginScene(MouseEvent mouseEvent) {

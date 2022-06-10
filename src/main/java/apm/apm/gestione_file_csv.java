@@ -95,7 +95,14 @@ public class gestione_file_csv {
                 for(int elem : esito_valutazione){
                     somma_val+=elem;
                 }
-                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), somma_val, username, password, nome_servizio, url);
+
+                //System.out.println(APM.user.getId() + " - Rob: "+ somma_val + " - Username: "+ username + " - Pass: "+ password + " - name: "+ nome_servizio + " - url: "+ url);
+
+
+                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), somma_val, username, password, url, nome_servizio);
+
+                //System.out.println(APM.user.getId() + "Nuovo Servizio: Username: "+ nuovo_servizio.getUsername() + " - Pass: "+ nuovo_servizio.getPassword() + " - name: "+ nuovo_servizio.getServizio() + " - url: "+ nuovo_servizio.getUrl());
+
                 APM.user.portachiavi.add(nuovo_servizio);
                 line = reader.readLine();
             }

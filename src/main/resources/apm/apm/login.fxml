@@ -19,19 +19,24 @@
                         <Font size="35.0" />
                     </font>
                 </Text>
-                <MFXButton fx:id="loginButton" layoutX="274.0" layoutY="313.0" onAction="#onClick" style="-fx-background-color: #59cb91; -fx-text-fill: white;" text="Accedi" textAlignment="CENTER" viewOrder="1.0">
+                <MFXButton fx:id="loginButton" layoutX="274.0" layoutY="308.0" onAction="#onClick" style="-fx-background-color: #59cb91; -fx-text-fill: white;" text="Accedi" textAlignment="CENTER" viewOrder="1.0">
                     <font>
                         <Font size="23.0" />
                     </font>
                 </MFXButton>
-            <Text layoutX="224.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Non sei registrato?" wrappingWidth="126.15900039672852">
+            <Text layoutX="224.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Non sei registrato?" wrappingWidth="126.15900039672852">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text fx:id="register" fill="#0080ae" layoutX="353.0" layoutY="395.0" onMouseClicked="#registerScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca qui" underline="true" wrappingWidth="70.15900039672852">
+            <Text fx:id="register" fill="#0080ae" layoutX="353.0" layoutY="415.0" onMouseClicked="#registerScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca qui" underline="true" wrappingWidth="70.15900039672852">
                <font>
                   <Font size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="messaggio_login" fill="#12809e" layoutX="196.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="261.33673095703125">
+               <font>
+                  <Font size="18.0" />
                </font>
             </Text>
             </children>

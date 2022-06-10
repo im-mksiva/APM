@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -63,6 +64,9 @@ public class noteController {
 
     @FXML
     private Circle noteCircle;
+
+    @FXML
+    private Text nota_eliminata;
 
     private User logged;
 
@@ -114,6 +118,7 @@ public class noteController {
         System.out.println("cancellazione");
         note selezione = tabella.getSelectionModel().getSelectedItem();
         this.logged.note.remove(selezione);
+        new dissolvenza_testo(nota_eliminata, "Nota eliminata correttamente");
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().remove(selezione);
         tabella.refresh();

@@ -71,7 +71,7 @@ public class credentialController {
     private MFXTextField search_credential;
 
     @FXML
-    private Text credenziale_rimossa;
+    private Text messaggio_da_mostrare;
 
     @FXML
     private MFXButton note_button;
@@ -163,34 +163,7 @@ public class credentialController {
         System.out.println("cancellazione");
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
         this.logged.portachiavi.remove(selezione);
-
-
-
-
-        //dissolvenza_testo test = new dissolvenza_testo();
-        //test.dissolvenza(credenziale_rimossa);
-
-            //credenziale_rimossa.setText("Credenziale rimossa correttamente");
-
-            Task task = new Task<Void>() {
-                @Override public Void call() {
-                    try {
-                        credenziale_rimossa.setVisible(true);
-                        Thread.sleep(500);
-                        credenziale_rimossa.setOpacity(0.7);
-                        Thread.sleep(500);
-                        credenziale_rimossa.setOpacity(0.4);
-                        Thread.sleep(500);
-                        credenziale_rimossa.setOpacity(0.2);
-                        credenziale_rimossa.setVisible(false);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                };
-            };
-            new Thread(task).start();
-
+        new dissolvenza_testo(messaggio_da_mostrare, "Credenziale rimossa Correttamente");
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().remove(selezione);
         tabella.refresh();
@@ -227,6 +200,7 @@ public class credentialController {
                 MFXLegacyTableView<credentialTableCell> tabella;
                 @Override public Void call() {
                     APM.user.portachiavi.import_csv(file.getAbsolutePath());
+                    new dissolvenza_testo(messaggio_da_mostrare, "Credenziali importate correttamente");
                     tabella.refresh();
                     return null;
                 };
@@ -248,6 +222,7 @@ public class credentialController {
             Task task = new Task<Void>() {
                 @Override public Void call() {
                     APM.user.portachiavi.export_csv(file.getAbsolutePath());
+                    new dissolvenza_testo(messaggio_da_mostrare, "Credenziali esportate correttamente");
                     return null;
                 };
             };

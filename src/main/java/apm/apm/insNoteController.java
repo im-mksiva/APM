@@ -43,6 +43,8 @@ public class insNoteController {
     @FXML
     private MFXButton bottoneSalva;
 
+    @FXML
+    private Text modifica_effettuata;
 
     @FXML
     MFXLegacyTableView<note> tabella;
@@ -65,7 +67,10 @@ public class insNoteController {
         );
         if (InserisciTesto.getText() != "" && InserisciTitolo.getText()!="") {
             logged.note.add(new_nota);
-            inserimento_effettuato.setText("nota inserita correttamente");
+            new dissolvenza_testo(inserimento_effettuato, "Nota inserita correttamente");
+            //inserimento_effettuato.setText("nota inserita correttamente");
+        }else{
+            new dissolvenza_testo(inserimento_effettuato, "Nota non inserita per dati mancanti");
         }
         InserisciTesto.clear();
         InserisciTag.clear();
@@ -98,6 +103,8 @@ public class insNoteController {
         //selezione.setLast_modified("CURRENT_TIMESTAMP");
         //System.out.println("date   " + selezione.getLast_modified());
         selezione.update(logged);
+        //Nota Modificata correttamente
+        new dissolvenza_testo(modifica_effettuata, "Nota Modificata correttamente");
         tabella.refresh();
         selezione.setTesto(testo);
 
