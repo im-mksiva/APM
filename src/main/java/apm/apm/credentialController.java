@@ -137,6 +137,10 @@ public class credentialController {
     @FXML
     void edit(ActionEvent event) {
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+        if (selezione == null){
+            System.out.println("nessun elemento selezionato");
+            return;
+        }
         try {
             URL fxmlLocation = getClass().getResource("edit_credential.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
@@ -151,7 +155,7 @@ public class credentialController {
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
             edit_credController.setup();
-
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -160,8 +164,14 @@ public class credentialController {
 
     @FXML
     void deleteRow(ActionEvent event) {
-        System.out.println("cancellazione");
+//        System.out.println("cancellazione");
+
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
+        if (selezione == null){
+            System.out.println("nessun elemento selezionato");
+            return;
+        }
+
         this.logged.portachiavi.remove(selezione);
         new dissolvenza_testo(messaggio_da_mostrare, "Credenziale rimossa Correttamente");
         FilteredList esterna = (FilteredList) tabella.getItems();
@@ -181,6 +191,7 @@ public class credentialController {
             edit_credController.logged = logged;
             edit_credController.tabella = tabella;
             edit_credController.favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

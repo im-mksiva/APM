@@ -10,7 +10,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class credentialTableCell extends Credenziali_servizi {
-    MFXButton copia_user = new MFXButton("copia username");
+    MFXButton copia_user = new MFXButton("Copia username");
     MFXButton copia_pass = new MFXButton("Copia password");
 
     credentialTableCell(Credenziali_servizi credenziale) {

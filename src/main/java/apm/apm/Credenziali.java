@@ -10,7 +10,7 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
     Credenziali(int id, int robustezza, int pwnd, String username, String password) {
         this.id = id;
         this.robustezza = robustezza;
-        this.pwnd = 0;
+        this.pwnd = pwnd;
         this.username = username;
         this.password = password;
     }

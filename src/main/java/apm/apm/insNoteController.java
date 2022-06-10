@@ -76,9 +76,13 @@ public class insNoteController {
         InserisciTag.clear();
         InserisciTitolo.clear();
         FilteredList esterna = (FilteredList) tabella.getItems();
+        LocalDateTime dateTime = LocalDateTime.now();
+        String timeStamp = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(dateTime);
+        new_nota.setLast_modified(timeStamp);
         new_nota.setTesto(testo_in_chiaro);
         esterna.getSource().add(new_nota);
         tabella.refresh();
+
     }
 
     @FXML

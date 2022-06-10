@@ -20,6 +20,7 @@ public class APM extends Application {
         Scene scene = new Scene(root, 800, 580);
         stage.setTitle("APM Login");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -47,12 +49,21 @@ public class loginController {
             Scene scene = new Scene(root, 1000, 690);
             stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
+            stage.setResizable(false);
 
             stage.show();
         }else{
             new dissolvenza_testo(messaggio_login, "Nome utente o Password errati");
         }
     }
+
+    @FXML
+    void catch_enter(KeyEvent event) throws IOException {
+        if (event.getCode().equals(KeyCode.ENTER)){
+            onClick();
+        }
+    }
+
 
     public void registerScene(MouseEvent mouseEvent) {
         Pane schermata = (Pane) register.getScene().lookup("#schermata");

@@ -21,9 +21,9 @@
             </children>
         </AnchorPane>
       <Pane fx:id="schermata" prefHeight="605.0" prefWidth="1000.0" />
-      <Circle fx:id="accountCircle" fill="WHITE" layoutX="948.0" layoutY="64.0" radius="19.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
-      <Text layoutX="971.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="⏷" />
-      <MenuButton layoutX="925.0" layoutY="39.0" mnemonicParsing="false" opacity="0.0" prefHeight="48.0" prefWidth="65.0" text="MenuButton">
+      <Circle fx:id="accountCircle" fill="WHITE" layoutX="948.0" layoutY="51.0" radius="19.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" />
+      <Text layoutX="971.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="⏷" />
+      <MenuButton layoutX="925.0" layoutY="28.0" mnemonicParsing="false" opacity="0.0" prefHeight="48.0" prefWidth="65.0" text="MenuButton">
         <items>
           <MenuItem fx:id="userSettings" mnemonicParsing="false" onAction="#userScene" text="Impostazioni" />
           <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#userLogout" text="Esci" />

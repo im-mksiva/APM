@@ -104,6 +104,7 @@ public class checkController {
                         throw new RuntimeException(e);
                     }
                 }
+                tabella.refresh();
                 return null;
             };
         };
