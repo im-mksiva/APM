@@ -38,14 +38,15 @@ public class registerController {
     @FXML
     protected void onClick() {
         AuthManager register = new AuthManager();
-        User new_user = new User(username.getText(),password.getText(),"nome","cognome");
-        boolean registrato = register.userRegister(new_user);
-        if (registrato == true){
-            loginScene(null);
-        }else{
-            new dissolvenza_testo(utente_registrato, "Utente già registrato");
+        if (username.getText() == null || password.getText() == null) {
+            User new_user = new User(username.getText(), password.getText(), "nome", "cognome");
+            boolean registrato = register.userRegister(new_user);
+            if (registrato == true) {
+                loginScene(null);
+            } else {
+                new dissolvenza_testo(utente_registrato, "Utente già registrato");
+            }
         }
-
     }
 
     public void loginScene(MouseEvent mouseEvent) {
