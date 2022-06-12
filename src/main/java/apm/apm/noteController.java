@@ -138,6 +138,7 @@ public class noteController {
             Scene scene = new Scene(fxmlLoader.load(), 567, 540);
             Stage stage = new Stage();
             stage.setTitle("Inserisci nota");
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             insNoteController ins = fxmlLoader.getController();
             ins.logged = logged;
@@ -160,6 +161,7 @@ public class noteController {
             Scene scene = new Scene(fxmlLoader.load(), 567, 540);
             Stage stage = new Stage();
             stage.setTitle("Modifica nota");
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             stage.setUserData(selezione);
             insNoteController vis_mod_controller = fxmlLoader.getController();

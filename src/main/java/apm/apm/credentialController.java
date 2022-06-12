@@ -147,6 +147,7 @@ public class credentialController {
             Scene scene = new Scene(fxmlLoader.load(), 567, 540);
             Stage stage = new Stage();
             stage.setTitle("Modifica credenziale");
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
 
             stage.setUserData(selezione);
@@ -186,6 +187,7 @@ public class credentialController {
             Scene scene = new Scene(fxmlLoader.load(), 567, 540);
             Stage stage = new Stage();
             stage.setTitle("Inserisci credenziale");
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             edit_credController edit_credController = fxmlLoader.getController();
             edit_credController.logged = logged;
