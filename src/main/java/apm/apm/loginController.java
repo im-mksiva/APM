@@ -71,6 +71,8 @@ public class loginController {
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlLocation = getClass().getResource("register.fxml");
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        Stage stage = (Stage) register.getScene().getWindow();
+        stage.setTitle("APM Registrazione");
         try {
             schermata.getChildren().add(loader.load());
         } catch (IOException e) {

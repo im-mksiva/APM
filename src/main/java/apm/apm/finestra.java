@@ -120,6 +120,7 @@ public class finestra {
             Scene scene = new Scene(root, 800, 580);
             stage.setTitle("APM Login");
             stage.setScene(scene);
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
