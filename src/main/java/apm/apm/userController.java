@@ -27,7 +27,8 @@ public class userController {
     void changePass(ActionEvent event) {
         User logged = APM.user;
         String new_pass = user_pass.getText();
-        logged.update_user_password(new_pass);
+        logged.setPassword(new_pass);
+        logged.update_credenziale(logged);
         javafx.application.Platform.exit();
     }
 

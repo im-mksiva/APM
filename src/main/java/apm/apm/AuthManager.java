@@ -8,18 +8,17 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Objects;
 
+
 public class AuthManager {
     SQLite_agent db_agent;
-    public AuthManager (){
+    //costruttore che crea un oggetto di tipo DB agent
+    AuthManager (){
         this.db_agent = new SQLite_agent();
     }
 
-
-
-
-    public boolean userRegister(User new_user) {
-        // verifica se esiste già uno username uguale, se si restituisce un messaggio di errore nella UI
-//        SQLite_agent db_agent = new SQLite_agent();
+    //metodo che consente la registrazione del singolo utente
+    boolean userRegister(User new_user) {
+        // verifica se esiste già uno username uguale, se si restituisce un messaggio di errore nella GUI
         if (db_agent.getUser(new_user.getUsername()) != null) {
             System.out.println("l'utente c'è già");
             return false;
@@ -33,13 +32,13 @@ public class AuthManager {
         //generazione della chiave di criptazione per l'utente
         String encr_key = getSalt().substring(0, 16);
 
-
+        //inizializzazione del cifrario
         Encrypt_Decrypt crypt_text = new Encrypt_Decrypt(Cipher.ENCRYPT_MODE, user_pass);
+        //criptazione della chiave master
         new_user.setEncr_key(crypt_text.Encrypt(encr_key));
 
         // inserimento del nuovo utente in APM.db
         db_agent.insertUser(new_user);
-        System.out.println("fatto");
         try {
             db_agent.connection.close();
         } catch (SQLException e) {
@@ -48,41 +47,33 @@ public class AuthManager {
         return true;
     }
 
-    public User userLogin(String username, String password) {
+    //metodo che consente all'utente l'accesso al sistema
+    User userLogin(String username, String password) {
         User logged = db_agent.getUser(username);
         if (logged == null) {
-            System.out.println("username non trovato");
             return null;
         }
 
-
-//        String hashed_pass = db_agent.get_User_Hash(username);
-//        String user_salt = db_agent.get_Salt(username);
+        //genero l'hash della password inserita dell'utente
         String login_hashed_pass = get_SecurePassword(password, logged.getSalt());
-        // questo metodo di comparazione me l'ha suggerito IntelliJ, credo che le stringhe si possano confrontare solo in questo modo
-        // dato che sono oggetti in java
+        //si confronta l'hash della pass appena inserita dall'utente con l'hash della pass presente del DB
         if (Objects.equals(login_hashed_pass, logged.getPassword())) {
-            System.out.println("Login ok");
             logged = db_agent.getUser(username);
-//            logged.setPassword(password);
             logged.Decrypt(password);
             return logged;
-        } else {
-            System.out.println("password non corretta");
         }
         return null;
     }
 
-
+    //metodo che consente la rimozione di un utente dal sistema
     void removeUser(int user_id) {
         db_agent.deleteRecord(user_id, "users_apm", "user_id");
     }
 
-
     // spazio alle funzioni crittografiche
     // questo metodo mi consente di poter calcolare l'hash SHA-512 facendo uso di un salt generato al momento
     // il salt poi lo conservo in APM.db
-    public String get_SecurePassword(String UserPasswordToHash, String salt) {
+    String get_SecurePassword(String UserPasswordToHash, String salt) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -99,8 +90,8 @@ public class AuthManager {
         return generatedPassword;
     }
 
-    // Add salt
-    public String getSalt() {
+    //metodo che consente la creazione un salt
+    String getSalt() {
         SecureRandom sr = null;
         try {
             sr = SecureRandom.getInstance("SHA1PRNG");

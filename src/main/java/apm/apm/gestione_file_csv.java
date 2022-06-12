@@ -4,11 +4,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 public class gestione_file_csv {
@@ -50,12 +47,12 @@ public class gestione_file_csv {
         for (String elem : nome_campi) {
             if (indici_campi.containsKey(elem)) {
                 indici_campi.put(elem, indice_campo(prima_riga, elem));
-                //System.out.println("dentro l'if hashmap:  " + indici_campi);
             }
         }
         return indici_campi;
     }
 
+    //metodo che consente di inserire
     private Map<String, String> inserimento_campi(String[] riga, Map<String, Integer> diz_indici) {
         String[] nome_campi = {"name", "url", "username", "password"};
         Map<String, String> dizionario_inserimento = new HashMap<String, String>();
@@ -77,11 +74,9 @@ public class gestione_file_csv {
             String line = reader.readLine();
             String[] prima_riga = separa_stringa(line);
             Map<String, Integer> diz_indici = dizionario_indice(prima_riga);
-            //System.out.println("dizionario indici:\n" + diz_indici);
             //dalla seconda riga in poi
             line = reader.readLine();
             while (line != null) {
-                //System.out.println("line prima di essere spezzata " + line);
                 String[] riga_successiva = separa_stringa(line);
                 Map<String, String> diz_ins = inserimento_campi(riga_successiva, diz_indici);
                 //aggiungere metodo per inserimento dati nel DB
@@ -95,14 +90,7 @@ public class gestione_file_csv {
                 for(int elem : esito_valutazione){
                     somma_val+=elem;
                 }
-
-                //System.out.println(APM.user.getId() + " - Rob: "+ somma_val + " - Username: "+ username + " - Pass: "+ password + " - name: "+ nome_servizio + " - url: "+ url);
-
-
-                Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), somma_val, username, password, url, nome_servizio);
-
-                //System.out.println(APM.user.getId() + "Nuovo Servizio: Username: "+ nuovo_servizio.getUsername() + " - Pass: "+ nuovo_servizio.getPassword() + " - name: "+ nuovo_servizio.getServizio() + " - url: "+ nuovo_servizio.getUrl());
-
+               Credenziali_servizi nuovo_servizio = new Credenziali_servizi(APM.user.getId(), somma_val, username, password, url, nome_servizio);
                 APM.user.portachiavi.add(nuovo_servizio);
                 line = reader.readLine();
             }
@@ -116,9 +104,7 @@ public class gestione_file_csv {
     void export_file(ArrayList<Credenziali_servizi> lista_credenziali, String percorso){
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(percorso));
-            //BufferedWriter writer = Files.newBufferedWriter(Paths.get("C:\\Users\\calog\\IdeaProjects\\APM\\" + username + "_credenziali.csv"));
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("name,url,username,password"));
-            //ArrayList<Credenziali_servizi> lista_credenziali = APM.user.portachiavi.getLista_credenziali();
             for(Credenziali_servizi elem : lista_credenziali){
                 csvPrinter.printRecord(elem.getServizio(),elem.getUrl(),elem.getUsername(),elem.getPassword());
             }

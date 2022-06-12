@@ -90,7 +90,7 @@ public class edit_credController {
         selezione.setServizio(servizio.getText());
         selezione.setUsername(username.getText());
         selezione.setRobustezza(punteggio);
-        selezione.update(logged);
+        selezione.update_credenziale(logged);
         new dissolvenza_testo(modifica_effettuata, "Credenziale modificata correttamente");
         selezione.setPassword(nuova_pass);
         tabella.refresh();
@@ -176,6 +176,9 @@ public class edit_credController {
         int punteggio = 0;
         for (int elem : valutazione) {
             punteggio += elem;
+        }
+        for (Integer elem: valutazione) {
+            System.out.println(elem);
         }
         this.punteggio = punteggio;
         if (punteggio == 5) {

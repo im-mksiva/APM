@@ -6,38 +6,16 @@ import java.util.ArrayList;
 
 public class archivio_note implements base_operations {
     private User user;
-    SQLite_agent db_agent;
+    private SQLite_agent db_agent;
 
+    //costruttore
     archivio_note(User user) {
         this.user = user;
         this.db_agent = user.db_agent;
     }
 
-
-    public void add(Object nuova_nota) {
-        note new_nota = (note)nuova_nota;
-        new_nota.Encrypt(user.getEncr_key());
-        db_agent.insert_note(new_nota);
-
-    }
-
-    @Override
-    public void remove(Object nota) {
-
-        note toRemove = (note) nota;
-        db_agent.deleteRecord(toRemove.getId(), "note", "note_id");
-
-
-    }
-
-    public void removeAll() {
-
-        db_agent.deleteRecord(user.getId(), "note", "user_id");
-
-    }
-
-
-    public ArrayList<note> getLista_note() {
+    //metodo che consente di ottenere la lista delle note di uno specifico utente, identificato per mezzo dello user_id
+    ArrayList<note> getLista_note() {
         ResultSet result = db_agent.get_all_Note(user.getId());
         ArrayList<note> lista = new ArrayList<>();
         boolean continua;
@@ -67,6 +45,32 @@ public class archivio_note implements base_operations {
         }
         return lista;
     }
+
+    //metodo che deriva dall'interfaccia base_operation
+    //consente di aggiungere una nota ad un utente
+    @Override
+    public void add(Object nuova_nota) {
+        note new_nota = (note)nuova_nota;
+        new_nota.Encrypt(user.getEncr_key());
+        db_agent.insert_note(new_nota);
+    }
+
+    //metodo che deriva dall'interfaccia base_operation
+    //consente di rimuovere una nota di un utente
+    @Override
+    public void remove(Object nota) {
+        note toRemove = (note) nota;
+        db_agent.deleteRecord(toRemove.getId(), "note", "note_id");
+    }
+
+    //metodo che deriva dall'interfaccia base_operation
+    //consente di rimuovere tutte le note di un utente
+    @Override
+    public void removeAll() {
+        db_agent.deleteRecord(user.getId(), "note", "user_id");
+    }
+
+
 
 
 

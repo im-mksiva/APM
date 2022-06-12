@@ -8,12 +8,6 @@ import java.util.Objects;
 
 public class HaveIBeenPwned {
 
-    /* Sha-1 è un algoritmo di tipo hash e come tale produce un digest di lunghezza fissa a partire da un messaggio di lunghezza variabile.
-    I punti di forza degli algoritmi di tipo hash sono:
-    1 - l'elevata improbablità che 2 messaggi uguali abbiano lo stesso digest;
-    2 - la funzione hash è invertibile, ovvero non è possibile risalire dal digest alla password.
-    Sha-1 produce un digest del messaggio di 160 bit.
-    */
     //prende in ingresso una password come stringa e restituisce un digest sempre come stringa
     private String digest_sha1(String password) throws NoSuchAlgorithmException {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
@@ -26,14 +20,13 @@ public class HaveIBeenPwned {
         return sb.toString();
     }
 
-
     //prende in ingresso un digest come stringa, la rende maiuscola e separa i primi 5 caratteri
     //dai restanti inserendoli in una lista
     private String[] prefix_suffix(String digest) {
         String[] lista = {null, null};
         String new_digest = digest.toUpperCase();
         lista[0] = new_digest.substring(0, 5);
-        lista[1] = new_digest.substring(5, new_digest.length());
+        lista[1] = new_digest.substring(5);
         return lista;
     }
 
