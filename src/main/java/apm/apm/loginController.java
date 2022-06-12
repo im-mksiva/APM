@@ -3,7 +3,6 @@ package apm.apm;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -48,13 +46,14 @@ public class loginController {
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 1000, 690);
-            stage.setTitle("Gestione credenziali");
+            stage.setTitle("APM - Another Password Manager");
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             stage.setResizable(false);
             stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.show();
         }else{
-            new dissolvenza_testo(messaggio_login, "Nome utente o Password errati");
+            new dissolvenza_testo(messaggio_login, "Nome utente o password errati");
         }
     }
 

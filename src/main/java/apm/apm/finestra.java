@@ -72,6 +72,7 @@ public class finestra {
                 Scene scene = new Scene(fxmlLoader.load(), 567, 540);
                 Stage stage = new Stage();
                 stage.setTitle("Impostazioni utente");
+                stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.show();
