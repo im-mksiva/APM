@@ -90,7 +90,7 @@ public class checkController {
                     try {
                         Credenziali_servizi temp = (Credenziali_servizi) lista.get(i);
                         temp.check_pwnd();
-                        temp.update(APM.user);
+                        temp.update_credenziale(APM.user);
                         percentage += step;
                         progressBar.setProgress(percentage);
                         /*

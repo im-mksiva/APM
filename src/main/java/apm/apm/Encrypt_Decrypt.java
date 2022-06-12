@@ -11,39 +11,31 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt_Decrypt {
-    Cipher cipher = null;
+    private Cipher cipher = null;
 
-    //come funziona? Abbiamo un oggetto capace di poter effettuare le operazioni. Quando inizializzo l'oggetto scelgo la modalità operativa (Cripto o decripto)
-    // e passo la password dell'utente come base per la chiave di cifratura.
+    //costruttore
+    //Quando inizializzo l'oggetto scelgo la modalità operativa (Cripto o decripto)
+    // e passo la chiave master come chiave di cifratura per la criptazione dei dati
     Encrypt_Decrypt(int cipherMode, String chiave) {
         SecretKeySpec secretKey = null;
         //criptazione della encr_key, come chiave uso la pass dell'utente, verifico prima se la user_pass è di 16 caratteri.
         // In caso contrario creo una stringa a partire dalla user_pass
 
-        while (chiave.length() < 16) {
-            chiave += chiave;
+            while (chiave.length() < 16) {
+                chiave += chiave;
+            }
+            chiave = chiave.substring(0, 16);
+            try {
+                secretKey = new SecretKeySpec(chiave.getBytes("UTF-8"), "AES");
+                this.cipher = Cipher.getInstance("AES");
+                this.cipher.init(cipherMode, secretKey);
+            } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+                throw new RuntimeException(e);
+            }
         }
-        chiave = chiave.substring(0, 16);
 
-        try {
-            secretKey = new SecretKeySpec(chiave.getBytes("UTF-8"), "AES");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            this.cipher = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            this.cipher.init(cipherMode, secretKey);
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // uso la chiave già presente nell'oggetto istanziato per criptare le informazioni. Qui passo "text" contenente le informazioni da criptare
-
     String Encrypt(String text) {
         byte[] encrypt = new byte[0];
         try {
@@ -69,13 +61,13 @@ public class Encrypt_Decrypt {
     }
 
 
+    //metodo per criptare i file
     void Encrypt(File file_da_criptare, String percorso_salva_file) {
         FileInputStream inputStream = null;
         String percorso = file_da_criptare.getAbsolutePath();
         int punto = percorso.lastIndexOf(".");
         String estensione = percorso.substring(punto, percorso.length());
         if(estensione.contentEquals(".cripto")){
-            System.out.println("*** file gia' criptato ***");
             return;
         }
         try {
@@ -95,15 +87,13 @@ public class Encrypt_Decrypt {
 
     }
 
+    //metodo per decriptare i file
     void Decrypt(File file_da_decriptare, String percorso_file_da_decriptare)  {
         FileInputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file_da_decriptare);
             byte[] inputBytes = inputStream.readAllBytes();
             byte[] outputBytes = cipher.doFinal(inputBytes);
-            //String percorso = file_da_decriptare.getAbsolutePath();
-            //FileOutputStream file_criptato = new FileOutputStream(percorso.substring(0, percorso.lastIndexOf(".")));
-            System.out.println("percorso dentro la funzione di decripta -> " + percorso_file_da_decriptare);
             FileOutputStream file_criptato = new FileOutputStream(percorso_file_da_decriptare);
             file_criptato.write(outputBytes);
             inputStream.close();
