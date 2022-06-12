@@ -38,7 +38,7 @@ public class registerController {
     @FXML
     protected void onClick() {
         AuthManager register = new AuthManager();
-        if (username.getText() == null || password.getText() == null) {
+        if (username.getText().isEmpty() || password.getText().isEmpty()) {
             return;
         }
         User new_user = new User(username.getText(), password.getText(), "nome", "cognome");
