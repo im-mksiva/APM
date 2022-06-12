@@ -113,11 +113,15 @@ public class edit_credController {
                 tag.getText());
 
         credentialTableCell new_cell = new credentialTableCell(new_credential);
-        logged.portachiavi.add(new_credential);
-        inserimento_effettuato.setText("Credenziale inserita correttamente");
-        new dissolvenza_testo(inserimento_effettuato, "Credenziale inserita correttamente");
+        if (username.getText().isEmpty() || password.getText().isEmpty()){
+            new dissolvenza_testo(inserimento_effettuato, "Username o password mancanti");
+            return;
+        }else{
+            logged.portachiavi.add(new_credential);
+            new dissolvenza_testo(inserimento_effettuato, "Credenziale inserita correttamente");
+        }
+
         setFavicon(url.getText());
-        //System.out.println("prima di essere cancellato l'username " + new_cell.getUsername());
         username.clear();
         password.clear();
         servizio.clear();
