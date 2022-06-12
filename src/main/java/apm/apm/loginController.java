@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -50,7 +51,7 @@ public class loginController {
             stage.setTitle("Gestione credenziali");
             stage.setScene(scene);
             stage.setResizable(false);
-
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.show();
         }else{
             new dissolvenza_testo(messaggio_login, "Nome utente o Password errati");

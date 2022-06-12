@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class SQLite_agent {
     // manages connection to sqlite db
-        Connection connection = null;
-//    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
-    String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
+    Connection connection = null;
+    String percorso_db_file = "/home/mksiva/IdeaProjects/APM/database/APM.db";
+    //String percorso_db_file = "C:\\Users\\calog\\IdeaProjects\\APM\\database\\APM.db";
     String db_conn = "jdbc:sqlite:" + percorso_db_file;
 
     //costruttore che inizializza la connessione al DB
