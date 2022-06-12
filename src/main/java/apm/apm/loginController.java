@@ -50,7 +50,7 @@ public class loginController {
             stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             stage.setResizable(false);
-
+            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.show();
         }else{
             new dissolvenza_testo(messaggio_login, "Nome utente o password errati");
@@ -70,6 +70,8 @@ public class loginController {
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlLocation = getClass().getResource("register.fxml");
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        Stage stage = (Stage) register.getScene().getWindow();
+        stage.setTitle("APM Registrazione");
         try {
             schermata.getChildren().add(loader.load());
         } catch (IOException e) {
