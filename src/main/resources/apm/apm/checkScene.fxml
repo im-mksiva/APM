@@ -21,7 +21,7 @@
                   <TableColumn fx:id="tag" prefWidth="151.9999656677246" styleClass="col" text="Tag" />
                   <TableColumn fx:id="servizio" prefWidth="199.2000274658203" styleClass="col" text="Nome servizio" />
                   <TableColumn fx:id="url" prefWidth="219.0" styleClass="col" text="URL" />
-                  <TableColumn fx:id="robustezza" prefWidth="220.0" styleClass="col" text="Robustezza" />
+                  <TableColumn fx:id="strenght" prefWidth="220.0" styleClass="col" text="Robustezza" />
                   <TableColumn fx:id="pwnd" prefWidth="183.0" styleClass="col" text="Compromessa" />
                </columns>
                <contextMenu>

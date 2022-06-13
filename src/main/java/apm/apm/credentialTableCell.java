@@ -12,6 +12,9 @@ import java.awt.datatransfer.StringSelection;
 public class credentialTableCell extends Credenziali_servizi {
     MFXButton copia_user = new MFXButton("Copia username");
     MFXButton copia_pass = new MFXButton("Copia password");
+    
+    String strenght;
+
 
     credentialTableCell(Credenziali_servizi credenziale) {
         super(credenziale.getId(), credenziale.getUser_id(), credenziale.getRobustezza(), credenziale.getPwnd(), credenziale.getUsername(), credenziale.getPassword(), credenziale.getUrl(), credenziale.getServizio(), credenziale.getTag());
@@ -25,11 +28,25 @@ public class credentialTableCell extends Credenziali_servizi {
             System.out.println("Password copiata");
             copyToClip(credenziale.getPassword());
         });
+        strenght = strenth_as_Text();
 
     }
 
     public MFXButton getCopia_user() {
         return copia_user;
+    }
+    
+    public String strenth_as_Text(){
+        String text = null;
+        switch (this.getRobustezza()){
+            case 5: return "forte";
+            case 4: return "media";
+            default: return "debole";
+        }
+    };
+
+    public String getStrenght() {
+        return strenght;
     }
 
     public void setCopia_user(MFXButton copia_user) {
