@@ -65,13 +65,24 @@ public class insNoteController {
                 InserisciTitolo.getText(),
                 APM.user.getId()
         );
-        if (InserisciTesto.getText() != "" && InserisciTitolo.getText()!="") {
+
+        if (InserisciTesto.getText().isEmpty() || InserisciTitolo.getText().isEmpty()) {
+            new dissolvenza_testo(inserimento_effettuato, "Nota non inserita per dati mancanti");
+            return;
+
+        }else{
             logged.note.add(new_nota);
             new dissolvenza_testo(inserimento_effettuato, "Nota inserita correttamente");
             //inserimento_effettuato.setText("nota inserita correttamente");
-        }else{
-            new dissolvenza_testo(inserimento_effettuato, "Nota non inserita per dati mancanti");
         }
+
+//            if (InserisciTesto.getText() != "" && InserisciTitolo.getText()!="") {
+//            logged.note.add(new_nota);
+//            new dissolvenza_testo(inserimento_effettuato, "Nota inserita correttamente");
+//            //inserimento_effettuato.setText("nota inserita correttamente");
+//        }else{
+//            new dissolvenza_testo(inserimento_effettuato, "Nota non inserita per dati mancanti");
+//        }
         InserisciTesto.clear();
         InserisciTag.clear();
         InserisciTitolo.clear();
