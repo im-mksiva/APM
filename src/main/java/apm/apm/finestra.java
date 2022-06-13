@@ -65,7 +65,7 @@ public class finestra {
         }
     }
 
-        public void userScene (ActionEvent event){
+        public void settings (ActionEvent event){
             try {
                 URL fxmlLocation = getClass().getResource("user.fxml");
                 FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
