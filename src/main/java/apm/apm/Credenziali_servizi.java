@@ -7,10 +7,6 @@ public class Credenziali_servizi extends Credenziali {
     private String url, servizio, tag;
     private int user_id;
 
-    public int getUser_id() {
-        return user_id;
-    }
-
     //costruttore
     Credenziali_servizi(int id, int user_id, int robustezza, int pwnd, String username, String password, String url, String servizio, String tag) {
         super(id, robustezza, pwnd, username, password);
@@ -30,6 +26,9 @@ public class Credenziali_servizi extends Credenziali {
     }
 
     //metodi getter e setter per accedere e settare le variabili private
+    public int getUser_id() {
+        return user_id;
+    }
     public String getUrl() {
         return url;
     }
