@@ -11,7 +11,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-
 import javax.crypto.Cipher;
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +56,6 @@ public class file_encController {
     void open_file_cripto(ActionEvent event) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Scegli file da criptare");
-        //fc.getExtensionFilters().removeAll(new FileChooser.ExtensionFilter("File criptato", "*.cripto"));
         File file = fc.showOpenDialog(null);
         if (file != null){
             System.out.println(file.getAbsolutePath());
@@ -68,7 +66,6 @@ public class file_encController {
             cripta_file.setText(file.getName());
             decripta_file.setDisable(true);
             salva.setDisable(false);
-            //cripta.Encrypt(file);
         }else{
             this.flag=3;
         }
@@ -80,7 +77,6 @@ public class file_encController {
         fc.setTitle("Scegli file da decriptare");
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("File criptato", "*.cripto"));
         File file = fc.showOpenDialog(null);
-        //Encrypt_Decrypt decripta = new Encrypt_Decrypt(Cipher.DECRYPT_MODE, logged.getEncr_key());
         if (file != null){
             System.out.println(file.getAbsolutePath());
             this.file_selezionato = file;

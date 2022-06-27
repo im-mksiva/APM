@@ -54,7 +54,7 @@ public class credentialController {
 
     @FXML
     private TableColumn<?, ?> copia_pass;
-    //
+
     @FXML
     private TableColumn<?, ?> copia_user;
 
@@ -86,7 +86,6 @@ public class credentialController {
 
     private User logged;
     ObservableList<credentialTableCell> lista_cred;
-    gestione_file_csv imp_exp_file_csv = new gestione_file_csv();
 
     @FXML
     public void initialize() {
@@ -99,7 +98,6 @@ public class credentialController {
         }
 
         if (lista_cred == null){
-
             ArrayList<credentialTableCell> lista = logged.portachiavi.getLista_credenziali();
             lista_cred = FXCollections.observableArrayList(lista);
             tabella.setItems(lista_cred);
@@ -110,8 +108,6 @@ public class credentialController {
             }
         });
 
-
-        // ricerca nella lista credenziali
         FilteredList<credentialTableCell> filtro_dati = new FilteredList<>(lista_cred, b -> true);
         search_credential.textProperty().addListener((observable, oldValue, newValue) -> {
             filtro_dati.setPredicate(lista_cred -> {
@@ -133,7 +129,6 @@ public class credentialController {
         tabella.setItems(filtro_dati);
     }
 
-
     @FXML
     void edit(ActionEvent event) {
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
@@ -149,8 +144,6 @@ public class credentialController {
             stage.setTitle("Modifica credenziale");
             stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
-
-            stage.setUserData(selezione);
             edit_credController edit_credController = fxmlLoader.getController();
             edit_credController.selezione = selezione;
             edit_credController.logged = logged;
@@ -165,14 +158,11 @@ public class credentialController {
 
     @FXML
     void deleteRow(ActionEvent event) {
-//        System.out.println("cancellazione");
-
         credentialTableCell selezione = tabella.getSelectionModel().getSelectedItem();
         if (selezione == null){
             System.out.println("nessun elemento selezionato");
             return;
         }
-
         this.logged.portachiavi.remove(selezione);
         new dissolvenza_testo(messaggio_da_mostrare, "Credenziale rimossa Correttamente");
         FilteredList esterna = (FilteredList) tabella.getItems();
@@ -207,19 +197,17 @@ public class credentialController {
         fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
         File file = fc.showOpenDialog(null);
         if (file != null){
-            //System.out.println(file.getAbsolutePath());
             Task task = new Task<Void>() {
-                @FXML
-                MFXLegacyTableView<credentialTableCell> tabella;
                 @Override public Void call() {
                     APM.user.portachiavi.import_csv(file.getAbsolutePath());
                     new dissolvenza_testo(messaggio_da_mostrare, "Credenziali importate correttamente");
                     tabella.refresh();
+
                     return null;
                 };
             };
+
             new Thread(task).start();
-            tabella.refresh();
         }
     }
 
@@ -231,7 +219,6 @@ public class credentialController {
         fc.getExtensionFilters().addAll((new FileChooser.ExtensionFilter("File CSV", "*.csv")));
         File file = fc.showSaveDialog(null);
         if (file != null) {
-            //System.out.println(file.getAbsolutePath());
             Task task = new Task<Void>() {
                 @Override public Void call() {
                     APM.user.portachiavi.export_csv(file.getAbsolutePath());
@@ -247,7 +234,6 @@ public class credentialController {
 
     public void checkScene(ActionEvent event) {
         Pane schermata = (Pane) tabella.getScene().lookup("#schermata");
-        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlLocation = getClass().getResource("checkScene.fxml");
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         try {
@@ -256,6 +242,6 @@ public class credentialController {
             throw new RuntimeException(e);
         }
     }
-    }
+}
 
 

@@ -14,11 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 
 public class loginController {
+    @FXML
     public Text register;
     @FXML
     private MFXTextField username;
@@ -34,14 +34,12 @@ public class loginController {
         String user = username.getText();
         String pass = password.getText();
         APM.user = login.userLogin(user, pass);
-//        APM.user = login.userLogin("calmor", "1234");
         User user_logged = APM.user;
         if (user_logged != null) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
             System.out.println("tutto ok");
             stage = new Stage();
-
             URL fxmlLocation = getClass().getResource("principale.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
             Parent root = fxmlLoader.load();
@@ -50,7 +48,6 @@ public class loginController {
             stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.getIcons().add(new Image(this.getClass().getResource("icons/APM.png").toString()));
             stage.show();
         }else{
             new dissolvenza_testo(messaggio_login, "Nome utente o password errati");
@@ -64,10 +61,8 @@ public class loginController {
         }
     }
 
-
     public void registerScene(MouseEvent mouseEvent) {
         Pane schermata = (Pane) register.getScene().lookup("#schermata");
-        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlLocation = getClass().getResource("register.fxml");
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Stage stage = (Stage) register.getScene().getWindow();
@@ -79,4 +74,4 @@ public class loginController {
         }
     }
 
-    }
+}

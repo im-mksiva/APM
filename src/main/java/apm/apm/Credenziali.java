@@ -7,7 +7,6 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
     private int id, robustezza, pwnd;
     private String username, password;
 
-    //costruttore
     Credenziali(int id, int robustezza, int pwnd, String username, String password) {
         this.id = id;
         this.robustezza = robustezza;
@@ -16,14 +15,17 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
         this.password = password;
     }
 
-
-    //OVERLOADING
     Credenziali(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    //metodi getter e setter per accedere e settare le variabili private
+    Credenziali(String username, String password, int robustezza) {
+        this.username = username;
+        this.password = password;
+        this.robustezza = robustezza;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,7 +57,6 @@ public abstract class Credenziali implements Encrypt_decrypt_info {
         this.password = password;
     }
 
-    //metodo che consente di valutare la compromissione di una password
     void check_pwnd() throws NoSuchAlgorithmException, IOException {
         HaveIBeenPwned tester = new HaveIBeenPwned();
         this.pwnd = tester.valuta_password(this.password);

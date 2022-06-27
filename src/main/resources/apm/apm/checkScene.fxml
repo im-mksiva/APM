@@ -3,8 +3,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXProgressBar?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,15 +22,6 @@
                   <TableColumn fx:id="strenght" prefWidth="220.0" styleClass="col" text="Robustezza" />
                   <TableColumn fx:id="pwnd" prefWidth="183.0" styleClass="col" text="Compromessa" />
                </columns>
-               <contextMenu>
-                  <ContextMenu>
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Visualizza" />
-                        <MenuItem fx:id="editCred" mnemonicParsing="false" onAction="#edit" text="Modifica" />
-                        <MenuItem fx:id="cancella" mnemonicParsing="false" onAction="#deleteRow" text="Elimina" />
-                     </items>
-                  </ContextMenu>
-               </contextMenu>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

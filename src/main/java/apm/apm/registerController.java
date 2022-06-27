@@ -5,15 +5,10 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
 import java.io.IOException;
 import java.net.URL;
 
@@ -52,7 +47,6 @@ public class registerController {
 
     public void loginScene(MouseEvent mouseEvent) {
         Pane schermata = (Pane) login.getScene().lookup("#schermata");
-        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlLocation = getClass().getResource("login.fxml");
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Stage stage = (Stage) login.getScene().getWindow();

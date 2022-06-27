@@ -48,7 +48,6 @@ public class edit_credController {
     @FXML
     private Text modifica_effettuata;
 
-    credentialTableCell selezione, new_credential;
     @FXML
     private MFXButton bottoneInsert;
 
@@ -57,7 +56,9 @@ public class edit_credController {
 
     @FXML
     private MFXButton bottoneConferma;
+
     User logged;
+    credentialTableCell selezione;
 
     @FXML
     public void initialize() {
@@ -99,8 +100,7 @@ public class edit_credController {
 
     @FXML
     void insert_credential(ActionEvent event) {
-        //int id, int user_id, int robustezza, int pwnd, String username, String password, String url, String servizio, String tag
-        //int user_id, String username, String password, String servizio, String url, String tag
+        String insert_pass = password.getText();
         Credenziali_servizi new_credential = new Credenziali_servizi (
                 0,
                 logged.getId(),
@@ -120,7 +120,8 @@ public class edit_credController {
             logged.portachiavi.add(new_credential);
             new dissolvenza_testo(inserimento_effettuato, "Credenziale inserita correttamente");
         }
-
+        System.out.println(insert_pass);
+        new_cell.setPassword(insert_pass);
         setFavicon(url.getText());
         username.clear();
         password.clear();
@@ -130,8 +131,6 @@ public class edit_credController {
         favicon.setFill(new ImagePattern( new Image("file:favicon/default.png")));
         bottoneInsert.setDisable(true);
         bottoneConferma.setDisable(false);
-        // il problema era che FilteredList è un oggetto read-only che racchiude la lista di partenza,
-        // quindi dobbiamo aggiungere la nuova cella alla lista "interna"
         FilteredList esterna = (FilteredList) tabella.getItems();
         esterna.getSource().add(new_cell);
         tabella.refresh();
@@ -170,7 +169,6 @@ public class edit_credController {
         password.requestFocus();
         checkPassStrenght();
 
-//        password.setStyle("-mfx-float-mode: BORDER");
     }
 
     @FXML
@@ -181,9 +179,7 @@ public class edit_credController {
         for (int elem : valutazione) {
             punteggio += elem;
         }
-        for (Integer elem: valutazione) {
-            System.out.println(elem);
-        }
+
         this.punteggio = punteggio;
         if (punteggio == 5) {
             password.setStyle("-fx-border-color: green;");

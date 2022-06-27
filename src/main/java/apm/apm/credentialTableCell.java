@@ -1,10 +1,6 @@
 package apm.apm;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -12,8 +8,8 @@ import java.awt.datatransfer.StringSelection;
 public class credentialTableCell extends Credenziali_servizi {
     MFXButton copia_user = new MFXButton("Copia username");
     MFXButton copia_pass = new MFXButton("Copia password");
-    
-    String strenght;
+
+    private String strenght, stato_pwnd;
 
 
     credentialTableCell(Credenziali_servizi credenziale) {
@@ -21,15 +17,15 @@ public class credentialTableCell extends Credenziali_servizi {
         copia_user.setStyle("-fx-background-color: #00487C; -fx-text-fill: white");
         copia_user.setOnAction(actionEvent -> {
             System.out.println("Username copiato");
-            copyToClip(credenziale.getUsername());
+            copyToClip(this.getUsername());
         });
         copia_pass.setStyle("-fx-background-color: #00487C; -fx-text-fill: white");
         copia_pass.setOnAction(actionEvent -> {
             System.out.println("Password copiata");
-            copyToClip(credenziale.getPassword());
+            copyToClip(this.getPassword());
         });
-        strenght = strenth_as_Text();
-
+        this.strenght = strenth_as_Text();
+        this.stato_pwnd = compr_as_Text();
     }
 
     public MFXButton getCopia_user() {
@@ -44,6 +40,13 @@ public class credentialTableCell extends Credenziali_servizi {
             default: return "debole";
         }
     };
+
+    public String compr_as_Text(){
+        if (this.getPwnd() == 0){
+            return "Sicura";
+        }
+        return "Compromessa";
+    }
 
     public String getStrenght() {
         return strenght;

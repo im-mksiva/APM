@@ -6,30 +6,20 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class noteController {
 
@@ -73,7 +63,9 @@ public class noteController {
     @FXML
     public void initialize(){
         logged = APM.user;
+
         ArrayList<note> lista_note = logged.note.getLista_note();
+
         tag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         titolo.setCellValueFactory(new PropertyValueFactory<>("nome"));
         testo.setCellValueFactory(new PropertyValueFactory<>("testo"));
@@ -92,6 +84,7 @@ public class noteController {
 
         new_list = FXCollections.observableArrayList(lista_note);
         tabella.setItems(new_list);
+
         FilteredList<note> filtro_dati = new FilteredList<>(new_list, b -> true);
         search_text.textProperty().addListener((observable, oldValue, newValue) -> {
             filtro_dati.setPredicate(new_list -> {
@@ -111,9 +104,7 @@ public class noteController {
             });
         });
         tabella.setItems(filtro_dati);
-        for (note elem : tabella.getItems()){
-            System.out.println(elem.getId());
-        }
+
     }
 
     @FXML

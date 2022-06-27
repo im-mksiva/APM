@@ -7,8 +7,6 @@ import java.net.URL;
 
 public class favicon {
 
-    //metodo che consente di ottenere il nome dell'immagine in formato png che verrà usata
-    //come icona nella visualizzazione delle singole credenziale a partire dall'url del servizio
     String getfavicon(String url_servizio) {
         String nome_file_favicon = null;
         File file = null;
@@ -28,15 +26,15 @@ public class favicon {
           }
           URL url = new URL("https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www."+url_servizio+"&size=256");
           BufferedImage image = null;
-          image = ImageIO.read(url); // se non si trova una icona allora ci penserà il blocco di catch a risolvere passando il nome dell'icona predefinita
+          image = ImageIO.read(url);
           if (!ImageIO.write(image, "png", file))
               System.err.println("errore nella scrittura");
       }
       catch (MalformedURLException e) {
           e.printStackTrace();
       }
-      catch (IOException | StringIndexOutOfBoundsException e) { // in questo modo sia quando non mi viene data una favicon dall'url, sia quando l'url non è una stringa adatta
-          nome_file_favicon = "default"; // ho una icona da mettere nella UI
+      catch (IOException | StringIndexOutOfBoundsException e) {
+          nome_file_favicon = "default";
         }
       return nome_file_favicon;
     }
